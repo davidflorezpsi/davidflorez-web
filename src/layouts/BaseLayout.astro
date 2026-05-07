@@ -1,0 +1,57 @@
+---
+import Analytics from '../components/Analytics.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import '../styles/global.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+  ogImage?: string;
+}
+
+const {
+  title = 'David Flórez | Psicólogo Clínico Niñez y Adolescencia | Bogotá',
+  description = 'Psicólogo clínico especialista en niñez y adolescencia. Consulta presencial en Bogotá y online para Latinoamérica y España. ACT, DBT, PCIT, PEERS, ADOS-2.',
+  ogImage = '/og-image.png',
+} = Astro.props;
+
+const siteUrl = Astro.site ?? 'https://davidflorez.co';
+const canonicalURL = new URL(Astro.url.pathname, siteUrl);
+const ogImageURL = new URL(ogImage, siteUrl);
+---
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="generator" content={Astro.generator} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalURL} />
+
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={ogImageURL} />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="es_CO" />
+    <meta property="og:site_name" content="David Flórez · Psicólogo Clínico" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImageURL} />
+
+    <Analytics />
+  </head>
+  <body>
+    <Header />
+    <main>
+      <slot />
+    </main>
+    <Footer />
+  </body>
+</html>

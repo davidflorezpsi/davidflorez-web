@@ -1,0 +1,45 @@
+---
+interface Props {
+  title: string;
+  price: string;
+  description: string;
+  accentColor?: string;
+}
+
+const { title, price, description, accentColor = '#05a3d4' } = Astro.props;
+---
+<div class="service-card" style={`border-top-color: ${accentColor};`}>
+  <h3>{title}</h3>
+  <p class="price">{price}</p>
+  <p class="description">{description}</p>
+  <slot />
+</div>
+
+<style>
+  .service-card {
+    border-top: 4px solid;
+    padding: 2rem;
+    background: #fff;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.07);
+    border-radius: 0 0 8px 8px;
+  }
+
+  h3 {
+    font-size: 1.15rem;
+    color: #003346;
+    margin-bottom: 0.5rem;
+  }
+
+  .price {
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: #05a3d4;
+    margin-bottom: 1rem;
+  }
+
+  .description {
+    font-size: 0.9rem;
+    color: #444;
+    line-height: 1.65;
+  }
+</style>

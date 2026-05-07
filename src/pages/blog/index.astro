@@ -1,0 +1,55 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+---
+<BaseLayout
+  title="Artículos | David Flórez · Psicólogo Clínico"
+  description="Contenido clínico basado en evidencia para familias, adolescentes y profesionales de salud mental."
+>
+  <section class="blog-hero">
+    <div class="container">
+      <h1>Artículos</h1>
+      <p class="lead">
+        Próximamente — contenido clínico basado en evidencia para familias y profesionales.
+      </p>
+      <a href="/#agenda" class="btn-back">Agendar consulta</a>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .blog-hero {
+    min-height: 60vh;
+    display: flex;
+    align-items: center;
+    background: #fff;
+  }
+
+  h1 {
+    font-size: clamp(2rem, 5vw, 3rem);
+    color: #003346;
+    margin-bottom: 1rem;
+  }
+
+  .lead {
+    font-size: 1.1rem;
+    color: #555;
+    max-width: 540px;
+    line-height: 1.7;
+    margin-bottom: 2rem;
+  }
+
+  .btn-back {
+    display: inline-block;
+    background: #05a3d4;
+    color: #fff;
+    padding: 0.75rem 1.75rem;
+    border-radius: 4px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    transition: background 0.2s;
+  }
+
+  .btn-back:hover {
+    background: #047fb5;
+  }
+</style>

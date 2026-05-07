@@ -1,0 +1,97 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+<BaseLayout
+  title="Política de Privacidad — David Flórez"
+  description="Política de privacidad de la consulta de David Erwin Flórez Rojas, psicólogo clínico T.P. 205129."
+>
+  <div class="privacidad-wrap">
+    <div class="container">
+      <h1>Política de Privacidad</h1>
+
+      <section class="privacidad-section">
+        <h2>Responsable del tratamiento</h2>
+        <p>David Erwin Flórez Rojas, psicólogo clínico — T.P. 205129.</p>
+      </section>
+
+      <section class="privacidad-section">
+        <h2>Datos recolectados</h2>
+        <p>Nombre, correo electrónico, número telefónico y motivo de consulta.</p>
+      </section>
+
+      <section class="privacidad-section">
+        <h2>Finalidad</h2>
+        <p>Gestión de citas y comunicación con consultantes y familias.</p>
+      </section>
+
+      <section class="privacidad-section">
+        <h2>Base legal</h2>
+        <p>Consentimiento del titular, conforme a la Ley 1581 de 2012 (Colombia) y sus decretos reglamentarios.</p>
+      </section>
+
+      <section class="privacidad-section">
+        <h2>Transferencia a terceros</h2>
+        <p>Los datos personales no se comparten con terceros con fines comerciales.</p>
+      </section>
+
+      <section class="privacidad-section">
+        <h2>Derechos del titular</h2>
+        <p>
+          Tienes derecho a acceder, rectificar y suprimir tus datos personales.
+          Para ejercer estos derechos escribe a:
+          <a href="mailto:ps.davidflorezr@gmail.com">ps.davidflorezr@gmail.com</a>
+        </p>
+      </section>
+
+      <p class="privacidad-fecha">Última actualización: mayo de 2026</p>
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .privacidad-wrap {
+    padding: 5rem 0 7rem;
+  }
+
+  .privacidad-wrap h1 {
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 700;
+    color: #003346;
+    margin-bottom: 3rem;
+    border-left: 4px solid #05a3d4;
+    padding-left: 1rem;
+    line-height: 1.2;
+  }
+
+  .privacidad-section {
+    margin-bottom: 2rem;
+  }
+
+  .privacidad-section h2 {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: #003346;
+    margin-bottom: 0.4rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .privacidad-section p {
+    color: #444;
+    line-height: 1.8;
+    font-size: 0.95rem;
+  }
+
+  .privacidad-section a {
+    color: #05a3d4;
+    text-decoration: underline;
+  }
+
+  .privacidad-fecha {
+    color: #999;
+    font-size: 0.82rem;
+    margin-top: 3rem;
+    border-top: 1px solid #ececec;
+    padding-top: 1.5rem;
+  }
+</style>

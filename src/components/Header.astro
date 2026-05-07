@@ -1,0 +1,178 @@
+---
+---
+<header class="site-header">
+  <div class="container header-inner">
+    <a href="/#inicio" class="logo" aria-label="David Flórez — Inicio">
+      <img src="/images/logo-sobre-claro.svg" alt="David Flórez Psicólogo Clínico" height="40" />
+    </a>
+    <nav class="nav-desktop" aria-label="Navegación principal">
+      <a href="/#filosofia">Marco clínico</a>
+      <a href="/#sobre-mi">Quién soy</a>
+      <a href="/#como-trabajo">Cómo trabajo</a>
+      <a href="/#servicios">Servicios</a>
+      <a href="/#agenda">Cómo empezamos</a>
+      <a href="/blog">Blog</a>
+      <a href="/#agenda" class="btn-header">Llamada gratuita</a>
+    </nav>
+    <button class="hamburger" id="hamburger" aria-label="Abrir menú" aria-expanded="false" aria-controls="nav-mobile">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+  </div>
+  <nav class="nav-mobile" id="nav-mobile" aria-label="Menú móvil" aria-hidden="true">
+    <a href="/#filosofia">Marco clínico</a>
+    <a href="/#sobre-mi">Quién soy</a>
+    <a href="/#como-trabajo">Cómo trabajo</a>
+    <a href="/#servicios">Servicios</a>
+    <a href="/#agenda">Cómo empezamos</a>
+    <a href="/blog">Blog</a>
+    <a href="/#agenda" class="btn-mobile">Llamada gratuita</a>
+  </nav>
+</header>
+
+<style>
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: #fff;
+    border-bottom: 1px solid #05a3d4;
+  }
+
+  .header-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 64px;
+  }
+
+  .logo img {
+    height: 40px;
+    width: auto;
+    display: block;
+  }
+
+  .nav-desktop {
+    display: flex;
+    align-items: center;
+    gap: 1.75rem;
+  }
+
+  .nav-desktop a {
+    font-size: 0.95rem;
+    color: #003346;
+    transition: color 0.2s;
+  }
+
+  .nav-desktop a:hover {
+    color: #05a3d4;
+  }
+
+  .btn-header {
+    background: #05a3d4;
+    color: #fff !important;
+    padding: 0.4rem 1.1rem;
+    border-radius: 6px;
+    font-weight: 600;
+    transition: background 0.2s;
+  }
+
+  .btn-header:hover {
+    background: #047fb5 !important;
+    color: #fff !important;
+  }
+
+  .hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 6px;
+  }
+
+  .hamburger span {
+    display: block;
+    width: 24px;
+    height: 2px;
+    background: #003346;
+    border-radius: 2px;
+    transition: all 0.3s ease;
+  }
+
+  .hamburger[aria-expanded='true'] span:nth-child(1) {
+    transform: translateY(7px) rotate(45deg);
+  }
+
+  .hamburger[aria-expanded='true'] span:nth-child(2) {
+    opacity: 0;
+  }
+
+  .hamburger[aria-expanded='true'] span:nth-child(3) {
+    transform: translateY(-7px) rotate(-45deg);
+  }
+
+  .nav-mobile {
+    display: none;
+    flex-direction: column;
+    background: #fff;
+    padding: 0.5rem 1.5rem 1.5rem;
+    border-top: 1px solid #ececec;
+  }
+
+  .nav-mobile.open {
+    display: flex;
+  }
+
+  .nav-mobile a {
+    padding: 0.8rem 0;
+    color: #003346;
+    font-size: 1rem;
+    border-bottom: 1px solid #ececec;
+  }
+
+  .nav-mobile a:last-child {
+    border-bottom: none;
+  }
+
+  .btn-mobile {
+    margin-top: 0.75rem;
+    background: #05a3d4;
+    color: #fff !important;
+    padding: 0.75rem 1rem;
+    border-radius: 6px;
+    font-weight: 600;
+    text-align: center;
+  }
+
+  @media (max-width: 768px) {
+    .nav-desktop {
+      display: none;
+    }
+
+    .hamburger {
+      display: flex;
+    }
+  }
+</style>
+
+<script>
+  const hamburger = document.getElementById('hamburger');
+  const navMobile = document.getElementById('nav-mobile');
+
+  hamburger?.addEventListener('click', () => {
+    const isOpen = navMobile?.classList.toggle('open');
+    hamburger.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    navMobile?.setAttribute('aria-hidden', isOpen ? 'false' : 'true');
+  });
+
+  navMobile?.querySelectorAll('a').forEach((link) => {
+    link.addEventListener('click', () => {
+      navMobile.classList.remove('open');
+      hamburger?.setAttribute('aria-expanded', 'false');
+      navMobile.setAttribute('aria-hidden', 'true');
+    });
+  });
+</script>

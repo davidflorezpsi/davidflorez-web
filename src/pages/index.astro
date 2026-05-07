@@ -1,0 +1,926 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+<BaseLayout>
+
+  <!-- 1. HERO -->
+  <section id="inicio" class="hero">
+    <img src="/images/patron-ondas-doble.svg" alt="" aria-hidden="true" class="hero-bg-pattern" />
+    <div class="hero-text">
+      <h1>En un mundo donde la mente a veces calla lo que el corazón no entiende, nace una forma distinta de acompañar.</h1>
+    </div>
+  </section>
+
+  <!-- 2. METÁFORA — texto sobre imagen de fondo -->
+  <section id="metafora" class="metafora">
+    <img src="/images/alpinistas-montañas.svg" alt="" aria-hidden="true" class="metafora-bg" />
+    <div class="container metafora-inner">
+      <div class="metafora-texto">
+        <blockquote class="cita-alpinistas">
+          "Imagina que un psicólogo y tú son dos escaladores, cada uno sube su propia montaña, uno en frente del otro. El psicólogo puede ver el camino por el que puedes subir, no porque él la haya escalado antes ni porque sea más listo, sino porque está situado en una posición diferente, lo que le permite ver cosas desde una posición que tú no alcanzas a ver."
+        </blockquote>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. FILOSOFÍA — fondo oscuro, 2 columnas -->
+  <section id="filosofia" class="filosofia">
+    <div class="container filosofia-inner">
+      <div class="filosofia-texto">
+        <span class="kicker">MARCO CLÍNICO</span>
+        <div class="linea-decorativa"></div>
+        <h2 class="filosofia-h2">Psicología Clínica Basada en Procesos</h2>
+        <p>Esta práctica forma parte de la tradición de la ciencia conductual contextual. El marco de trabajo es la Terapia Basada en Procesos (PBT), desarrollada por Hayes y Hofmann (2018), que integra coherentemente herramientas de ACT, DBT y análisis funcional del comportamiento para identificar y modificar los procesos psicológicos que mantienen el sufrimiento. Por lo tanto, este no es solo un espacio para 'hablar de tus problemas'. No ofrezco solo acompañamiento emocional abierto, sino sesiones de apoyo con objetivo clínico. Cada proceso comienza con una hipótesis, avanza con datos y termina con criterios de cierre definidos.</p>
+        <p>La mayoría de la psicología infantil disponible en Bogotá opera bajo un eclecticismo no declarado: se combinan técnicas de distintos modelos sin justificación funcional. El resultado son procesos abiertos, objetivos difusos y progreso difícil de medir. Esta práctica opera de forma diferente: cada intervención está justificada por el análisis funcional del caso, los objetivos son conductuales y verificables, y el progreso se registra sistemáticamente.</p>
+        <p>La TCC clásica trabaja sobre el contenido del pensamiento. El psicoanálisis trabaja sobre la historia. Esta práctica trabaja sobre los procesos — los patrones funcionales que conectan el contexto con la conducta problema. No importa qué piensa el consultante; importa cómo eso que piensa funciona en su vida y qué procesos psicológicos lo sostienen.</p>
+        <p>La psicología clínica infanto-juvenil basada en procesos es una especialización dentro de las ciencias del comportamiento. No es orientación, no es coaching, no es acompañamiento. Es la aplicación sistemática de principios derivados de la investigación básica sobre el comportamiento humano al tratamiento de psicopatologías complejas en niños y adolescentes.</p>
+      </div>
+      <div class="filosofia-img">
+        <img src="/images/hombre-leyendo.svg" alt="Ilustración de persona leyendo" width="600" height="614" style="max-width:100%; display:block" loading="lazy" />
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. SOBRE MÍ — bio izquierda, foto derecha -->
+  <section id="sobre-mi" class="sobre-mi">
+    <img src="/images/patron-ondas-4.svg" alt="" aria-hidden="true" class="sobre-mi-wave" />
+    <div class="container sobre-mi-inner">
+      <div class="sobre-mi-foto">
+        <img src="/images/david-florez.svg" alt="David Flórez, psicólogo clínico" loading="lazy" />
+      </div>
+      <div class="sobre-mi-bio">
+        <span class="kicker">QUIÉN SOY</span>
+        <div class="linea-decorativa"></div>
+        <h2 class="sobre-mi-h2">Sobre mí</h2>
+        <p>Psicólogo clínico especialista en niñez y adolescencia, con experiencia desde 2022 en evaluación e intervención de trastornos afectivos, conductuales y del neurodesarrollo.</p>
+        <p>Formación en marcos contextuales de tercera generación: Terapia de Aceptación y Compromiso (ACT), Terapia Dialéctica Conductual (DBT), Psicoterapia Analítico Funcional (FAP), Interacción Padres-Hijos (PCIT) y ABA-NET.</p>
+        <p>Certificaciones internacionales en evaluación diagnóstica del espectro autista (ADOS-2/ADI-R, ADIPA 2026) e intervención en habilidades sociales para adolescentes (PEERS, ADIPA 2026).</p>
+        <p>Atiendo presencialmente en Bogotá y en consulta online a familias hispanohablantes en Latinoamérica y España.</p>
+        <p class="bio-tagline"><em>"La verdadera locura es no crecer con evidencia."</em></p>
+        <small class="bio-tp">T.P. 205129</small>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. CÓMO TRABAJO — iconos al fondo de cada tarjeta -->
+  <section id="como-trabajo" class="como-trabajo">
+    <img src="/images/patron-ondas-3.svg" alt="" aria-hidden="true" class="como-trabajo-bg" />
+    <div class="container como-trabajo-content">
+      <span class="kicker kicker-center">MI MÉTODO</span>
+      <div class="linea-decorativa linea-center"></div>
+      <h2 class="como-h2">Cómo trabajo</h2>
+      <div class="metodo-grid">
+
+        <article class="metodo-card">
+          <span class="card-num">01</span>
+          <img src="/images/matraz.svg" alt="" aria-hidden="true" class="card-icon" />
+          <h3>Con evidencia, no con intuición</h3>
+          <p>Cada intervención parte de evaluación diagnóstica rigurosa y marcos terapéuticos validados científicamente: ACT, DBT, PCIT, PEERS, ABA-NET. No improviso. No prometo curas.</p>
+        </article>
+
+        <article class="metodo-card">
+          <span class="card-num">02</span>
+          <img src="/images/corazon.svg" alt="" aria-hidden="true" class="card-icon" />
+          <h3>Con las familias, no solo con el consultante</h3>
+          <p>El cambio sostenible en niños y adolescentes ocurre cuando los adultos significativos también aprenden. El trabajo terapéutico incluye orientación a padres y cuidadores.</p>
+        </article>
+
+        <article class="metodo-card">
+          <span class="card-num">03</span>
+          <img src="/images/cerebro.svg" alt="" aria-hidden="true" class="card-icon" />
+          <h3>Con IA como herramienta, no como terapeuta</h3>
+          <p>Uso IA para investigación, síntesis de literatura clínica y producción de contenido educativo. Jamás para diagnóstico, jamás para sustituir el vínculo terapéutico. La IA es mi asistente, tú eres mi consultante.</p>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. SERVICIOS -->
+  <section id="servicios" class="servicios">
+    <div class="container servicios-inner">
+      <span class="kicker kicker-center">CONSULTA</span>
+      <div class="linea-decorativa linea-center"></div>
+      <h2 class="servicios-h2">Servicios</h2>
+      <p class="servicios-sub">Dos programas clínicos estructurados. Sin sesiones sueltas.</p>
+
+      <div class="servicios-grid">
+
+        <div class="servicio-card">
+          <span class="servicio-num">01</span>
+          <h3>Evaluación Funcional Clínica</h3>
+          <p>Un proceso diagnóstico estructurado que identifica los procesos psicológicos, conductuales y contextuales que explican las dificultades de tu hijo o hija. Es un análisis funcional del comportamiento en el contexto real del consultante.</p>
+
+          <p class="servicio-label">INCLUYE:</p>
+          <ul class="servicio-lista">
+            <li>Entrevista clínica estructurada con cuidadores</li>
+            <li>Observación directa y entrevista del consultante</li>
+            <li>Aplicación de instrumentos de evaluación y análisis de registros, triangulando múltiples informantes</li>
+            <li>Informe clínico con análisis funcional, hipótesis diagnóstica e indicadores de intervención</li>
+            <li>Sesión de entrega del informe y ruta de intervención</li>
+          </ul>
+
+          <p class="servicio-label">¿PARA QUIÉN?</p>
+          <p>Familias que notan dificultades conductuales, emocionales o del neurodesarrollo en su hijo o hija y buscan una conceptualización clínica rigurosa antes de iniciar cualquier intervención. También para segundas opiniones y familias referidas por pediatras, neuropediatras o instituciones educativas.</p>
+
+          <div class="servicio-badges">
+            <span class="badge">Presencial · Bogotá</span>
+            <span class="badge">Telepresencial · Internacional</span>
+          </div>
+        </div>
+
+        <div class="servicio-card">
+          <span class="servicio-num">02</span>
+          <h3>Programa de Intervención Individual</h3>
+          <p>Un ciclo de 16 sesiones de psicoterapia basada en procesos, con objetivos conductuales definidos desde la primera sesión y seguimiento cuantificable del progreso. No es acompañamiento abierto. Es un programa con criterios clínicos claros de avance y cierre.</p>
+
+          <p class="servicio-label">INCLUYE:</p>
+          <ul class="servicio-lista">
+            <li>16 sesiones individuales con el consultante</li>
+            <li>4 sesiones de coaching parental integradas al ciclo</li>
+            <li>Registro conductual continuo a lo largo del ciclo</li>
+            <li>4 reportes mensuales de progreso para los cuidadores</li>
+            <li>Sesión de cierre y evaluación de resultados</li>
+          </ul>
+
+          <p class="servicio-label">CONDICIÓN DE INGRESO:</p>
+          <p>Haber completado la Evaluación Funcional con el profesional, o presentar informe diagnóstico externo vigente (no mayor a 12 meses), sujeto a validación en la llamada de orientación inicial.</p>
+
+          <div class="servicio-badges">
+            <span class="badge">Presencial · Bogotá</span>
+            <span class="badge">Telepresencial · Internacional</span>
+          </div>
+        </div>
+
+      </div>
+
+      <p class="servicios-nota">Esta práctica no ofrece: sesiones individuales sueltas · psicoterapia ecléctica · servicios por EPS · atención a adultos</p>
+    </div>
+  </section>
+
+  <!-- 7. CÓMO EMPEZAMOS — fondo blanco, ◄ marcadores -->
+  <section id="agenda" class="empezamos">
+    <div class="container empezamos-inner">
+      <h2 class="empezamos-h2">¿Cómo empezamos?</h2>
+      <p class="empezamos-sub">Cinco pasos. El primero es gratuito.</p>
+
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0; width: 100%;">
+        <div style="display: flex; align-items: center; justify-content: center; padding: 2rem;">
+          <img src="/images/patron-flechas-doble.svg" alt="" aria-hidden="true" style="width: 100%; max-width: 500px; display: block;" />
+        </div>
+        <div style="padding: 2rem;">
+          <ol class="pasos">
+
+            <li class="paso">
+              <p class="paso-marcador">◄ <strong>01</strong></p>
+              <div class="paso-cuerpo">
+                <h3>Llamada de orientación inicial <span class="paso-badge">Gratuita · 20 minutos · Virtual</span></h3>
+                <p>Conversamos sobre las dificultades de tu hijo o hija, evaluamos si el caso es pertinente para esta práctica y determinamos qué servicio aplica. Sin compromiso por ninguna parte.</p>
+              </div>
+            </li>
+
+            <li class="paso">
+              <p class="paso-marcador">◄ <strong>02</strong></p>
+              <div class="paso-cuerpo">
+                <h3>Decisión de proceder</h3>
+                <p>Si el caso es pertinente y decides iniciar, el profesional confirma la idoneidad clínica y se define el servicio a contratar.</p>
+              </div>
+            </li>
+
+            <li class="paso">
+              <p class="paso-marcador">◄ <strong>03</strong></p>
+              <div class="paso-cuerpo">
+                <h3>Pago del servicio</h3>
+                <p>Pago anticipado requerido para habilitar el calendario de sesiones. Medios disponibles: tarjeta de crédito/débito internacional vía Stripe · pagos nacionales vía Mi Llave.</p>
+              </div>
+            </li>
+
+            <li class="paso">
+              <p class="paso-marcador">◄ <strong>04</strong></p>
+              <div class="paso-cuerpo">
+                <h3>Acceso al calendario y consentimiento informado</h3>
+                <p>Tras la confirmación del pago recibes acceso al calendario de sesiones y al formulario de consentimiento informado digital.</p>
+              </div>
+            </li>
+
+            <li class="paso">
+              <p class="paso-marcador">◄ <strong>05</strong></p>
+              <div class="paso-cuerpo">
+                <h3>Inicio del proceso clínico</h3>
+                <p>Primera sesión agendada. Proceso estructurado, objetivos definidos, progreso medible.</p>
+              </div>
+            </li>
+
+          </ol>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 8. AGENDA CAL.COM — fondo CIAN (#05a3d4) -->
+  <section class="agenda-cal">
+    <div class="container agenda-cal-inner">
+      <h2>¡Agenda tu llamada de orientación gratuita!</h2>
+      <p class="agenda-cal-sub">Dos programas clínicos estructurados. Sin sesiones sueltas.</p>
+      <div id="cal-embed" role="region" aria-label="Calendario de agendamiento">
+        Calendario de agendamiento — se carga aquí
+      </div>
+      <a href="https://wa.me/message/5OEMXE22UKG7I1" class="btn-wa-cal" target="_blank" rel="noopener noreferrer">
+        Consultas por WhatsApp
+      </a>
+      <p class="agenda-nota-cal">Máximo 1 llamada por familia · Sin costo · Sin compromiso</p>
+    </div>
+  </section>
+
+  <!-- 9. WHATSAPP + INSTAGRAM — fondo oscuro #003346 -->
+  <section class="dark-closing">
+    <div class="container dark-closing-inner">
+      <p class="ig-handle">@ps.davidflorez</p>
+      <div class="ig-grid">
+        <!-- Galería Instagram — Fase 2C -->
+        <div class="ig-card"><span>Post de Instagram</span></div>
+        <div class="ig-card"><span>Post de Instagram</span></div>
+        <div class="ig-card"><span>Post de Instagram</span></div>
+        <div class="ig-card"><span>Post de Instagram</span></div>
+        <div class="ig-card"><span>Post de Instagram</span></div>
+        <div class="ig-card"><span>Post de Instagram</span></div>
+      </div>
+    </div>
+  </section>
+
+</BaseLayout>
+
+<style>
+  /* ===== UTILIDADES ===== */
+  .kicker {
+    display: block;
+    font-size: 0.8rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: #05a3d4;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+  }
+  .kicker-center { text-align: center; }
+
+  .linea-decorativa {
+    width: 40px;
+    height: 3px;
+    background: #05a3d4;
+    margin: 1rem 0;
+  }
+  .linea-center { margin-left: auto; margin-right: auto; }
+
+  /* ===== 1. HERO — fondo oscuro ===== */
+  .hero {
+    background: #003346;
+    height: 100vh;
+    width: 100%;
+    position: relative;
+    overflow: clip;
+  }
+
+  .hero-text {
+    position: absolute;
+    top: 80px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    max-width: 1200px;
+    padding: 0 2rem;
+    z-index: 1;
+  }
+
+  .hero-kicker {
+    color: #05a3d4;
+    margin-bottom: 1.5rem;
+  }
+
+  .hero h1 {
+    font-size: clamp(2.8rem, 4.5vw, 4rem);
+    font-weight: 700;
+    color: #fff;
+    line-height: 1;
+    max-width: 800px;
+  }
+
+  .hero-tagline {
+    color: #05a3d4;
+    font-style: italic;
+    font-size: 0.9rem;
+    margin-top: 1.5rem;
+  }
+
+  .hero-col-right {
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding-top: 4rem;
+    position: relative;
+    z-index: 2;
+  }
+
+  .btn-cta {
+    display: inline-block;
+    background: #05a3d4;
+    color: #fff;
+    padding: 1rem 2rem;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 1rem;
+    transition: background 0.2s;
+    white-space: nowrap;
+  }
+  .btn-cta:hover { background: #047fb5; }
+
+  .hero-bg-pattern {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 2025px;
+    height: 705px;
+    z-index: 0;
+  }
+
+  /* ===== 2. METÁFORA — texto sobre imagen de fondo ===== */
+  .metafora {
+    background: #003346;
+    position: relative;
+    overflow: hidden;
+    min-height: 820px;
+    border: none;
+    box-shadow: none;
+  }
+
+  .metafora-bg {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 1435px;
+    height: 820px;
+    z-index: 0;
+  }
+
+  .metafora-inner {
+    position: absolute;
+    bottom: 80px;
+    left: 50%;
+    transform: translateX(-80%);
+    width: 480px;
+    z-index: 1;
+  }
+
+  .cita-alpinistas {
+    font-size: 16px;
+    color: #003346;
+    line-height: 1.5;
+    font-style: normal;
+    text-align: left;
+    border-left: 4px solid #05a3d4;
+    padding-left: 1.5rem;
+  }
+
+  /* ===== 3. FILOSOFÍA — 2 columnas ===== */
+  .filosofia {
+    background: #ececec;
+    padding: 6rem 0;
+    border: none;
+    box-shadow: none;
+  }
+
+  .filosofia-inner {
+    display: grid;
+    grid-template-columns: 55fr 45fr;
+    gap: 4rem;
+    align-items: center;
+  }
+
+  .filosofia-h2 {
+    font-size: clamp(1.8rem, 3vw, 2.5rem);
+    font-weight: 700;
+    color: #003346;
+    line-height: 1.2;
+    margin-bottom: 2rem;
+  }
+
+  .filosofia-texto p {
+    font-size: 16px;
+    font-style: normal;
+    color: #003346;
+    line-height: 1.75;
+    margin-bottom: 1.5rem;
+  }
+  .filosofia-texto p:last-child { margin-bottom: 0; }
+
+  /* ===== 4. SOBRE MÍ ===== */
+  .sobre-mi {
+    background: #ececec;
+    padding: 6rem 0;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .sobre-mi-wave {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 1366px;
+    height: 345px;
+    opacity: 0.06;
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  .sobre-mi-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: start;
+    position: relative;
+    z-index: 1;
+  }
+
+  .sobre-mi-h2 {
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 700;
+    color: #003346;
+    line-height: 1.2;
+    margin-bottom: 1.5rem;
+  }
+
+  .sobre-mi-bio p {
+    color: #444;
+    line-height: 1.8;
+    margin-bottom: 1rem;
+  }
+
+  .bio-tagline {
+    color: #003346 !important;
+    font-weight: 600 !important;
+  }
+
+  .bio-tp {
+    color: gray;
+    margin-top: 1.5rem;
+    display: block;
+    font-size: 0.82rem;
+  }
+
+  .sobre-mi-foto {
+    min-height: 810px;
+  }
+
+  .sobre-mi-foto img {
+    width: 810px;
+    height: 810px;
+    max-width: 100%;
+    display: block;
+    object-fit: cover;
+  }
+
+  /* ===== 5. CÓMO TRABAJO ===== */
+  .como-trabajo {
+    background: #fff;
+    padding: 6rem 0;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .como-trabajo-bg {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 935px;
+    height: 768px;
+    opacity: 0.05;
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  .como-trabajo-content {
+    position: relative;
+    z-index: 1;
+  }
+
+  .como-h2 {
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 700;
+    color: #003346;
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+
+  .metodo-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+  }
+
+  .metodo-card {
+    background: #ececec;
+    border-radius: 12px;
+    padding: 2rem;
+    border-left: 4px solid #05a3d4;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    z-index: 1;
+  }
+
+  .card-num {
+    position: absolute;
+    top: 1.5rem;
+    right: 1.5rem;
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    color: #05a3d4;
+    opacity: 0.7;
+    font-weight: 600;
+  }
+
+  .metodo-card h3 {
+    font-size: 1.1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #003346;
+    font-weight: 700;
+    line-height: 1.4;
+    margin-bottom: 0.75rem;
+  }
+
+  .metodo-card p {
+    font-size: 0.9rem;
+    color: #555;
+    line-height: 1.75;
+    flex: 1;
+  }
+
+  .card-icon {
+    display: block;
+    width: 174px;
+    height: 177px;
+    margin-bottom: 1.5rem;
+  }
+
+  /* ===== 6. SERVICIOS ===== */
+  .servicios {
+    background: #ececec;
+    padding: 6rem 0;
+  }
+
+  .servicios-h2 {
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 700;
+    color: #003346;
+    text-align: center;
+    margin-bottom: 0.75rem;
+  }
+
+  .servicios-sub {
+    color: #444;
+    font-size: 1.1rem;
+    margin-bottom: 3rem;
+    text-align: center;
+  }
+
+  .servicios-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    margin-bottom: 2rem;
+  }
+
+  .servicio-card {
+    background: #fff;
+    border-radius: 12px;
+    padding: 2.5rem;
+    border: 1.5px solid #003346;
+  }
+
+  .servicio-num {
+    display: block;
+    color: #05a3d4;
+    font-size: 0.8rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+  }
+
+  .servicio-card h3 {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #003346;
+    margin-bottom: 1rem;
+    line-height: 1.3;
+  }
+
+  .servicio-card > p {
+    color: #444;
+    line-height: 1.8;
+    font-size: 0.95rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .servicio-label {
+    display: block;
+    color: #05a3d4;
+    font-size: 0.75rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    font-weight: 700;
+    margin-top: 1.5rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .servicio-lista {
+    list-style: disc;
+    padding-left: 1.25rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .servicio-lista li {
+    color: #444;
+    font-size: 0.9rem;
+    line-height: 1.7;
+    margin-bottom: 0.3rem;
+  }
+
+  .servicio-lista li::marker { color: #05a3d4; }
+
+  .servicio-badges {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    margin-top: 1.5rem;
+  }
+
+  .badge {
+    background: #ececec;
+    color: #003346;
+    border-radius: 20px;
+    padding: 0.3rem 0.8rem;
+    font-size: 0.8rem;
+  }
+
+  .servicios-nota {
+    text-align: center;
+    color: #666;
+    font-size: 0.85rem;
+  }
+
+  /* ===== 7. CÓMO EMPEZAMOS ===== */
+  .empezamos {
+    background: #fff;
+    padding: 6rem 0;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .empezamos-layout {
+    display: flex;
+    gap: 2rem;
+    align-items: flex-start;
+  }
+
+  .empezamos-flechas {
+    width: 870px;
+    height: 885px;
+    max-width: 100%;
+    display: block;
+    flex: 0 0 25%;
+    align-self: flex-start;
+  }
+
+  .empezamos-h2 {
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 700;
+    color: #003346;
+    text-align: center;
+    margin-bottom: 0.5rem;
+  }
+
+  .empezamos-sub {
+    color: #444;
+    font-size: 1.1rem;
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+
+  .pasos {
+    list-style: none;
+    flex: 1 1 75%;
+  }
+
+  .paso { margin-bottom: 2rem; }
+
+  .paso-marcador {
+    font-size: 0.85rem;
+    color: #003346;
+    margin-bottom: 0.25rem;
+    letter-spacing: 0.03em;
+  }
+
+  .paso-marcador strong {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #003346;
+    margin-left: 0.3rem;
+  }
+
+  .paso-cuerpo h3 {
+    color: #003346;
+    font-weight: 700;
+    font-size: 0.95rem;
+    margin-bottom: 0.4rem;
+    line-height: 1.4;
+  }
+
+  .paso-badge {
+    color: #666;
+    font-weight: 400;
+    font-size: 0.85rem;
+    margin-left: 0.4rem;
+  }
+
+  .paso-cuerpo p {
+    color: #555;
+    font-size: 0.9rem;
+    line-height: 1.75;
+  }
+
+  /* ===== 8. AGENDA CAL — fondo CIAN ===== */
+  .agenda-cal {
+    background: #05a3d4;
+    padding: 4rem 0 5rem;
+  }
+
+  .agenda-cal-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .agenda-cal h2 {
+    font-size: clamp(1.8rem, 3vw, 2.5rem);
+    font-weight: 700;
+    color: #fff;
+    line-height: 1.2;
+    margin-bottom: 0.75rem;
+  }
+
+  .agenda-cal-sub {
+    color: #fff;
+    font-size: 1rem;
+    opacity: 0.9;
+    margin-bottom: 2.5rem;
+  }
+
+  #cal-embed {
+    background: #fff;
+    border-radius: 12px;
+    padding: 3rem;
+    color: #888;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 200px;
+    max-width: 800px;
+    width: 100%;
+  }
+
+  .btn-wa-cal {
+    display: inline-block;
+    border: 2px solid rgba(255, 255, 255, 0.7);
+    color: #fff;
+    background: transparent;
+    padding: 0.8rem 2.5rem;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    margin-top: 2rem;
+    transition: border-color 0.2s, background 0.2s, color 0.2s;
+  }
+  .btn-wa-cal:hover {
+    border-color: #fff;
+    background: #fff;
+    color: #003346;
+  }
+
+  .agenda-nota-cal {
+    color: rgba(255, 255, 255, 0.65);
+    font-size: 0.82rem;
+    margin-top: 1rem;
+  }
+
+  /* ===== 9. DARK CLOSING — WhatsApp + Instagram, fondo oscuro ===== */
+  .dark-closing {
+    background: #003346;
+    padding: 4rem 0;
+  }
+
+  .dark-closing-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  /* Botón WhatsApp — outline blanco */
+  .btn-wa {
+    display: inline-block;
+    border: 2px solid rgba(255, 255, 255, 0.7);
+    color: #fff;
+    background: transparent;
+    padding: 0.8rem 2.5rem;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    transition: border-color 0.2s, background 0.2s, color 0.2s;
+  }
+  .btn-wa:hover {
+    border-color: #fff;
+    background: #fff;
+    color: #003346;
+  }
+
+  .agenda-nota {
+    color: rgba(255, 255, 255, 0.65);
+    font-size: 0.82rem;
+    margin-top: 1rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .ig-handle {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 0.9rem;
+    letter-spacing: 0.1em;
+    margin-bottom: 1.2rem;
+  }
+
+  .ig-grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 0.75rem;
+    width: 100%;
+  }
+
+  .ig-card {
+    background: #05a3d4;
+    aspect-ratio: 4 / 5;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+  }
+
+  .ig-card span {
+    color: #003346;
+    font-size: 0.78rem;
+    font-weight: 600;
+    text-align: center;
+    line-height: 1.3;
+  }
+
+  /* ===== RESPONSIVE ===== */
+  @media (max-width: 900px) {
+    .metodo-grid,
+    .servicios-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .hero-text {
+      padding: 0 1.5rem;
+    }
+
+    .filosofia-inner,
+    .sobre-mi-inner {
+      grid-template-columns: 1fr;
+      gap: 2.5rem;
+    }
+
+    .empezamos-layout {
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .cita-alpinistas { font-size: 1.1rem; }
+
+    .pasos { max-width: 100%; }
+
+    .ig-grid { grid-template-columns: repeat(3, 1fr); }
+  }
+
+  @media (max-width: 480px) {
+    .ig-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+</style>
