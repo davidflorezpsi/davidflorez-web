@@ -223,7 +223,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       <h2>¡Agenda tu llamada de orientación gratuita!</h2>
       <p class="agenda-cal-sub">Dos programas clínicos estructurados. Sin sesiones sueltas.</p>
       <div style="max-width:1000px;margin:0 auto;overflow:hidden;">
-        <div id="cal-embed" style="width:100%;min-width:900px;height:650px;"></div>
+        <div id="cal-embed" style="width:100%;min-width:900px;height:780px;"></div>
       </div>
       <script type="text/javascript">
         (function (C, A, L) { let p = function (a, ar) { a.q.push(ar); }; let d = C.document; C.Cal = C.Cal || function () { let cal = C.Cal; let ar = arguments; if (!cal.loaded) { cal.ns = {}; cal.q = cal.q || []; d.head.appendChild(d.createElement("script")).src = A; cal.loaded = true; } if (ar[0] === L) { const api = function () { p(api, arguments); }; const namespace = ar[1]; api.q = api.q || []; if(typeof namespace === "string"){cal.ns[namespace] = cal.ns[namespace] || api;p(cal.ns[namespace], ar);p(cal, [L, namespace, ar[2]])} else p(cal, ar); return;} p(cal, ar); }; })(window, "https://app.cal.com/embed/embed.js", "init");
