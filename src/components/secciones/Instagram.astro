@@ -1,0 +1,108 @@
+---
+/**
+ * 11 / Últimas publicaciones.
+ *
+ * PENDIENTE: las cuatro casillas son marcadores de posición — no hay conexión
+ * con la API de Instagram. Cuando se conecte, o cuando David suba las imágenes
+ * a /public, reemplazar el contenido de cada casilla por su <img> y su enlace.
+ */
+import { INSTAGRAM } from '../../data/contacto';
+
+const CASILLAS = [
+  { n: '01', destacada: false },
+  { n: '02', destacada: true },
+  { n: '03', destacada: false },
+  { n: '04', destacada: false },
+];
+---
+
+<section class="instagram">
+  <div class="container">
+    <h2 class="solo-lectores">Últimas publicaciones en Instagram</h2>
+
+    <div class="cab">
+      <span class="cejilla-cyan">11 / Últimas publicaciones</span>
+      <a href={INSTAGRAM} target="_blank" rel="noopener noreferrer" class="toque">@ps.davidflorez ↗</a>
+    </div>
+
+    <div class="rejilla">
+      {
+        CASILLAS.map((c) => (
+          <div class={c.destacada ? 'casilla destacada' : 'casilla'}>
+            <span>Publicación {c.n}</span>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .instagram {
+    background: var(--azul-oscuro);
+    padding: clamp(3rem, 6vw, 4.5rem) 0;
+  }
+
+  .cab {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    align-items: baseline;
+    justify-content: space-between;
+    border-top: 1px solid rgba(255, 255, 255, 0.3);
+    padding-top: 1rem;
+  }
+
+  .cejilla-cyan {
+    font-family: var(--fuente-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--cian);
+  }
+
+  .cab a {
+    font-family: var(--fuente-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.14em;
+    color: #fff;
+  }
+
+  .cab a:hover {
+    color: var(--cian);
+  }
+
+  .rejilla {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 0;
+    margin-top: 2rem;
+    border-left: 1px solid rgba(255, 255, 255, 0.3);
+    border-top: 1px solid rgba(255, 255, 255, 0.3);
+  }
+
+  .casilla {
+    aspect-ratio: 4 / 5;
+    border-right: 1px solid rgba(255, 255, 255, 0.3);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+    display: flex;
+    align-items: flex-end;
+    padding: 1rem;
+  }
+
+  .casilla span {
+    font-family: var(--fuente-mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--cian);
+  }
+
+  .destacada {
+    background: var(--cian);
+  }
+
+  .destacada span {
+    color: var(--azul-oscuro);
+  }
+</style>

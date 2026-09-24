@@ -1,3 +1,10 @@
 User-agent: *
 Allow: /
-Sitemap: https://davidflorez.co/sitemap.xml
+
+# Paginacion: si el blog llega a generar /blog/page/2, esas URLs no deben
+# indexarse (contenido duplicado sin valor propio). El contenido si se rastrea.
+Disallow: /page/
+Disallow: /*/page/
+
+# Astro genera un indice de sitemaps, no un sitemap.xml suelto.
+Sitemap: https://davidflorez.co/sitemap-index.xml

@@ -1,0 +1,144 @@
+---
+/**
+ * Resumen (TL;DR) — va justo después del hero, que es donde se resuelve la
+ * intención de búsqueda: alguien llega preguntándose "¿este psicólogo me
+ * sirve?" y aquí lo sabe en treinta segundos sin bajar por toda la página.
+ *
+ * También es el bloque que leen los buscadores con IA para citar la práctica.
+ */
+import { CAL_COM } from '../../data/contacto';
+
+const CLAVES = [
+  {
+    et: 'Qué es',
+    tx: 'Psicología clínica basada en procesos (PBT): cada caso empieza con una hipótesis, avanza con datos registrados y termina con criterios de cierre. No es acompañamiento abierto.',
+  },
+  {
+    et: 'Para quién',
+    tx: 'Niñez de 2 a 11, adolescencia de 12 a 17 y adultez joven de 18 a 25 años. Presencial en Bogotá, telepresencial en Latinoamérica y España.',
+  },
+  {
+    et: 'Cómo empieza',
+    tx: 'Con una llamada de orientación de 20 minutos, sin costo. Ahí se valida si el caso es pertinente y qué servicio aplica.',
+  },
+  {
+    et: 'Inversión',
+    tx: 'Desde $450.000 la evaluación de 3 sesiones hasta $2.400.000 el ciclo de 16. Pago anticipado, cuotas con financiamiento interno o tarjeta.',
+  },
+  {
+    et: 'Qué no se ofrece',
+    tx: 'Sesiones sueltas, psicoterapia ecléctica, terapia de pareja, atención por EPS ni servicio de urgencias.',
+  },
+];
+---
+
+<section id="resumen" class="resumen" aria-labelledby="resumen-h2">
+  <div class="container">
+    <div class="cab">
+      <h2 id="resumen-h2">En resumen</h2>
+      <p class="lectura">Lo esencial en 30 segundos</p>
+    </div>
+
+    <dl class="claves">
+      {
+        CLAVES.map((c) => (
+          <div class="clave">
+            <dt>{c.et}</dt>
+            <dd>{c.tx}</dd>
+          </div>
+        ))
+      }
+    </dl>
+
+    <p class="pie">
+      ¿No sabes si tu caso encaja? <a href="#pertinencia">Responde cuatro preguntas</a> o
+      <a href={CAL_COM} target="_blank" rel="noopener noreferrer">agenda la llamada gratuita</a>.
+    </p>
+  </div>
+</section>
+
+<style>
+  .resumen {
+    background: #fff;
+    padding: clamp(2.5rem, 5vw, 3.5rem) 0;
+  }
+
+  .cab {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1.5rem;
+    justify-content: space-between;
+    align-items: baseline;
+    border-top: 2px solid var(--azul-oscuro);
+    padding-top: 1rem;
+  }
+
+  /* Mismo peso visual que una cejilla: no compite con los H2 de sección. */
+  h2 {
+    font-family: var(--fuente-mono);
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--azul-oscuro);
+  }
+
+  .lectura {
+    font-family: var(--fuente-mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+    color: var(--azul-medio);
+  }
+
+  /* 190px es el ancho que permite que las cinco claves entren en una fila
+     dentro del contenedor de 1180px; por debajo colapsan solas. */
+  .claves {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+    gap: clamp(1.25rem, 2.5vw, 1.75rem);
+    margin-top: 1.75rem;
+  }
+
+  .clave {
+    border-top: 2px solid var(--cian);
+    padding-top: 0.85rem;
+  }
+
+  dt {
+    font-family: var(--fuente-mono);
+    font-size: 0.64rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--azul-oscuro);
+  }
+
+  dd {
+    font-size: 0.88rem;
+    line-height: 1.65;
+    color: var(--tinta-suave);
+    margin-top: 0.5rem;
+    text-wrap: pretty;
+  }
+
+  .pie {
+    font-family: var(--fuente-mono);
+    font-size: 0.66rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--azul-medio);
+    margin-top: 1.75rem;
+    border-top: 1px solid rgba(0, 51, 70, 0.2);
+    padding-top: 1rem;
+  }
+
+  .pie a {
+    color: var(--azul-medio);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .pie a:hover {
+    color: var(--azul-oscuro);
+  }
+</style>

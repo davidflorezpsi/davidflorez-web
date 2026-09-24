@@ -11,7 +11,7 @@ Este espacio nace con un propósito claro: hacer que la psicología clínica bas
 
 ## Qué vas a encontrar aquí
 
-Artículos sobre trastornos del neurodesarrollo, estrategias de crianza con respaldo empírico, actualizaciones sobre marcos terapéuticos como ACT, DBT y PCIT, y reflexiones sobre el papel de la tecnología en la práctica clínica.
+Artículos sobre trastornos del neurodesarrollo, estrategias de crianza con respaldo empírico, actualizaciones sobre marcos terapéuticos como ACT, DBT y la terapia basada en procesos, y reflexiones sobre el papel de la tecnología en la práctica clínica.
 
 ## Lo que no vas a encontrar
 

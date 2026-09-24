@@ -1,0 +1,463 @@
+---
+/**
+ * 04 / Cómo trabajo — los tres principios, demostrados por contraste.
+ *
+ * Las dos versiones de cada nota comparten celda (grid-area:1/1) y se cruzan
+ * con opacity + translateY: la sección no salta al cambiar de interruptor.
+ *
+ * Los rótulos de nota van en #d6ecf4 a 0.62rem — con cyan no alcanzaban
+ * 4.5:1 de contraste sobre el navy.
+ */
+const PRINCIPIOS = [
+  {
+    num: '01',
+    titulo: 'Con evidencia,<br>no con intuición',
+    claim:
+      'Cada intervención parte de evaluación diagnóstica rigurosa y marcos validados: ACT, DBT, PEERS, análisis funcional del comportamiento y entrenamiento conductual a cuidadores. No improvisamos y no prometemos curas.',
+    si: {
+      rotulo: 'Nota de sesión · con método',
+      texto:
+        'Hipótesis: la evitación mantiene la conducta. Instrumentos: ADOS-2 y registro diario del cuidador. Criterio de cierre: cuatro semanas sin episodios.',
+    },
+    no: {
+      rotulo: 'Nota de sesión · sin método',
+      texto:
+        'Impresión: el niño está mejor. Seguimos con lo que veníamos haciendo. Cerramos cuando dejen de venir.',
+    },
+  },
+  {
+    num: '02',
+    titulo: 'Con las familias,<br>no solo con el consultante',
+    claim:
+      'El cambio sostenible en niñez y adolescencia ocurre cuando los adultos significativos también aprenden. El proceso incluye a cuidadores.',
+    si: {
+      rotulo: 'Sesión 8 · con método',
+      texto:
+        'El cuidador practica en vivo, con guía en el momento. Tarea: cinco minutos diarios de juego dirigido, registrados en casa.',
+    },
+    no: {
+      rotulo: 'Sesión 8 · sin método',
+      texto:
+        'El niño entra solo. Los cuidadores esperan afuera y reciben un resumen de tres minutos al salir.',
+    },
+  },
+  {
+    num: '03',
+    titulo: 'Con IA como herramienta,<br>no como terapeuta',
+    claim:
+      'La usamos para investigación, síntesis de literatura clínica y material educativo. Jamás para diagnóstico ni para sustituir el vínculo.',
+    si: {
+      rotulo: 'Uso de IA · con método',
+      texto:
+        'Síntesis de literatura y material educativo. La hipótesis, la decisión clínica y el vínculo son del terapeuta, con tarjeta profesional.',
+    },
+    no: {
+      rotulo: 'Uso de IA · sin método',
+      texto:
+        'Un chat responde "tu diagnóstico es…". Sin evaluación, sin historia clínica y sin nadie que responda por el resultado.',
+    },
+  },
+];
+---
+
+<section id="como-trabajo" class="como">
+  <div class="container">
+    <div class="rotulo-cyan">
+      <span class="cejilla-cyan">04 / Cómo trabajo</span>
+      <h2>Cómo trabajo</h2>
+    </div>
+
+    <div class="interruptor-fila" data-reveal="mh">
+      <div class="veredicto">
+        <p class="et">La contraprueba</p>
+        <p id="met-veredicto">
+          Hipótesis, datos y criterios de cierre: el proceso se puede auditar — y se puede cerrar.
+        </p>
+      </div>
+
+      <div class="interruptor" role="radiogroup" aria-label="Comparar con método o sin método">
+        <span id="met-pastilla"></span>
+        <button type="button" role="radio" data-met="si" aria-checked="true">Con método</button>
+        <button type="button" role="radio" data-met="no" aria-checked="false">Sin método</button>
+      </div>
+    </div>
+
+    {
+      PRINCIPIOS.map((p, i) => (
+        <article class="principio" data-reveal={`m${i + 1}`}>
+          <div class="claim">
+            <span class="num" data-met-num>
+              {p.num}
+            </span>
+            <div class="claim-texto">
+              <h3 set:html={p.titulo} />
+              <p>{p.claim}</p>
+            </div>
+          </div>
+
+          <div class="nota" data-met-caja>
+            <div class="capa" data-met-capa="si">
+              <span class="nota-rotulo">{p.si.rotulo}</span>
+              <p>{p.si.texto}</p>
+            </div>
+            <div class="capa" data-met-capa="no">
+              <span class="nota-rotulo apagado">{p.no.rotulo}</span>
+              <p class="apagado">{p.no.texto}</p>
+            </div>
+          </div>
+        </article>
+      ))
+    }
+  </div>
+</section>
+
+<style>
+  .como {
+    background: var(--azul-oscuro);
+    padding: clamp(4rem, 8vw, 6.5rem) 0;
+  }
+
+  .rotulo-cyan {
+    border-top: 2px solid var(--cian);
+    padding-top: 1rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+
+  .cejilla-cyan {
+    font-family: var(--fuente-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--cian);
+  }
+
+  h2 {
+    flex: 1 1 420px;
+    font-family: var(--fuente-titular);
+    font-stretch: 115%;
+    font-weight: 800;
+    font-size: clamp(1.8rem, 3.6vw, 3rem);
+    line-height: 1.02;
+    letter-spacing: -0.03em;
+    color: #fff;
+    text-transform: uppercase;
+    max-width: 20ch;
+  }
+
+  [data-reveal] {
+    opacity: 0;
+    transform: translateY(16px);
+    transition:
+      opacity 0.7s ease 350ms,
+      transform 0.7s var(--salida) 350ms;
+  }
+
+  [data-reveal][data-visible] {
+    opacity: 1;
+    transform: none;
+  }
+
+  .interruptor-fila {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.25rem clamp(1.5rem, 4vw, 3rem);
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 3rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.25);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.25);
+    padding: 1.5rem 0;
+  }
+
+  .veredicto {
+    display: flex;
+    flex-direction: column;
+    gap: 0.55rem;
+    flex: 1 1 300px;
+    min-width: min(100%, 260px);
+  }
+
+  .et {
+    font-family: var(--fuente-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--cian);
+  }
+
+  #met-veredicto {
+    font-size: 0.92rem;
+    line-height: 1.65;
+    color: var(--hielo);
+    max-width: 52ch;
+    text-wrap: pretty;
+  }
+
+  .interruptor {
+    position: relative;
+    flex: 0 1 320px;
+    min-width: min(100%, 250px);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    padding: 3px;
+  }
+
+  #met-pastilla {
+    position: absolute;
+    top: 3px;
+    bottom: 3px;
+    left: 3px;
+    width: calc(50% - 3px);
+    background: var(--cian);
+    transition:
+      left 0.4s var(--salida),
+      background 0.3s ease;
+  }
+
+  .interruptor button {
+    position: relative;
+    background: none;
+    border: none;
+    padding: 0.7rem 0.5rem;
+    cursor: pointer;
+    font-family: var(--fuente-mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--teal-claro);
+    transition: color 0.3s ease;
+  }
+
+  .interruptor button[aria-checked='true'] {
+    color: var(--azul-oscuro);
+  }
+
+  .principio {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: clamp(1.25rem, 3vw, 2.5rem);
+    align-items: start;
+    border-top: 1px solid rgba(255, 255, 255, 0.25);
+    padding: clamp(1.75rem, 3.5vw, 2.5rem) 0;
+  }
+
+  .claim {
+    display: flex;
+    gap: clamp(0.9rem, 2vw, 1.4rem);
+    align-items: flex-start;
+  }
+
+  .num {
+    font-family: var(--fuente-titular);
+    font-stretch: 118%;
+    font-weight: 900;
+    font-size: 2.2rem;
+    line-height: 0.8;
+    color: transparent;
+    -webkit-text-stroke: 2px var(--cian);
+    transition: -webkit-text-stroke 0.25s ease;
+  }
+
+  .principio:hover .num {
+    -webkit-text-stroke: 2px #fff;
+  }
+
+  .claim-texto {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+    min-width: 0;
+  }
+
+  .claim-texto h3 {
+    font-family: var(--fuente-titular);
+    font-stretch: 112%;
+    font-weight: 800;
+    font-size: clamp(1.05rem, 1.9vw, 1.3rem);
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+    color: #fff;
+    text-transform: uppercase;
+  }
+
+  .claim-texto p {
+    font-size: 0.92rem;
+    line-height: 1.7;
+    color: var(--hielo);
+    text-wrap: pretty;
+  }
+
+  .nota {
+    display: grid;
+    border: 1px solid rgba(5, 163, 212, 0.7);
+    background: rgba(255, 255, 255, 0.04);
+    padding: clamp(1rem, 2vw, 1.25rem);
+    transition:
+      border-color 0.25s ease,
+      background 0.25s ease;
+  }
+
+  .principio:hover .nota {
+    border-color: var(--cian);
+  }
+
+  /* Las dos versiones comparten celda y se cruzan sin mover la sección. */
+  .capa {
+    grid-area: 1 / 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    transition:
+      opacity 0.35s ease,
+      transform 0.35s var(--salida);
+  }
+
+  .capa[data-met-capa='no'] {
+    opacity: 0;
+    transform: translateY(8px);
+    visibility: hidden;
+  }
+
+  .nota-rotulo {
+    font-family: var(--fuente-mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--hielo);
+  }
+
+  .capa p {
+    font-size: 0.92rem;
+    line-height: 1.7;
+    color: #fff;
+    text-wrap: pretty;
+  }
+
+  .apagado {
+    color: var(--teal-claro) !important;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    [data-reveal] {
+      opacity: 1;
+      transform: none;
+      transition: none;
+    }
+  }
+</style>
+
+<script>
+  let conMetodo = true;
+
+  const pintarMetodo = () => {
+    const pastilla = document.getElementById('met-pastilla');
+    if (pastilla) {
+      pastilla.style.left = conMetodo ? '3px' : '50%';
+      pastilla.style.background = conMetodo ? '#05a3d4' : '#88b6c0';
+    }
+
+    document.querySelectorAll<HTMLButtonElement>('[data-met]').forEach((b) => {
+      const activo = (b.dataset.met === 'si') === conMetodo;
+      b.setAttribute('aria-checked', activo ? 'true' : 'false');
+      b.style.color = activo ? '#003346' : conMetodo ? '#88b6c0' : '#d6ecf4';
+    });
+
+    document.querySelectorAll<HTMLElement>('[data-met-capa]').forEach((c) => {
+      const activo = (c.dataset.metCapa === 'si') === conMetodo;
+      c.style.opacity = activo ? '1' : '0';
+      c.style.transform = activo ? 'translateY(0)' : 'translateY(8px)';
+      c.style.visibility = activo ? 'visible' : 'hidden';
+    });
+
+    document.querySelectorAll<HTMLElement>('[data-met-caja]').forEach((caja) => {
+      caja.style.borderColor = conMetodo ? 'rgba(5,163,212,0.7)' : 'rgba(136,182,192,0.45)';
+      caja.style.background = conMetodo ? 'rgba(255,255,255,0.04)' : 'rgba(0,0,0,0.12)';
+    });
+
+    document.querySelectorAll<HTMLElement>('[data-met-num]').forEach((n) => {
+      n.style.webkitTextStroke = `2px ${conMetodo ? '#05a3d4' : '#88b6c0'}`;
+    });
+
+    const v = document.getElementById('met-veredicto');
+    if (v) {
+      v.textContent = conMetodo
+        ? 'Hipótesis, datos y criterios de cierre: el proceso se puede auditar — y se puede cerrar.'
+        : 'Sin método: procesos abiertos, objetivos difusos y progreso que nadie puede medir. Es lo más común, y es lo que evitamos.';
+    }
+  };
+
+  document.querySelectorAll<HTMLButtonElement>('[data-met]').forEach((b) => {
+    b.addEventListener('click', () => {
+      conMetodo = b.dataset.met === 'si';
+      pintarMetodo();
+    });
+  });
+
+  // Hover de la tarjeta: solo afecta el borde y el número, nunca el contenido.
+  document.querySelectorAll<HTMLElement>('.principio').forEach((art) => {
+    const hover = (on: boolean) => {
+      const caja = art.querySelector<HTMLElement>('[data-met-caja]');
+      const num = art.querySelector<HTMLElement>('[data-met-num]');
+      if (caja) {
+        caja.style.borderColor = on
+          ? '#05a3d4'
+          : conMetodo
+            ? 'rgba(5,163,212,0.7)'
+            : 'rgba(136,182,192,0.45)';
+      }
+      if (num) {
+        num.style.webkitTextStroke = `2px ${on ? '#fff' : conMetodo ? '#05a3d4' : '#88b6c0'}`;
+      }
+    };
+    art.addEventListener('mouseenter', () => hover(true));
+    art.addEventListener('mouseleave', () => hover(false));
+  });
+
+  /**
+   * Revelado con IntersectionObserver: funciona aunque no llegue ningún evento
+   * de scroll (por ejemplo al entrar directo a #como-trabajo). La clave estable
+   * de cada elemento vive fuera del DOM.
+   */
+  const revelados: Record<string, boolean> = {};
+  const objetivos = [...document.querySelectorAll<HTMLElement>('#como-trabajo [data-reveal]')];
+
+  const marcar = (el: HTMLElement) => {
+    revelados[el.dataset.reveal as string] = true;
+    el.setAttribute('data-visible', '');
+  };
+
+  if ('IntersectionObserver' in window) {
+    const obs = new IntersectionObserver(
+      (entradas) => {
+        entradas.forEach((e) => {
+          if (!e.isIntersecting) return;
+          marcar(e.target as HTMLElement);
+          obs.unobserve(e.target);
+        });
+      },
+      { rootMargin: '0px 0px -10% 0px' },
+    );
+    objetivos.forEach((el) => obs.observe(el));
+  } else {
+    objetivos.forEach(marcar);
+  }
+
+  // El navegador congela las transiciones en pestañas ocultas.
+  document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState !== 'visible') return;
+    objetivos.forEach((el) => {
+      if (!revelados[el.dataset.reveal as string]) return;
+      el.style.transition = 'none';
+      el.setAttribute('data-visible', '');
+      void el.offsetWidth;
+      el.style.transition = '';
+    });
+  });
+
+  pintarMetodo();
+</script>

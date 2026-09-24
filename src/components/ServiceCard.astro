@@ -1,45 +1,320 @@
 ---
+/**
+ * Tarjeta de servicio.
+ *
+ * Alineación por subgrid: la tarjeta ocupa 7 pistas del contenedor
+ * (cejilla · título · descripción 1fr · inversión · botón · chips · acciones),
+ * así "Inversión", el botón de detalle y los CTA caen exactamente al mismo
+ * nivel en todas las tarjetas sin importar el largo del texto.
+ */
+import type { Servicio } from '../data/servicios';
+import { wa } from '../data/contacto';
+
 interface Props {
-  title: string;
-  price: string;
-  description: string;
-  accentColor?: string;
+  servicio: Servicio;
 }
 
-const { title, price, description, accentColor = '#05a3d4' } = Astro.props;
+const { servicio: s } = Astro.props;
+
+const clases = [
+  'tarjeta',
+  s.destacada ? 'destacada' : '',
+  s.alterna ? 'alterna' : '',
+  s.oscura ? 'oscura' : '',
+]
+  .filter(Boolean)
+  .join(' ');
 ---
-<div class="service-card" style={`border-top-color: ${accentColor};`}>
-  <h3>{title}</h3>
-  <p class="price">{price}</p>
-  <p class="description">{description}</p>
-  <slot />
-</div>
+
+<article class={clases} data-serv={s.n} data-id={s.id}>
+  <span class="cejilla-serv">{s.cejilla}</span>
+
+  <h3>{s.titulo}</h3>
+
+  <p class="desc">{s.desc}</p>
+
+  {
+    s.precio && (
+      <div class="inversion">
+        <span class="inv-etiqueta">Inversión</span>
+        <span class="inv-linea" />
+        <span class="inv-precio">{s.precio}</span>
+        {s.notaPrecio && <span class="inv-nota">{s.notaPrecio}</span>}
+      </div>
+    )
+  }
+
+  <button type="button" class="ver-detalle" data-detalle={s.id} aria-expanded="false" aria-controls={`cajon-${s.id}`}>
+    <span>{s.btnDetalle}</span>
+    <span class="signo">+</span>
+  </button>
+
+  <div class="chips">
+    {s.chips.map((c) => <span class="chip">{c}</span>)}
+  </div>
+
+  <div class="acciones">
+    {
+      s.acciones.map((a) => (
+        <a
+          href={wa(a.msg)}
+          target="_blank"
+          rel="noopener noreferrer"
+          class={a.primaria ? 'accion primaria' : 'accion secundaria'}
+        >
+          {a.label}
+        </a>
+      ))
+    }
+  </div>
+</article>
 
 <style>
-  .service-card {
-    border-top: 4px solid;
-    padding: 2rem;
-    background: #fff;
-    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.07);
-    border-radius: 0 0 8px 8px;
+  .tarjeta {
+    grid-row: span 7;
+    display: grid;
+    grid-template-rows: subgrid;
+    transition: box-shadow 0.2s ease;
+    padding: 2rem clamp(1.25rem, 2vw, 1.9rem);
+    border-right: 1px solid rgba(0, 51, 70, 0.25);
+    border-bottom: 1px solid rgba(0, 51, 70, 0.25);
+    border-top: 3px solid var(--azul-oscuro);
+  }
+
+  .destacada {
+    border-top-color: var(--cian);
+  }
+
+  .alterna {
+    background: var(--gris-claro);
+  }
+
+  .oscura {
+    background: var(--azul-oscuro);
+  }
+
+  .cejilla-serv {
+    display: block;
+    font-family: var(--fuente-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--azul-medio);
+  }
+
+  .oscura .cejilla-serv {
+    color: var(--cian);
   }
 
   h3 {
-    font-size: 1.15rem;
-    color: #003346;
-    margin-bottom: 0.5rem;
+    font-family: var(--fuente-titular);
+    font-stretch: 112%;
+    font-weight: 800;
+    font-size: 1.3rem;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    color: var(--azul-oscuro);
+    margin-top: 0.85rem;
+    text-transform: uppercase;
   }
 
-  .price {
-    font-size: 1.05rem;
+  .oscura h3 {
+    color: #fff;
+  }
+
+  .desc {
+    font-size: 0.94rem;
+    line-height: 1.7;
+    color: var(--tinta-suave);
+    margin-top: 0.85rem;
+  }
+
+  .oscura .desc {
+    color: var(--hielo);
+  }
+
+  .inversion {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.4rem 0.75rem;
+    margin-top: 1.5rem;
+    border-top: 1px solid rgba(0, 51, 70, 0.2);
+    border-bottom: 1px solid rgba(0, 51, 70, 0.2);
+    padding: 0.7rem 0;
+  }
+
+  .oscura .inversion {
+    border-top-color: rgba(255, 255, 255, 0.3);
+    border-bottom-color: rgba(255, 255, 255, 0.3);
+  }
+
+  .inv-etiqueta {
+    font-family: var(--fuente-mono);
+    font-size: 0.66rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--azul-oscuro);
+  }
+
+  .oscura .inv-etiqueta {
+    color: #fff;
+  }
+
+  .inv-linea {
+    flex: 1;
+    height: 1px;
+    background: rgba(0, 51, 70, 0.2);
+  }
+
+  .oscura .inv-linea {
+    background: rgba(255, 255, 255, 0.3);
+  }
+
+  .inv-precio {
+    font-family: var(--fuente-mono);
+    font-size: 0.8rem;
+    color: var(--azul-medio);
     font-weight: 600;
-    color: #05a3d4;
-    margin-bottom: 1rem;
   }
 
-  .description {
-    font-size: 0.9rem;
-    color: #444;
-    line-height: 1.65;
+  .oscura .inv-precio {
+    color: var(--cian);
+  }
+
+  .inv-nota {
+    font-family: var(--fuente-mono);
+    font-size: 0.56rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--tinta-suave);
+    flex: 0 1 auto;
+    text-align: right;
+  }
+
+  .oscura .inv-nota {
+    color: var(--hielo);
+  }
+
+  .ver-detalle {
+    margin-top: 1.25rem;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.75rem 0 0;
+    font-family: var(--fuente-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--azul-medio);
+    text-align: left;
+  }
+
+  .oscura .ver-detalle {
+    color: var(--cian);
+  }
+
+  .signo {
+    font-size: 1.1rem;
+    line-height: 1;
+  }
+
+  .chips {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    margin-top: 1.5rem;
+    align-items: flex-end;
+  }
+
+  .chip {
+    border: 1px solid rgba(0, 51, 70, 0.3);
+    padding: 0.3rem 0.7rem;
+    font-family: var(--fuente-mono);
+    font-size: 0.64rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--azul-oscuro);
+  }
+
+  .oscura .chip {
+    border-color: rgba(255, 255, 255, 0.4);
+    color: var(--hielo);
+  }
+
+  .acciones {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 1.25rem;
+    align-items: flex-start;
+  }
+
+  /*
+   * align-self:flex-start es obligatorio: sin él, cuando hay un solo botón
+   * este se estira a toda la altura de la pista.
+   */
+  .accion {
+    flex: 1 1 auto;
+    align-self: flex-start;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    min-height: 44px;
+    padding: 0.8rem 1rem;
+    font-family: var(--fuente-mono);
+    font-size: 0.66rem;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+    transition:
+      opacity 0.2s ease,
+      background 0.2s ease;
+  }
+
+  .primaria {
+    background: var(--azul-oscuro);
+    color: #fff;
+  }
+
+  .primaria:hover {
+    opacity: 0.86;
+    color: #fff;
+  }
+
+  .oscura .primaria {
+    background: var(--cian);
+    color: var(--azul-oscuro);
+  }
+
+  .oscura .primaria:hover {
+    color: var(--azul-oscuro);
+  }
+
+  .secundaria {
+    border: 1px solid var(--azul-oscuro);
+    color: var(--azul-oscuro);
+  }
+
+  .secundaria:hover {
+    background: rgba(5, 163, 212, 0.14);
+    color: var(--azul-oscuro);
+  }
+
+  .oscura .secundaria {
+    background: var(--cian);
+    border-color: var(--cian);
+    color: var(--azul-oscuro);
+  }
+
+  .oscura .secundaria:hover {
+    opacity: 0.86;
+    background: var(--cian);
+    color: var(--azul-oscuro);
   }
 </style>

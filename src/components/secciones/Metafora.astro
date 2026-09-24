@@ -1,0 +1,534 @@
+---
+/**
+ * 01 / La metáfora — cuerda continua con dos nodos arrastrables.
+ *
+ * Detalles que costaron trabajo y no hay que tocar:
+ *  · La fibra son trazos finos RECTOS (dasharray 1.3 7), no puntos redondos:
+ *    los puntos festonean la silueta.
+ *  · Los parches de cruce siguen la curvatura y su textura va EN FASE con la
+ *    fibra principal (stroke-dashoffset calculado). Barras rectas leen como costuras.
+ *  · Orden de capas explícito (#meta-bajo / #meta-alto): los anillos de los nodos
+ *    nunca quedan tapados por la cuerda.
+ *  · El asta del banderín nace escondida DENTRO de la cuerda, alineada con la
+ *    tangente del extremo, y crece con el izado.
+ */
+import { CUERDA_D, PARCHES } from '../../data/geometria';
+
+const CITA =
+  '"Imagina que tú y tu psicólogo son un equipo de Fórmula 1: tú eres el piloto en el monoplaza y él es tu ingeniero de pista en el muro de boxes. Tú estás tomando las curvas a 300 km/h, por lo que tu visión se limita a los metros de asfalto que tienes justo por delante. El psicólogo puede avisarte del tráfico, de cuándo es mejor cambiar la estrategia o qué trazada te conviene tomar, no porque sea mejor piloto que tú ni porque sepa conducir tu coche, sino porque está frente a los monitores y la telemetría. Esa posición diferente le da una perspectiva global de la carrera, lo que le permite ver cosas que tú, desde el interior del casco, no alcanzas a ver."';
+---
+
+<section id="metafora" class="metafora">
+  <div class="container">
+    <div class="rotulo-meta">
+      <span class="cejilla-meta">01 / La metáfora</span>
+    </div>
+
+    <h2 class="solo-lectores">La metáfora: el clínico ve la carrera desde el muro de boxes</h2>
+
+    <blockquote id="alp-cita">{CITA}</blockquote>
+
+    <div class="lienzo">
+      <svg
+        id="cordon"
+        viewBox="0 2 660 205"
+        width="100%"
+        role="img"
+        aria-label="Una sola cuerda ondulada con dos gazas: la del consultante, más grande y más baja, y la del clínico, más pequeña y más alta. Arrastra cada punto para recorrer la cuerda."
+      >
+        <defs>
+          <filter id="cuerda-suave" x="-20%" y="-55%" width="140%" height="210%">
+            <feDropShadow
+              dx="0"
+              dy="1.2"
+              stdDeviation="1.7"
+              flood-color="#001d28"
+              flood-opacity="0.45"></feDropShadow>
+          </filter>
+        </defs>
+
+        <g id="meta-capas">
+          <g transform="translate(630.0,64.5)">
+            <g id="meta-asta">
+              <path d="M0 -2 L0 -45" stroke="#e8f4f9" stroke-width="2.2" stroke-linecap="round"
+              ></path>
+              <circle cx="0" cy="-46.3" r="1.6" fill="#e8f4f9"></circle>
+              <g id="meta-tela">
+                <path
+                  d="M0 -44.6 C8.4 -45.4, 16.6 -42.4, 23.4 -37.2 C16.6 -33.4, 8.4 -30.6, 0 -29.6 Z"
+                  fill="#ff9e89"
+                  stroke="#ff9e89"
+                  stroke-width="1.8"
+                  stroke-linejoin="round"></path>
+                <path
+                  d="M0 -35.4 C7.6 -34.6, 14.8 -34.4, 20.6 -35.4 C14.2 -32.6, 7.4 -30.4, 0 -29.6 Z"
+                  fill="#003346"
+                  opacity="0.16"></path>
+              </g>
+            </g>
+          </g>
+
+          <path
+            id="cuerda-core"
+            d={CUERDA_D}
+            fill="none"
+            stroke="#d6ecf4"
+            stroke-width="9.6"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            filter="url(#cuerda-suave)"></path>
+          <path
+            id="cuerda-tex"
+            d={CUERDA_D}
+            fill="none"
+            stroke="#88b6c0"
+            stroke-width="8.6"
+            stroke-dasharray="1.3 7"
+            opacity="0.28"
+            stroke-linejoin="round"></path>
+
+          <g id="meta-bajo"></g>
+
+          <g id="cx-parches">
+            {
+              PARCHES.map((p) => (
+                <path
+                  d={p.d}
+                  fill="none"
+                  stroke={p.stroke}
+                  stroke-width={p.width}
+                  stroke-dasharray={p.dash}
+                  stroke-dashoffset={p.offset}
+                  opacity={p.opacity}
+                  stroke-linecap={p.cap}
+                  stroke-linejoin="round"
+                />
+              ))
+            }
+          </g>
+
+          <path
+            id="meta-vista"
+            d="M569.7 133.8 L569.7 133.8"
+            stroke="#ff9e89"
+            stroke-width="1.5"
+            stroke-dasharray="4 7"
+            opacity="0"></path>
+
+          <g id="meta-alto">
+            <g id="meta-cli" class="nodo" transform="translate(569.7,133.8)">
+              <circle r="24" fill="transparent"></circle>
+              <circle r="13.5" fill="#003346" stroke="#05a3d4" stroke-width="3"></circle>
+              <text
+                y="-23"
+                text-anchor="middle"
+                font-family="IBM Plex Mono, monospace"
+                font-size="10.5"
+                letter-spacing="2"
+                fill="#05a3d4">CLÍNICO</text
+              >
+            </g>
+            <g id="meta-tu" class="nodo" transform="translate(30.0,108.8)">
+              <circle r="24" fill="transparent"></circle>
+              <circle r="13.5" fill="#003346" stroke="#ff9e89" stroke-width="3"></circle>
+              <text
+                y="29"
+                text-anchor="middle"
+                font-family="IBM Plex Mono, monospace"
+                font-size="10.5"
+                letter-spacing="2"
+                fill="#e8f4f9">TÚ</text
+              >
+            </g>
+          </g>
+        </g>
+      </svg>
+
+      <div class="lectura">
+        <p id="meta-pista">Sube con el scroll · arrastra los dos puntos por la cuerda</p>
+        <div id="meta-porque">
+          <span>Por qué</span>
+          <p>
+            El último tramo no lo sube el scroll: lo subes tú. El clínico no te carga hasta la cima —
+            se sitúa donde alcanza a ver el camino y te lo señala. El impulso siempre es tuyo.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .metafora {
+    position: relative;
+    background: var(--azul-oscuro);
+    padding: clamp(3.25rem, 6vw, 5rem) 0;
+    overflow: hidden;
+  }
+
+  .rotulo-meta {
+    display: flex;
+    align-items: baseline;
+    gap: 1.25rem;
+    border-top: 2px solid var(--durazno);
+    padding-top: 1rem;
+  }
+
+  .cejilla-meta {
+    font-family: var(--fuente-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--durazno);
+  }
+
+  blockquote {
+    margin: 2rem 0 0;
+    max-width: 52ch;
+    color: #fff;
+    font-size: clamp(0.98rem, 1.5vw, 1.28rem);
+    line-height: 1.6;
+    letter-spacing: 0;
+    text-wrap: pretty;
+  }
+
+  .lienzo {
+    margin-top: clamp(1.25rem, 3vw, 2rem);
+  }
+
+  #cordon {
+    display: block;
+    touch-action: pan-y;
+  }
+
+  .nodo {
+    cursor: grab;
+    touch-action: none;
+  }
+
+  /* El asta nace escondida dentro de la cuerda y crece con el izado. */
+  #meta-asta {
+    transform: rotate(-166deg) scale(0.2);
+    transition: transform 0.3s cubic-bezier(0.22, 0.61, 0.36, 1);
+  }
+
+  #meta-tela {
+    transform: scale(0.05);
+    transform-origin: 0px -44px;
+    transition: transform 0.3s cubic-bezier(0.22, 0.61, 0.36, 1);
+  }
+
+  .lectura {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    gap: 1.5rem 2.5rem;
+    margin-top: 0.9rem;
+  }
+
+  #meta-pista {
+    font-family: var(--fuente-mono);
+    font-size: 0.66rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--durazno);
+    line-height: 1.7;
+  }
+
+  #meta-porque {
+    flex: 1 1 340px;
+    max-width: 62ch;
+    display: flex;
+    gap: 0.85rem;
+    opacity: 0;
+    transition: opacity 0.6s ease;
+  }
+
+  #meta-porque span {
+    flex: 0 0 auto;
+    font-family: var(--fuente-mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--teal-claro);
+    padding-top: 0.2rem;
+  }
+
+  #meta-porque p {
+    font-size: 0.85rem;
+    line-height: 1.65;
+    color: var(--hielo);
+  }
+</style>
+
+<script>
+  // --- Cita que se ilumina palabra a palabra con el scroll -------------------
+  const cita = document.getElementById('alp-cita');
+  let palabras: HTMLSpanElement[] = [];
+  let citaLista = false;
+
+  if (cita) {
+    const texto = (cita.textContent || '').trim();
+    cita.textContent = '';
+    palabras = texto.split(/\s+/).map((w) => {
+      const s = document.createElement('span');
+      s.textContent = `${w} `;
+      s.style.opacity = '0.15';
+      s.style.transition = 'opacity 0.4s ease, color 0.2s ease';
+      s.addEventListener('mouseenter', () => {
+        if (citaLista) s.style.color = '#ff9e89';
+      });
+      s.addEventListener('mouseleave', () => {
+        s.style.color = '';
+      });
+      cita.appendChild(s);
+      return s;
+    });
+  }
+
+  const pintarCita = () => {
+    if (!cita || !palabras.length) return;
+    const vh = window.innerHeight || 800;
+    const r = cita.getBoundingClientRect();
+    const p = Math.max(0, Math.min(1, (vh * 0.8 - r.top) / (r.height + vh * 0.25)));
+    const n = Math.round(p * palabras.length);
+    for (let i = 0; i < palabras.length; i++) {
+      palabras[i].style.opacity = i < n ? '1' : '0.15';
+    }
+    citaLista = n >= palabras.length;
+    if (!citaLista) palabras.forEach((s) => (s.style.color = ''));
+  };
+
+  // --- Cuerda con dos nodos que se desplazan sobre el trazo ------------------
+  const svg = document.getElementById('cordon') as SVGSVGElement | null;
+  const cuerda = document.getElementById('cuerda-core') as SVGPathElement | null;
+
+  type Meta = {
+    pts: number[][];
+    N: number;
+    zonas: number[][];
+    iTope: number;
+    tu: number;
+    cli: number;
+    manual: boolean;
+    drag: 'tu' | 'cli' | null;
+    fase: number;
+  };
+  let meta: Meta | null = null;
+
+  const capa = (id: string, i: number) => {
+    if (!meta) return;
+    const g = document.getElementById(id);
+    if (!g || !g.parentNode) return;
+    const alto = meta.zonas.some((z) => i >= z[0] && i <= z[1]);
+    const cont = document.getElementById(alto ? 'meta-alto' : 'meta-bajo');
+    if (cont && g.parentNode !== cont) cont.appendChild(g);
+  };
+
+  const pintarMeta = () => {
+    if (!meta) return;
+    const tu = meta.pts[Math.max(0, Math.min(meta.N, meta.tu))];
+    const cli = meta.pts[Math.max(0, Math.min(meta.N, meta.cli))];
+
+    document
+      .getElementById('meta-tu')
+      ?.setAttribute('transform', `translate(${tu[0].toFixed(1)},${tu[1].toFixed(1)})`);
+    document
+      .getElementById('meta-cli')
+      ?.setAttribute('transform', `translate(${cli[0].toFixed(1)},${cli[1].toFixed(1)})`);
+
+    capa('meta-cli', meta.cli);
+    capa('meta-tu', meta.tu);
+
+    // Línea de mira entre el consultante y el clínico.
+    const vista = document.getElementById('meta-vista');
+    if (vista) {
+      const dx = cli[0] - tu[0];
+      const dy = cli[1] - tu[1];
+      const len = Math.sqrt(dx * dx + dy * dy) || 1;
+      const ux = dx / len;
+      const uy = dy / len;
+      vista.setAttribute(
+        'd',
+        `M${(tu[0] + ux * 16).toFixed(1)} ${(tu[1] + uy * 16).toFixed(1)} L${(cli[0] - ux * 16).toFixed(1)} ${(cli[1] - uy * 16).toFixed(1)}`,
+      );
+      vista.style.opacity = len > 44 ? '0.85' : '0';
+    }
+
+    // Izado del banderín según lo que falta del último tramo.
+    const prog = Math.max(0, Math.min(1, (meta.tu - meta.iTope) / (meta.N - meta.iTope)));
+    const sube = prog * prog * (3 - 2 * prog);
+    const asta = document.getElementById('meta-asta');
+    if (asta) {
+      asta.style.transform = `rotate(${(-166 + 166 * sube).toFixed(1)}deg) scale(${(0.2 + 0.8 * sube).toFixed(3)})`;
+    }
+    const tela = document.getElementById('meta-tela');
+    if (tela) tela.style.transform = `scale(${(0.05 + 0.95 * Math.pow(prog, 1.7)).toFixed(3)})`;
+
+    const fase = prog >= 0.985 ? 2 : meta.tu >= meta.iTope - 12 ? 1 : 0;
+    if (fase !== meta.fase) {
+      meta.fase = fase;
+      const pista = document.getElementById('meta-pista');
+      if (pista) {
+        pista.textContent =
+          fase === 2
+            ? 'Cima · bandera izada'
+            : fase === 1
+              ? 'Tu turno: arrastra TÚ hasta la cima'
+              : 'Sube con el scroll · arrastra los dos puntos por la cuerda';
+        pista.style.color = fase === 1 ? '#f8d17b' : '#ff9e89';
+      }
+      const pq = document.getElementById('meta-porque');
+      if (pq) pq.style.opacity = fase === 2 ? '1' : '0';
+    }
+  };
+
+  /** El scroll sube a TÚ solo hasta iTope: el último tramo lo tiene que arrastrar la persona. */
+  const scrollMeta = () => {
+    if (!meta || meta.manual || !svg) return;
+    const r = svg.getBoundingClientRect();
+    const vh = window.innerHeight || 800;
+    const ini = vh * 0.72;
+    const fin = Math.max(0, (vh - r.height) * 0.6);
+    const rec = Math.max(120, ini - fin);
+    const p = Math.max(0, Math.min(1, (ini - r.top) / rec));
+    const i = Math.round(p * meta.iTope);
+    if (i !== meta.tu) {
+      meta.tu = i;
+      pintarMeta();
+    }
+  };
+
+  if (svg && cuerda) {
+    let L = 0;
+    try {
+      L = cuerda.getTotalLength();
+    } catch {
+      L = 0;
+    }
+
+    if (L) {
+      const N = 900;
+      const pts: number[][] = [];
+      for (let i = 0; i <= N; i++) {
+        const p = cuerda.getPointAtLength((i / N) * L);
+        pts.push([p.x, p.y]);
+      }
+
+      // Índices de la cuerda que caen dentro de un cruce: allí los nodos suben de capa.
+      const indiceEn = (X: number[]) => {
+        let idx = -1;
+        for (let i = 0; i <= N; i++) {
+          const dx = pts[i][0] - X[0];
+          const dy = pts[i][1] - X[1];
+          if (dx * dx + dy * dy < 36) idx = i;
+        }
+        return idx;
+      };
+      const zonas: number[][] = [];
+      [
+        [376, 93],
+        [554, 137],
+      ].forEach((X) => {
+        const i = indiceEn(X);
+        if (i < 0) return;
+        const w = Math.round((72 / L) * N);
+        zonas.push([i - w, i + w]);
+      });
+
+      // El clínico se sitúa en el punto más alto del último tramo.
+      let iCli = Math.round(N * 0.748);
+      for (let i = Math.round(N * 0.714); i <= Math.round(N * 0.919); i++) {
+        if (pts[i][1] < pts[iCli][1]) iCli = i;
+      }
+
+      meta = {
+        pts,
+        N,
+        zonas,
+        iTope: Math.round(N * 0.714),
+        tu: 0,
+        cli: iCli,
+        manual: false,
+        drag: null,
+        fase: -1,
+      };
+      pintarMeta();
+
+      const aSvg = (ev: PointerEvent): number[] | null => {
+        const m = svg.getScreenCTM();
+        if (!m) return null;
+        const pt = svg.createSVGPoint();
+        pt.x = ev.clientX;
+        pt.y = ev.clientY;
+        const r = pt.matrixTransform(m.inverse());
+        return [r.x, r.y];
+      };
+
+      ([
+        ['meta-tu', 'tu'],
+        ['meta-cli', 'cli'],
+      ] as const).forEach(([id, clave]) => {
+        const g = document.getElementById(id);
+        g?.addEventListener('pointerdown', (ev) => {
+          if (!meta) return;
+          ev.preventDefault();
+          meta.drag = clave;
+          if (clave === 'tu') meta.manual = true;
+          g.style.cursor = 'grabbing';
+        });
+      });
+
+      window.addEventListener(
+        'pointermove',
+        (ev) => {
+          if (!meta || !meta.drag) return;
+          const q = aSvg(ev);
+          if (!q) return;
+          ev.preventDefault();
+          // Búsqueda local: el nodo no salta a otro tramo de la cuerda al pasar por un cruce.
+          const vent = 26;
+          let cur = meta[meta.drag];
+          for (let paso = 0; paso < 5; paso++) {
+            let best = cur;
+            let bd = Infinity;
+            const lo = Math.max(0, cur - vent);
+            const hi = Math.min(meta.N, cur + vent);
+            for (let i = lo; i <= hi; i++) {
+              const p = meta.pts[i];
+              const d = (p[0] - q[0]) ** 2 + (p[1] - q[1]) ** 2;
+              if (d < bd) {
+                bd = d;
+                best = i;
+              }
+            }
+            if (best === cur) break;
+            cur = best;
+          }
+          if (cur !== meta[meta.drag]) {
+            meta[meta.drag] = cur;
+            pintarMeta();
+          }
+        },
+        { passive: false },
+      );
+
+      const soltar = () => {
+        if (!meta || !meta.drag) return;
+        const g = document.getElementById(meta.drag === 'tu' ? 'meta-tu' : 'meta-cli');
+        if (g) g.style.cursor = 'grab';
+        meta.drag = null;
+      };
+      window.addEventListener('pointerup', soltar);
+      window.addEventListener('pointercancel', soltar);
+    }
+  }
+
+  const alScroll = () => {
+    pintarCita();
+    scrollMeta();
+  };
+  window.addEventListener('scroll', alScroll, { passive: true });
+  window.addEventListener('resize', alScroll, { passive: true });
+  alScroll();
+</script>

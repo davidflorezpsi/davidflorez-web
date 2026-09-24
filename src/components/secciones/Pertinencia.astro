@@ -1,0 +1,520 @@
+---
+/**
+ * 06 / Pertinencia — filtro honesto de cuatro preguntas que también dice
+ * a quién acudir si el caso no encaja.
+ */
+const PREGUNTAS = [
+  {
+    clave: 'quien',
+    titulo: '¿Para quién buscas atención?',
+    opciones: [
+      { v: 'nino', label: 'Un niño o niña', nota: '2 A 11 AÑOS' },
+      { v: 'ado', label: 'Un adolescente', nota: '12 A 17 AÑOS' },
+      { v: 'adulto', label: 'Un joven adulto', nota: '18 A 25 AÑOS' },
+      { v: 'inst', label: 'Un colegio o institución', nota: 'EQUIPO O GRUPO' },
+    ],
+  },
+  {
+    clave: 'necesidad',
+    titulo: '¿Qué necesitas hoy?',
+    opciones: [
+      { v: 'entender', label: 'Entender qué está pasando' },
+      { v: 'intervenir', label: 'Iniciar una intervención' },
+      { v: 'segunda', label: 'Una segunda opinión diagnóstica' },
+      { v: 'puntual', label: 'Orientación puntual, una sola vez' },
+    ],
+  },
+  {
+    clave: 'lugar',
+    titulo: '¿Desde dónde nos consultas?',
+    opciones: [
+      { v: 'bogota', label: 'Bogotá' },
+      { v: 'colombia', label: 'Otra ciudad de Colombia' },
+      { v: 'fuera', label: 'Fuera de Colombia' },
+    ],
+  },
+  {
+    clave: 'pago',
+    titulo: '¿Cómo esperas pagar el proceso?',
+    opciones: [
+      { v: 'particular', label: 'Particular, anticipado o en cuotas' },
+      { v: 'eps', label: 'Por EPS o seguro médico' },
+      { v: 'sueltas', label: 'Sesión por sesión, según vaya viendo' },
+    ],
+  },
+];
+---
+
+<section id="pertinencia" class="pertinencia">
+  <div class="container">
+    <div class="rotulo-cyan"><span class="cejilla-cyan">06 / Pertinencia</span></div>
+
+    <div class="intro">
+      <h2>¿Es mi caso?</h2>
+      <p>
+        No todo caso es para esta práctica, y decirlo a tiempo también es cuidado. Cuatro preguntas:
+        si no encajas, te decimos a quién acudir.
+      </p>
+    </div>
+
+    <div class="asistente">
+      <div class="progreso">
+        <span id="wiz-etiqueta">Paso 1 / 4</span>
+        <span class="barras">
+          {[1, 2, 3, 4].map((i) => <span class="barra" id={`wiz-s${i}`} />)}
+        </span>
+      </div>
+
+      {
+        PREGUNTAS.map((q, i) => (
+          <div class="paso" data-paso={i + 1} hidden={i !== 0}>
+            <h3>{q.titulo}</h3>
+            <div class="opciones">
+              {q.opciones.map((o) => (
+                <button type="button" class="opcion" data-q={q.clave} data-v={o.v}>
+                  {o.label}
+                  {o.nota && (
+                    <>
+                      <br />
+                      <span class="nota">{o.nota}</span>
+                    </>
+                  )}
+                </button>
+              ))}
+            </div>
+          </div>
+        ))
+      }
+
+      <div class="resultado" id="wiz-resultado" hidden>
+        <span class="res-etiqueta" id="res-etiqueta"></span>
+        <h3 id="res-titulo"></h3>
+        <p class="res-texto" id="res-texto"></p>
+
+        <div class="res-acciones" id="res-acciones" hidden>
+          <a href="#agenda" class="res-cta">Agendar la llamada gratuita ↗</a>
+          <a href="#servicios" class="res-linea">Ver el servicio que aplica</a>
+        </div>
+
+        <div class="res-deriva" id="res-deriva" hidden>
+          <p class="deriva-et">A quién acudir</p>
+          <p id="res-deriva-texto"></p>
+        </div>
+
+        <button type="button" id="wiz-reset" class="enlace-boton">Volver a empezar</button>
+      </div>
+
+      <button type="button" id="wiz-atras" class="atras" hidden>← Atrás</button>
+    </div>
+  </div>
+</section>
+
+<style>
+  .pertinencia {
+    background: var(--azul-oscuro);
+    padding: clamp(4rem, 8vw, 6.5rem) 0;
+  }
+
+  .rotulo-cyan {
+    border-top: 2px solid var(--cian);
+    padding-top: 1rem;
+  }
+
+  .cejilla-cyan {
+    font-family: var(--fuente-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--cian);
+  }
+
+  .intro {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    margin-top: 2.5rem;
+    align-items: flex-end;
+    justify-content: space-between;
+  }
+
+  .intro h2 {
+    font-family: var(--fuente-titular);
+    font-stretch: 115%;
+    font-weight: 800;
+    font-size: clamp(1.9rem, 4vw, 3.2rem);
+    line-height: 1;
+    letter-spacing: -0.03em;
+    color: #fff;
+    text-transform: uppercase;
+  }
+
+  .intro p {
+    flex: 1 1 380px;
+    max-width: 52ch;
+    color: var(--hielo);
+    font-size: 1.02rem;
+    line-height: 1.6;
+    text-wrap: pretty;
+  }
+
+  .asistente {
+    margin-top: 2.5rem;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    padding: clamp(1.5rem, 3vw, 2.5rem);
+  }
+
+  .progreso {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  #wiz-etiqueta {
+    font-family: var(--fuente-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--cian);
+  }
+
+  .barras {
+    flex: 1 1 160px;
+    display: flex;
+    gap: 6px;
+  }
+
+  .barra {
+    flex: 1;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.25);
+    transition: background 0.3s ease;
+  }
+
+  .barra[data-on] {
+    background: var(--cian);
+  }
+
+  .paso,
+  .resultado {
+    margin-top: 2rem;
+  }
+
+  .paso[hidden],
+  .resultado[hidden],
+  .res-acciones[hidden],
+  .res-deriva[hidden],
+  .atras[hidden] {
+    display: none;
+  }
+
+  .paso h3,
+  .resultado h3 {
+    font-family: var(--fuente-titular);
+    font-stretch: 112%;
+    font-weight: 700;
+    font-size: clamp(1.2rem, 2.2vw, 1.7rem);
+    line-height: 1.15;
+    color: #fff;
+    text-transform: uppercase;
+    letter-spacing: -0.02em;
+  }
+
+  .opciones {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+    gap: 0.75rem;
+    margin-top: 1.75rem;
+  }
+
+  .opcion {
+    text-align: left;
+    background: none;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    padding: 1.1rem;
+    cursor: pointer;
+    color: #fff;
+    font-size: 1rem;
+    font-weight: 700;
+    line-height: 1.4;
+    transition:
+      background 0.2s ease,
+      border-color 0.2s ease,
+      color 0.2s ease;
+  }
+
+  .opcion:hover {
+    background: var(--cian);
+    border-color: var(--cian);
+    color: var(--azul-oscuro);
+  }
+
+  .nota {
+    font-family: var(--fuente-mono);
+    font-weight: 400;
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+  }
+
+  .res-etiqueta {
+    display: inline-block;
+    font-family: var(--fuente-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--cian);
+  }
+
+  .resultado h3 {
+    font-weight: 800;
+    font-size: clamp(1.3rem, 2.6vw, 2rem);
+    line-height: 1.1;
+    margin-top: 0.75rem;
+    max-width: 28ch;
+  }
+
+  .res-texto {
+    color: var(--hielo);
+    font-size: 1rem;
+    line-height: 1.75;
+    margin-top: 1.25rem;
+    max-width: 60ch;
+  }
+
+  .res-acciones {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0;
+    margin-top: 2rem;
+  }
+
+  .res-cta,
+  .res-linea {
+    padding: 1rem 1.9rem;
+    font-family: var(--fuente-mono);
+    font-size: 0.74rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    transition:
+      background 0.2s ease,
+      color 0.2s ease;
+  }
+
+  .res-cta {
+    background: var(--cian);
+    color: var(--azul-oscuro);
+  }
+
+  .res-cta:hover {
+    background: #fff;
+    color: var(--azul-oscuro);
+  }
+
+  .res-linea {
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    color: #fff;
+  }
+
+  .res-linea:hover {
+    background: #fff;
+    color: var(--azul-oscuro);
+  }
+
+  .res-deriva {
+    margin-top: 1.75rem;
+    border-left: 3px solid var(--cian);
+    padding: 0.25rem 0 0.25rem 1.25rem;
+    max-width: 60ch;
+  }
+
+  .deriva-et {
+    font-family: var(--fuente-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--cian);
+  }
+
+  #res-deriva-texto {
+    color: #fff;
+    font-size: 0.95rem;
+    line-height: 1.7;
+    margin-top: 0.5rem;
+  }
+
+  .enlace-boton,
+  .atras {
+    margin-top: 1.75rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-family: var(--fuente-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  .enlace-boton {
+    color: var(--cian);
+    text-decoration: underline;
+  }
+
+  .atras {
+    color: var(--hielo);
+    display: block;
+  }
+</style>
+
+<script>
+  const seccion = document.getElementById('pertinencia');
+
+  if (seccion) {
+    let paso = 1;
+    const respuestas: Record<string, string> = {};
+
+    type Resultado = {
+      encaja: boolean;
+      etiqueta: string;
+      titulo: string;
+      texto: string;
+      deriva: string;
+    };
+
+    /** Orden de evaluación: institucional → EPS → sesiones sueltas → encaja. */
+    const resultado = (): Resultado => {
+      const a = respuestas;
+
+      if (a.quien === 'inst') {
+        return {
+          encaja: false,
+          etiqueta: 'Ruta institucional',
+          titulo: 'Tu caso va por la vía de instituciones',
+          texto:
+            'Con colegios y equipos de psicoorientación el trabajo es distinto: talleres docentes, asesoría de casos, evaluaciones referidas y charlas a familias.',
+          deriva:
+            'Escribe directamente por WhatsApp con el alcance que necesitas y se cotiza a la medida. La llamada de orientación gratuita está reservada para familias.',
+        };
+      }
+
+      if (a.pago === 'eps') {
+        return {
+          encaja: false,
+          etiqueta: 'Modalidad no disponible',
+          titulo: 'Esta práctica no atiende por EPS ni por seguro',
+          texto:
+            'Es una práctica privada particular, con pago anticipado del programa contratado. No hay facturación a EPS ni convenios con aseguradoras.',
+          deriva:
+            'Solicita la remisión a psicología clínica dentro de tu EPS. Si más adelante buscas atención particular con proceso estructurado, la puerta queda abierta.',
+        };
+      }
+
+      if (a.pago === 'sueltas' || a.necesidad === 'puntual') {
+        return {
+          encaja: false,
+          etiqueta: 'Formato no disponible',
+          titulo: 'Aquí no hay sesiones sueltas',
+          texto:
+            'Todo se trabaja como programa: evaluación delimitada o ciclo de intervención con objetivos y criterios de cierre. Sesiones aisladas no permiten medir progreso ni sostener un plan.',
+          deriva:
+            'Si lo que necesitas es una consulta única de orientación, busca un servicio de consejería psicológica puntual. Y de todos modos puedes usar la llamada gratuita de 20 minutos para orientarte.',
+        };
+      }
+
+      // Si encaja, el texto se compone de foco + dónde + con quién.
+      const infantil = a.quien === 'nino' || a.quien === 'ado';
+      const conQuien = 'Atiende David Flórez.';
+      const donde =
+        a.lugar === 'bogota'
+          ? 'Puedes elegir modalidad presencial en Bogotá o telepresencial.'
+          : infantil
+            ? 'La atención sería telepresencial; la evaluación con ADOS-2 requiere presencialidad en Bogotá.'
+            : 'La atención sería telepresencial.';
+
+      let foco: string;
+      if (a.quien === 'adulto') {
+        foco =
+          a.necesidad === 'intervenir'
+            ? 'Como quieres iniciar intervención, en la llamada se valida si conviene empezar por la Evaluación Clínica Inicial o entrar directo al ciclo de 16 sesiones.'
+            : a.necesidad === 'segunda'
+              ? 'Como buscas una segunda opinión, la ruta es la Evaluación Clínica Inicial, con formulación funcional del caso e hipótesis explícita.'
+              : 'La ruta natural es empezar por la Evaluación Clínica Inicial: primero la formulación, después el programa.';
+      } else {
+        foco =
+          a.necesidad === 'intervenir'
+            ? 'Como quieres iniciar intervención, en la llamada se valida si ya tienes un informe diagnóstico vigente o si conviene empezar por la Evaluación Funcional.'
+            : a.necesidad === 'segunda'
+              ? 'Como buscas una segunda opinión, la ruta natural es la Evaluación Funcional Clínica, o la evaluación especializada ADOS-2 / ADI-R si la pregunta es por espectro autista.'
+              : 'La ruta natural es empezar por la Evaluación Funcional Clínica: primero el mapa, después la ruta.';
+      }
+
+      return {
+        encaja: true,
+        etiqueta: 'Sí encaja',
+        titulo: 'Tu caso es pertinente para esta práctica',
+        texto: `${foco} ${donde} ${conQuien}`,
+        deriva: '',
+      };
+    };
+
+    const pintar = () => {
+      const etiqueta = document.getElementById('wiz-etiqueta');
+      if (etiqueta) etiqueta.textContent = paso > 4 ? 'Resultado' : `Paso ${paso} / 4`;
+
+      for (let i = 1; i <= 4; i++) {
+        const b = document.getElementById(`wiz-s${i}`);
+        if (!b) continue;
+        if (i <= Math.min(4, paso)) b.setAttribute('data-on', '');
+        else b.removeAttribute('data-on');
+      }
+
+      seccion.querySelectorAll<HTMLElement>('[data-paso]').forEach((p) => {
+        p.hidden = parseInt(p.dataset.paso || '0', 10) !== paso;
+      });
+
+      const caja = document.getElementById('wiz-resultado');
+      const atras = document.getElementById('wiz-atras') as HTMLButtonElement | null;
+      if (atras) atras.hidden = !(paso > 1 && paso <= 4);
+
+      if (!caja) return;
+      caja.hidden = paso <= 4;
+      if (paso <= 4) return;
+
+      const r = resultado();
+      const et = document.getElementById('res-etiqueta');
+      const ti = document.getElementById('res-titulo');
+      const tx = document.getElementById('res-texto');
+      if (et) et.textContent = r.etiqueta;
+      if (ti) ti.textContent = r.titulo;
+      if (tx) tx.textContent = r.texto;
+
+      const acciones = document.getElementById('res-acciones');
+      if (acciones) acciones.hidden = !r.encaja;
+
+      const deriva = document.getElementById('res-deriva');
+      const derivaTexto = document.getElementById('res-deriva-texto');
+      if (deriva) deriva.hidden = r.encaja;
+      if (derivaTexto) derivaTexto.textContent = r.deriva;
+    };
+
+    seccion.querySelectorAll<HTMLButtonElement>('.opcion').forEach((b) => {
+      b.addEventListener('click', () => {
+        respuestas[b.dataset.q as string] = b.dataset.v as string;
+        paso += 1;
+        pintar();
+      });
+    });
+
+    document.getElementById('wiz-atras')?.addEventListener('click', () => {
+      paso = Math.max(1, paso - 1);
+      pintar();
+    });
+
+    document.getElementById('wiz-reset')?.addEventListener('click', () => {
+      paso = 1;
+      Object.keys(respuestas).forEach((k) => delete respuestas[k]);
+      pintar();
+    });
+
+    pintar();
+  }
+</script>

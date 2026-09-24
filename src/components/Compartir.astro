@@ -1,0 +1,128 @@
+---
+/**
+ * Botón de compartir.
+ *
+ * En móvil abre la hoja nativa del sistema (WhatsApp, correo, notas…) con la
+ * API Web Share. Donde no existe —casi todo escritorio— copia el enlace al
+ * portapapeles. El texto del botón dice lo que va a pasar en cada caso.
+ *
+ * El portapapeles exige contexto seguro: funciona en davidflorez.co (HTTPS) y
+ * en localhost, no en un HTTP plano.
+ */
+---
+
+<div class="compartir">
+  <p class="et">¿Le sirve a alguien más?</p>
+  <button type="button" id="btn-compartir" class="btn">
+    <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <circle cx="18" cy="5" r="3"></circle>
+      <circle cx="6" cy="12" r="3"></circle>
+      <circle cx="18" cy="19" r="3"></circle>
+      <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
+      <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
+    </svg>
+    <span id="compartir-texto">Compartir esta página</span>
+  </button>
+  <span class="aviso" id="compartir-aviso" role="status" aria-live="polite"></span>
+</div>
+
+<style>
+  .compartir {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.75rem 1.25rem;
+    margin-top: 1.4rem;
+    border-top: 1px solid rgba(0, 51, 70, 0.45);
+    padding-top: 1.4rem;
+  }
+
+  .et {
+    font-family: var(--fuente-mono);
+    font-size: 0.66rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--azul-oscuro);
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    min-height: 44px;
+    background: none;
+    border: 1px solid var(--azul-oscuro);
+    color: var(--azul-oscuro);
+    padding: 0.7rem 1.2rem;
+    cursor: pointer;
+    font-family: var(--fuente-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+    transition:
+      background 0.2s ease,
+      color 0.2s ease;
+  }
+
+  .btn:hover {
+    background: var(--azul-oscuro);
+    color: #fff;
+  }
+
+  .aviso {
+    font-family: var(--fuente-mono);
+    font-size: 0.64rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--azul-oscuro);
+    opacity: 0;
+    transition: opacity 0.25s ease;
+  }
+
+  .aviso[data-visible] {
+    opacity: 1;
+  }
+</style>
+
+<script>
+  const boton = document.getElementById('btn-compartir');
+  const texto = document.getElementById('compartir-texto');
+  const aviso = document.getElementById('compartir-aviso');
+
+  if (boton && texto && aviso) {
+    const hayShare = typeof navigator.share === 'function';
+    if (!hayShare) texto.textContent = 'Copiar el enlace';
+
+    const decir = (msg: string) => {
+      aviso.textContent = msg;
+      aviso.setAttribute('data-visible', '');
+      window.setTimeout(() => aviso.removeAttribute('data-visible'), 2600);
+    };
+
+    boton.addEventListener('click', async () => {
+      const url = window.location.origin + window.location.pathname;
+      const datos = {
+        title: 'David Flórez · Psicología clínica basada en procesos',
+        text: 'Psicología clínica para niñez, adolescencia y adultez joven en Bogotá. La primera llamada es gratuita.',
+        url,
+      };
+
+      if (hayShare) {
+        try {
+          await navigator.share(datos);
+          return;
+        } catch (e) {
+          // Cancelar la hoja de compartir no es un error: no se avisa nada.
+          if ((e as Error)?.name === 'AbortError') return;
+        }
+      }
+
+      try {
+        await navigator.clipboard.writeText(url);
+        decir('Enlace copiado');
+      } catch {
+        decir('Copia la dirección de la barra');
+      }
+    });
+  }
+</script>

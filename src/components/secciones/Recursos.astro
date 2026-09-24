@@ -1,0 +1,203 @@
+---
+/**
+ * 08 / Psicoeducación — las entradas salen de la colección src/content/blog,
+ * no de datos fijos. Los borradores solo se ven en `npm run dev`.
+ */
+import { getCollection } from 'astro:content';
+import { wa } from '../../data/contacto';
+
+const posts = (
+  await getCollection('blog', ({ data }) => import.meta.env.DEV || data.draft !== true)
+)
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+  .slice(0, 2);
+
+const entradas = posts.map((p) => ({
+  categoria: p.data.tags?.[0] ?? 'Artículo',
+  titulo: p.data.title,
+  resumen: p.data.description,
+  enlace: `/blog/${p.slug}/`,
+}));
+
+const MSG_GUIA =
+  'Hola, escribo desde la web. Quiero recibir la guía "Pautas de crianza para padres milenials".';
+---
+
+<section id="recursos" class="recursos">
+  <div class="container">
+    <div class="rotulo-fila">
+      <span class="cejilla">08 / Psicoeducación</span>
+      <a href="/blog" class="ver-todo toque">Ver todo el blog ↗</a>
+    </div>
+
+    <h2>Blog y recursos</h2>
+
+    <div class="rejilla">
+      {
+        entradas.map((e) => (
+          <a href={e.enlace} class="entrada">
+            <span class="categoria">{e.categoria}</span>
+            <h3>{e.titulo}</h3>
+            <p>{e.resumen}</p>
+            <span class="leer">Leer →</span>
+          </a>
+        ))
+      }
+
+      <div class="descarga">
+        <span class="categoria-cyan">Descarga gratuita</span>
+        <h3>Pautas de crianza para padres milenials</h3>
+        <p>
+          Guía breve en PDF: qué sostiene una conducta, qué la mantiene, y qué puedes hacer distinto
+          esta semana.
+        </p>
+        <a href={wa(MSG_GUIA)} target="_blank" rel="noopener noreferrer" class="btn-descarga">
+          Pedir la guía por WhatsApp ↓
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .recursos {
+    background: var(--gris-claro);
+    padding: clamp(4rem, 8vw, 6.5rem) 0;
+  }
+
+  .rotulo-fila {
+    border-top: 2px solid var(--azul-oscuro);
+    padding-top: 1rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    align-items: baseline;
+    justify-content: space-between;
+  }
+
+  .ver-todo {
+    font-family: var(--fuente-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--azul-medio);
+  }
+
+  h2 {
+    font-family: var(--fuente-titular);
+    font-stretch: 115%;
+    font-weight: 800;
+    font-size: clamp(1.9rem, 4vw, 3.2rem);
+    line-height: 1;
+    letter-spacing: -0.03em;
+    color: var(--azul-oscuro);
+    text-transform: uppercase;
+    margin-top: 2rem;
+  }
+
+  .rejilla {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 0;
+    margin-top: 2.5rem;
+    border-top: 1px solid var(--azul-oscuro);
+    border-left: 1px solid var(--azul-oscuro);
+  }
+
+  .entrada,
+  .descarga {
+    padding: 1.9rem;
+    border-right: 1px solid var(--azul-oscuro);
+    border-bottom: 1px solid var(--azul-oscuro);
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+  }
+
+  .entrada {
+    color: var(--azul-oscuro);
+    background: #fff;
+    transition:
+      background 0.25s ease,
+      color 0.25s ease;
+  }
+
+  .entrada:hover {
+    background: var(--azul-oscuro);
+    color: #fff;
+  }
+
+  .categoria {
+    font-family: var(--fuente-mono);
+    font-size: 0.66rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: inherit;
+    opacity: 0.72;
+  }
+
+  .entrada h3,
+  .descarga h3 {
+    font-family: var(--fuente-titular);
+    font-stretch: 112%;
+    font-weight: 800;
+    font-size: 1.15rem;
+    line-height: 1.2;
+    letter-spacing: -0.015em;
+  }
+
+  .entrada p {
+    font-size: 0.9rem;
+    line-height: 1.7;
+    color: inherit;
+    opacity: 0.85;
+  }
+
+  .leer {
+    margin-top: auto;
+    font-family: var(--fuente-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  .descarga {
+    background: var(--azul-oscuro);
+  }
+
+  .categoria-cyan {
+    font-family: var(--fuente-mono);
+    font-size: 0.66rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--cian);
+  }
+
+  .descarga h3 {
+    color: #fff;
+  }
+
+  .descarga p {
+    font-size: 0.9rem;
+    line-height: 1.7;
+    color: var(--hielo);
+  }
+
+  .btn-descarga {
+    margin-top: auto;
+    background: var(--cian);
+    color: var(--azul-oscuro);
+    padding: 0.85rem 1.4rem;
+    font-family: var(--fuente-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    text-align: center;
+    transition: background 0.2s ease;
+  }
+
+  .btn-descarga:hover {
+    background: #fff;
+    color: var(--azul-oscuro);
+  }
+</style>

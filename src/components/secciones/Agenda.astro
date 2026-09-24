@@ -1,0 +1,295 @@
+---
+/**
+ * 10 / Primer paso — llamada de orientación por cal.com y el flujo de compra
+ * en tres pasos que la plataforma soporta hoy: WhatsApp → link de pago → agenda.
+ *
+ * El aviso de "sin cobros dentro de la web" es obligatorio.
+ */
+import { CAL_COM, wa } from '../../data/contacto';
+import Compartir from '../Compartir.astro';
+
+const MSG_RESERVA =
+  'Hola, escribo desde la web. Quiero reservar un programa y recibir el link de pago.';
+---
+
+<section id="agenda" class="agenda">
+  <div class="container">
+    <div class="cabeza">
+      <div class="cabeza-texto">
+        <span class="cejilla-navy">10 / Primer paso</span>
+        <h2>Agenda tu llamada de orientación gratuita</h2>
+        <p>20 minutos, sin costo, para saber si tu caso es pertinente y qué servicio aplica.</p>
+      </div>
+
+      <div class="cabeza-acciones">
+        <a href={CAL_COM} target="_blank" rel="noopener noreferrer" class="btn-solido">
+          <span>Ver horarios disponibles</span><span>↗</span>
+        </a>
+        <a href={wa()} target="_blank" rel="noopener noreferrer" class="btn-linea">
+          <span>Consultas por WhatsApp</span><span>↗</span>
+        </a>
+        <p class="letra-chica">Máx. 1 llamada por familia · Sin costo · Sin compromiso</p>
+      </div>
+    </div>
+
+    <div class="flujo">
+      <div class="flujo-cab">
+        <p>Cómo se reserva y se paga</p>
+        <p class="chico">Tres pasos · sin formularios</p>
+      </div>
+
+      <div class="flujo-fila">
+        <div class="tramo">
+          <span class="tramo-n">01</span>
+          <p class="tramo-t">Llamada de orientación</p>
+          <p class="tramo-d">
+            20 minutos, sin costo. Se valida pertinencia y se define el servicio. Se agenda aquí
+            mismo.
+          </p>
+          <a href={CAL_COM} target="_blank" rel="noopener noreferrer" class="tramo-btn">
+            Agendar llamada
+          </a>
+        </div>
+
+        <div class="tramo">
+          <span class="tramo-n">02</span>
+          <p class="tramo-t">Reserva y link de pago</p>
+          <p class="tramo-d">
+            Eliges pago anticipado, cuotas con financiamiento interno o tarjeta de crédito. Recibes
+            el link de pago seguro y el acuerdo firmado antes de iniciar.
+          </p>
+          <a href={wa(MSG_RESERVA)} target="_blank" rel="noopener noreferrer" class="tramo-btn">
+            Reservar por WhatsApp
+          </a>
+        </div>
+
+        <div class="tramo">
+          <span class="tramo-n">03</span>
+          <p class="tramo-t">Agenda de sesiones</p>
+          <p class="tramo-d">
+            Con el pago confirmado se abre tu expediente en la plataforma: fichas, tareas,
+            documentos y las sesiones del ciclo quedan agendadas.
+          </p>
+          <span class="tramo-sello">Plataforma PsiPragma</span>
+        </div>
+      </div>
+
+      <p class="aviso">
+        Sin cobros dentro de la web: el pago se hace por link seguro emitido por la clínica, nunca
+        por WhatsApp ni a cuentas personales
+      </p>
+
+      <Compartir />
+    </div>
+  </div>
+</section>
+
+<style>
+  .agenda {
+    background: var(--cian);
+    padding: clamp(4rem, 7vw, 5.5rem) 0;
+  }
+
+  .cabeza {
+    display: flex;
+    flex-wrap: wrap;
+    gap: clamp(2rem, 5vw, 4rem);
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .cabeza-texto {
+    flex: 1 1 440px;
+    min-width: min(100%, 300px);
+  }
+
+  .cejilla-navy {
+    font-family: var(--fuente-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--azul-oscuro);
+  }
+
+  h2 {
+    font-family: var(--fuente-titular);
+    font-stretch: 118%;
+    font-weight: 900;
+    font-size: clamp(2rem, 4.6vw, 3.6rem);
+    line-height: 0.98;
+    letter-spacing: -0.035em;
+    color: var(--azul-oscuro);
+    text-transform: uppercase;
+    margin-top: 1rem;
+  }
+
+  .cabeza-texto p {
+    color: var(--azul-oscuro);
+    font-size: 1.05rem;
+    line-height: 1.6;
+    margin-top: 1.25rem;
+    max-width: 46ch;
+    font-weight: 600;
+  }
+
+  .cabeza-acciones {
+    flex: 0 1 320px;
+    min-width: min(100%, 280px);
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .btn-solido,
+  .btn-linea {
+    padding: 1.15rem 1.75rem;
+    font-family: var(--fuente-mono);
+    font-size: 0.76rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    transition:
+      background 0.2s ease,
+      color 0.2s ease;
+  }
+
+  .btn-solido {
+    background: var(--azul-oscuro);
+    color: #fff;
+  }
+
+  .btn-solido:hover {
+    background: #fff;
+    color: var(--azul-oscuro);
+  }
+
+  .btn-linea {
+    border: 1px solid var(--azul-oscuro);
+    color: var(--azul-oscuro);
+  }
+
+  .btn-linea:hover {
+    background: var(--azul-oscuro);
+    color: #fff;
+  }
+
+  .letra-chica {
+    font-family: var(--fuente-mono);
+    font-size: 0.66rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--azul-oscuro);
+    margin-top: 1rem;
+  }
+
+  .flujo {
+    margin-top: clamp(2.5rem, 5vw, 3.5rem);
+    border-top: 1px solid rgba(0, 51, 70, 0.45);
+    padding-top: 1.5rem;
+  }
+
+  .flujo-cab {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1.5rem;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 1.4rem;
+  }
+
+  .flujo-cab p {
+    font-family: var(--fuente-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--azul-oscuro);
+  }
+
+  .flujo-cab .chico {
+    font-size: 0.6rem;
+    letter-spacing: 0.13em;
+  }
+
+  .flujo-fila {
+    display: flex;
+    flex-wrap: wrap;
+    gap: clamp(1rem, 2.5vw, 1.75rem);
+  }
+
+  .tramo {
+    flex: 1 1 260px;
+    min-width: min(100%, 240px);
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+    border-top: 2px solid var(--azul-oscuro);
+    padding-top: 0.9rem;
+  }
+
+  .tramo-n {
+    font-family: var(--fuente-mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--azul-oscuro);
+  }
+
+  .tramo-t {
+    font-family: var(--fuente-titular);
+    font-stretch: 110%;
+    font-weight: 700;
+    font-size: 1.02rem;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+    color: var(--azul-oscuro);
+    text-transform: uppercase;
+  }
+
+  .tramo-d {
+    font-size: 0.88rem;
+    line-height: 1.6;
+    color: var(--azul-oscuro);
+    text-wrap: pretty;
+    flex: 1 1 auto;
+  }
+
+  .tramo-btn {
+    align-self: flex-start;
+    background: var(--azul-oscuro);
+    color: #fff;
+    padding: 0.7rem 1.1rem;
+    font-family: var(--fuente-mono);
+    font-size: 0.64rem;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+    transition: opacity 0.2s ease;
+  }
+
+  .tramo-btn:hover {
+    opacity: 0.86;
+    color: #fff;
+  }
+
+  .tramo-sello {
+    font-family: var(--fuente-mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--azul-oscuro);
+    border: 1px solid rgba(0, 51, 70, 0.45);
+    padding: 0.55rem 0.8rem;
+    align-self: flex-start;
+  }
+
+  .aviso {
+    font-family: var(--fuente-mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--azul-oscuro);
+    margin-top: 1.4rem;
+  }
+</style>

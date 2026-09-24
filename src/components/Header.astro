@@ -1,178 +1,493 @@
 ---
+/**
+ * Barra flotante de vidrio (Liquid Glass de iOS 26 traducido a CSS).
+ *
+ * Dos reglas que no se pueden romper:
+ *  1. El vidrio no muestrea vidrio. Solo `.barra` lleva `backdrop-filter`;
+ *     el logo, las pastillas y el botón de menú son tintes translúcidos sin filtro propio.
+ *  2. Solo en la capa de navegación. Nunca vidrio sobre contenido, listas o texto.
+ *
+ * El piso opaco de 0.78 no es decorativo: sin él los enlaces sobre las secciones
+ * navy caen a 3.8:1 de contraste. Con él dan 9.6:1.
+ */
+const enlaces = [
+  { href: '#equipo', texto: 'Quién soy', movil: 'Quién soy' },
+  { href: '#marco', texto: 'Marco', movil: 'Marco clínico' },
+  { href: '#servicios', texto: 'Servicios', movil: 'Servicios' },
+  { href: '#pertinencia', texto: '¿Es mi caso?', movil: '¿Es mi caso?' },
+  { href: '#proceso', texto: 'Proceso', movil: 'Cómo empezamos' },
+  { href: '#recursos', texto: 'Blog', movil: 'Blog' },
+];
 ---
-<header class="site-header">
-  <div class="container header-inner">
-    <a href="/#inicio" class="logo" aria-label="David Flórez — Inicio">
-      <img src="/images/logo-sobre-claro.svg" alt="David Flórez Psicólogo Clínico" height="40" />
-    </a>
-    <nav class="nav-desktop" aria-label="Navegación principal">
-      <a href="/#filosofia">Marco clínico</a>
-      <a href="/#sobre-mi">Quién soy</a>
-      <a href="/#como-trabajo">Cómo trabajo</a>
-      <a href="/#servicios">Servicios</a>
-      <a href="/#agenda">Cómo empezamos</a>
-      <a href="/blog">Blog</a>
-      <a href="/#agenda" class="btn-header">Llamada gratuita</a>
+
+<header class="marco">
+  <div class="interior">
+    <div class="barra" id="barra">
+      <span class="rim" id="barra-rim" aria-hidden="true"></span>
+      <span class="especular" id="barra-luz" aria-hidden="true"></span>
+      <span class="arco" aria-hidden="true"></span>
+
+      <a href="#inicio" class="logo" aria-label="David Flórez — Inicio">
+        <img src="/images/logo-sobre-claro.svg" alt="David Flórez Psicólogo Clínico" width="200" height="36" />
+      </a>
+
+      <nav class="nav" id="nav-esc" aria-label="Navegación principal">
+        <span class="pastilla" id="nav-pastilla" aria-hidden="true"></span>
+        {enlaces.map((e) => <a href={e.href} data-nav>{e.texto}</a>)}
+        <a href="#agenda" class="cta">Llamada gratuita</a>
+      </nav>
+
+      <button type="button" class="hamburguesa" id="menu-boton" aria-label="Abrir menú" aria-expanded="false" aria-controls="menu-movil">
+        <span class="raya raya-1"></span>
+        <span class="raya raya-2"></span>
+        <span class="raya raya-3"></span>
+      </button>
+    </div>
+
+    <nav class="panel" id="menu-movil" aria-label="Menú móvil" hidden>
+      <span class="rim" aria-hidden="true"></span>
+      {enlaces.map((e) => <a href={e.href} data-cierra>{e.movil}</a>)}
+      <a href="#agenda" class="cta-movil" data-cierra>Llamada gratuita</a>
     </nav>
-    <button class="hamburger" id="hamburger" aria-label="Abrir menú" aria-expanded="false" aria-controls="nav-mobile">
-      <span></span>
-      <span></span>
-      <span></span>
-    </button>
   </div>
-  <nav class="nav-mobile" id="nav-mobile" aria-label="Menú móvil" aria-hidden="true">
-    <a href="/#filosofia">Marco clínico</a>
-    <a href="/#sobre-mi">Quién soy</a>
-    <a href="/#como-trabajo">Cómo trabajo</a>
-    <a href="/#servicios">Servicios</a>
-    <a href="/#agenda">Cómo empezamos</a>
-    <a href="/blog">Blog</a>
-    <a href="/#agenda" class="btn-mobile">Llamada gratuita</a>
-  </nav>
 </header>
 
 <style>
-  .site-header {
+  /* `pointer-events:none` en el marco para no bloquear el contenido a los lados. */
+  .marco {
     position: sticky;
     top: 0;
     z-index: 100;
-    background: #fff;
-    border-bottom: 1px solid #05a3d4;
+    padding: 0.85rem 1rem 0.35rem;
+    pointer-events: none;
   }
 
-  .header-inner {
+  .interior {
+    position: relative;
+    max-width: 1180px;
+    margin: 0 auto;
+    pointer-events: auto;
+  }
+
+  /* Capa 1 — la única región de muestreo. */
+  .barra {
+    position: relative;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    height: 64px;
+    gap: 1.25rem;
+    min-height: 64px;
+    padding: 0.4rem 0.5rem 0.4rem 0.4rem;
+    border-radius: 999px;
+    border: 1px solid rgba(255, 255, 255, 0.62);
+    overflow: hidden;
+    background-color: rgba(255, 255, 255, 0.78);
+    background-image: linear-gradient(
+      158deg,
+      rgba(255, 255, 255, 0.5) 0%,
+      rgba(255, 255, 255, 0.1) 44%,
+      rgba(214, 236, 244, 0.26) 100%
+    );
+    backdrop-filter: blur(16px) saturate(185%) brightness(1.06);
+    -webkit-backdrop-filter: blur(16px) saturate(185%) brightness(1.06);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.95),
+      inset 0 -1px 0 rgba(255, 255, 255, 0.45),
+      inset 1px 0 0 rgba(255, 255, 255, 0.6),
+      inset -1px 0 0 rgba(255, 255, 255, 0.6),
+      0 12px 34px rgba(0, 51, 70, 0.16),
+      0 2px 8px rgba(0, 51, 70, 0.08);
+  }
+
+  /* Capa 2 — refracción de borde, enmascarada al aro exterior. */
+  .rim {
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    backdrop-filter: blur(2px) brightness(1.3) saturate(150%);
+    -webkit-backdrop-filter: blur(2px) brightness(1.3) saturate(150%);
+    mask: radial-gradient(120% 150% at 50% 50%, transparent 58%, #000 84%);
+    -webkit-mask: radial-gradient(120% 150% at 50% 50%, transparent 58%, #000 84%);
+    pointer-events: none;
+  }
+
+  /* Capa 3 — reflejo especular; el gradiente lo pinta el script siguiendo el cursor. */
+  .especular {
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    opacity: 0;
+    mix-blend-mode: screen;
+    transition: opacity 0.35s ease;
+    pointer-events: none;
+  }
+
+  /* Capa 4 — arco de brillo superior, estático. */
+  .arco {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 54%;
+    border-radius: 999px 999px 60% 60% / 999px 999px 100% 100%;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.62), rgba(255, 255, 255, 0));
+    pointer-events: none;
+  }
+
+  .logo {
+    position: relative;
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+    background: rgba(255, 255, 255, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.75);
+    border-radius: 999px;
+    padding: 0.4rem 1.15rem;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9);
+    transition:
+      background 0.25s ease,
+      transform 0.25s var(--salida);
+  }
+
+  .logo:hover {
+    background: rgba(255, 255, 255, 0.82);
+  }
+
+  .logo:active {
+    transform: scale(0.97);
   }
 
   .logo img {
-    height: 40px;
+    height: 36px;
     width: auto;
-    display: block;
   }
 
-  .nav-desktop {
+  .nav {
+    position: relative;
     display: flex;
     align-items: center;
-    gap: 1.75rem;
+    gap: 0.2rem;
+    justify-content: flex-end;
   }
 
-  .nav-desktop a {
-    font-size: 0.95rem;
-    color: #003346;
-    transition: color 0.2s;
+  /*
+   * Una sola pastilla que se transporta al enlace bajo el cursor
+   * (equivalente a glassEffectID + GlassEffectContainer de SwiftUI).
+   * No hay una pastilla por enlace.
+   */
+  .pastilla {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 0;
+    height: 0;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.95);
+    opacity: 0;
+    transform: translateY(-50%);
+    transition:
+      left 0.42s var(--salida),
+      width 0.42s var(--salida),
+      height 0.3s ease,
+      opacity 0.28s ease;
+    pointer-events: none;
   }
 
-  .nav-desktop a:hover {
-    color: #05a3d4;
+  .nav a[data-nav] {
+    position: relative;
+    font-family: var(--fuente-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--azul-oscuro);
+    white-space: nowrap;
+    padding: 0.62rem 0.85rem;
+    border-radius: 999px;
+    transition: color 0.22s ease;
   }
 
-  .btn-header {
-    background: #05a3d4;
-    color: #fff !important;
-    padding: 0.4rem 1.1rem;
-    border-radius: 6px;
-    font-weight: 600;
-    transition: background 0.2s;
+  .nav a[data-nav]:hover {
+    color: var(--azul-medio);
   }
 
-  .btn-header:hover {
-    background: #047fb5 !important;
-    color: #fff !important;
+  /* CTA teñido (.glassProminent). */
+  .cta {
+    position: relative;
+    margin-left: 0.45rem;
+    background-color: rgba(5, 163, 212, 0.94);
+    background-image: linear-gradient(168deg, rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0) 58%);
+    color: var(--azul-oscuro);
+    padding: 0.72rem 1.25rem;
+    border-radius: 999px;
+    font-family: var(--fuente-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.7),
+      inset 0 -1px 0 rgba(0, 51, 70, 0.18),
+      0 4px 14px rgba(5, 163, 212, 0.4);
+    transition:
+      transform 0.28s var(--salida),
+      box-shadow 0.28s ease;
   }
 
-  .hamburger {
+  .cta:hover {
+    color: var(--azul-oscuro);
+    transform: translateY(-1.5px);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.85),
+      0 7px 20px rgba(5, 163, 212, 0.5);
+  }
+
+  .cta:active {
+    transform: scale(0.97);
+  }
+
+  .hamburguesa {
+    position: relative;
     display: none;
     flex-direction: column;
-    gap: 5px;
-    background: none;
-    border: none;
+    gap: 6px;
+    background: rgba(255, 255, 255, 0.45);
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    border-radius: 999px;
     cursor: pointer;
-    padding: 6px;
+    padding: 10px;
+    min-width: 46px;
+    min-height: 46px;
+    align-items: center;
+    justify-content: center;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.92);
+    margin-right: 0.15rem;
+    transition:
+      transform 0.2s ease,
+      background 0.2s ease;
   }
 
-  .hamburger span {
+  .hamburguesa:active {
+    transform: scale(0.95);
+  }
+
+  .raya {
     display: block;
-    width: 24px;
+    width: 22px;
     height: 2px;
-    background: #003346;
     border-radius: 2px;
-    transition: all 0.3s ease;
+    background: var(--azul-oscuro);
+    transition: transform 0.25s var(--salida), opacity 0.2s ease;
   }
 
-  .hamburger[aria-expanded='true'] span:nth-child(1) {
-    transform: translateY(7px) rotate(45deg);
+  .raya-3 {
+    background: var(--cian);
   }
 
-  .hamburger[aria-expanded='true'] span:nth-child(2) {
+  .hamburguesa[aria-expanded='true'] .raya-1 {
+    transform: translateY(4px) rotate(45deg);
+  }
+
+  .hamburguesa[aria-expanded='true'] .raya-2 {
+    transform: translateY(-4px) rotate(-45deg);
+  }
+
+  .hamburguesa[aria-expanded='true'] .raya-3 {
     opacity: 0;
   }
 
-  .hamburger[aria-expanded='true'] span:nth-child(3) {
-    transform: translateY(-7px) rotate(-45deg);
-  }
-
-  .nav-mobile {
-    display: none;
-    flex-direction: column;
-    background: #fff;
-    padding: 0.5rem 1.5rem 1.5rem;
-    border-top: 1px solid #ececec;
-  }
-
-  .nav-mobile.open {
+  .panel {
+    position: relative;
+    margin-top: 0.5rem;
     display: flex;
+    flex-direction: column;
+    border-radius: 26px;
+    border: 1px solid rgba(255, 255, 255, 0.62);
+    padding: 0.6rem 1.1rem 1.1rem;
+    overflow: hidden;
+    background-color: rgba(255, 255, 255, 0.78);
+    background-image: linear-gradient(
+      158deg,
+      rgba(255, 255, 255, 0.5) 0%,
+      rgba(255, 255, 255, 0.1) 44%,
+      rgba(214, 236, 244, 0.26) 100%
+    );
+    backdrop-filter: blur(16px) saturate(185%) brightness(1.06);
+    -webkit-backdrop-filter: blur(16px) saturate(185%) brightness(1.06);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.95),
+      inset 0 -1px 0 rgba(255, 255, 255, 0.45),
+      inset 1px 0 0 rgba(255, 255, 255, 0.6),
+      inset -1px 0 0 rgba(255, 255, 255, 0.6),
+      0 12px 34px rgba(0, 51, 70, 0.16),
+      0 2px 8px rgba(0, 51, 70, 0.08);
   }
 
-  .nav-mobile a {
-    padding: 0.8rem 0;
-    color: #003346;
-    font-size: 1rem;
-    border-bottom: 1px solid #ececec;
+  .panel[hidden] {
+    display: none;
   }
 
-  .nav-mobile a:last-child {
+  .panel .rim {
+    mask: radial-gradient(130% 140% at 50% 50%, transparent 62%, #000 88%);
+    -webkit-mask: radial-gradient(130% 140% at 50% 50%, transparent 62%, #000 88%);
+    backdrop-filter: blur(2px) brightness(1.28) saturate(150%);
+    -webkit-backdrop-filter: blur(2px) brightness(1.28) saturate(150%);
+  }
+
+  .panel a {
+    position: relative;
+    padding: 0.9rem 0.2rem;
+    color: var(--azul-oscuro);
+    font-family: var(--fuente-mono);
+    font-size: 0.78rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    border-bottom: 1px solid rgba(0, 51, 70, 0.12);
+    transition: color 0.2s ease;
+  }
+
+  .panel a:hover {
+    color: var(--azul-medio);
+  }
+
+  .panel a:last-of-type {
     border-bottom: none;
   }
 
-  .btn-mobile {
-    margin-top: 0.75rem;
-    background: #05a3d4;
-    color: #fff !important;
-    padding: 0.75rem 1rem;
-    border-radius: 6px;
-    font-weight: 600;
+  .cta-movil {
+    margin-top: 1rem;
+    background-color: rgba(5, 163, 212, 0.94);
+    background-image: linear-gradient(168deg, rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0) 58%);
+    color: var(--azul-oscuro) !important;
+    padding: 0.95rem 1rem !important;
+    border-radius: 999px;
     text-align: center;
+    border-bottom: none !important;
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.7),
+      0 4px 14px rgba(5, 163, 212, 0.4);
   }
 
-  @media (max-width: 768px) {
-    .nav-desktop {
+  /* Umbral móvil: 1080px (es el que usa el prototipo, no los 900 del README). */
+  @media (max-width: 1080px) {
+    .nav {
       display: none;
     }
 
-    .hamburger {
+    .hamburguesa {
       display: flex;
+    }
+  }
+
+  /* Retrocesos de accesibilidad obligatorios: el vidrio se apaga y queda opaco. */
+  @media (prefers-reduced-transparency: reduce), (prefers-contrast: more) {
+    .barra,
+    .panel {
+      backdrop-filter: none;
+      -webkit-backdrop-filter: none;
+      background-color: #fff;
+      background-image: none;
+      border-color: rgba(0, 51, 70, 0.25);
+    }
+
+    .rim,
+    .especular,
+    .arco {
+      display: none;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .pastilla,
+    .cta,
+    .logo,
+    .raya {
+      transition: none;
     }
   }
 </style>
 
 <script>
-  const hamburger = document.getElementById('hamburger');
-  const navMobile = document.getElementById('nav-mobile');
+  const barra = document.getElementById('barra');
+  const luz = document.getElementById('barra-luz');
+  const nav = document.getElementById('nav-esc');
+  const pastilla = document.getElementById('nav-pastilla');
+  const boton = document.getElementById('menu-boton');
+  const panel = document.getElementById('menu-movil');
 
-  hamburger?.addEventListener('click', () => {
-    const isOpen = navMobile?.classList.toggle('open');
-    hamburger.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
-    navMobile?.setAttribute('aria-hidden', isOpen ? 'false' : 'true');
-  });
+  const sinMovimiento = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const sinVidrio =
+    window.matchMedia('(prefers-reduced-transparency: reduce)').matches ||
+    window.matchMedia('(prefers-contrast: more)').matches;
 
-  navMobile?.querySelectorAll('a').forEach((link) => {
-    link.addEventListener('click', () => {
-      navMobile.classList.remove('open');
-      hamburger?.setAttribute('aria-expanded', 'false');
-      navMobile.setAttribute('aria-hidden', 'true');
+  // Reflejo especular que sigue el cursor sobre la barra.
+  if (barra && luz && !sinMovimiento && !sinVidrio) {
+    barra.addEventListener(
+      'mousemove',
+      (ev) => {
+        const r = barra.getBoundingClientRect();
+        const x = (((ev.clientX - r.left) / r.width) * 100).toFixed(1);
+        const y = (((ev.clientY - r.top) / r.height) * 100).toFixed(1);
+        luz.style.background = `radial-gradient(160px 120px at ${x}% ${y}%, rgba(255,255,255,0.55), rgba(255,255,255,0.12) 45%, transparent 72%)`;
+        luz.style.opacity = '1';
+      },
+      { passive: true },
+    );
+    barra.addEventListener('mouseleave', () => {
+      luz.style.opacity = '0';
     });
-  });
+  }
+
+  // Pastilla única que se transporta al enlace bajo el cursor.
+  if (nav && pastilla) {
+    nav.querySelectorAll<HTMLAnchorElement>('a[data-nav]').forEach((enlace) => {
+      enlace.addEventListener('mouseenter', () => {
+        const r = enlace.getBoundingClientRect();
+        const n = nav.getBoundingClientRect();
+        pastilla.style.left = `${Math.round(r.left - n.left)}px`;
+        pastilla.style.width = `${Math.round(r.width)}px`;
+        pastilla.style.height = `${Math.round(r.height)}px`;
+        pastilla.style.opacity = '1';
+      });
+    });
+    nav.addEventListener('mouseleave', () => {
+      pastilla.style.opacity = '0';
+    });
+  }
+
+  // Menú móvil.
+  if (boton && panel) {
+    const cerrar = () => {
+      panel.hidden = true;
+      boton.setAttribute('aria-expanded', 'false');
+      boton.setAttribute('aria-label', 'Abrir menú');
+    };
+
+    boton.addEventListener('click', () => {
+      const abierto = boton.getAttribute('aria-expanded') === 'true';
+      if (abierto) {
+        cerrar();
+      } else {
+        panel.hidden = false;
+        boton.setAttribute('aria-expanded', 'true');
+        boton.setAttribute('aria-label', 'Cerrar menú');
+      }
+    });
+
+    panel.querySelectorAll('[data-cierra]').forEach((a) => a.addEventListener('click', cerrar));
+
+    window.addEventListener(
+      'resize',
+      () => {
+        if (window.innerWidth > 1080) cerrar();
+      },
+      { passive: true },
+    );
+
+    document.addEventListener('keydown', (ev) => {
+      if (ev.key === 'Escape' && !panel.hidden) cerrar();
+    });
+  }
 </script>

@@ -1,0 +1,172 @@
+---
+/**
+ * 09 / Preguntas frecuentes — acordeón de ocho preguntas.
+ * Abren la sección las dos que definen el alcance de la práctica.
+ */
+const PREGUNTAS = [
+  {
+    q: '¿Quién va a atender mi caso?',
+    a: 'Siempre conmigo. Atiendo niñez y adolescencia —incluido neurodesarrollo y evaluación diagnóstica del espectro autista— y adultez joven, hasta los 25 años. Si tu caso pide otra especialidad, te lo digo en la llamada de orientación inicial y te remito a un colega.',
+  },
+  {
+    q: '¿Atiendes adultos o parejas?',
+    a: 'Atiendo hasta la adultez joven: personas de 18 a 25 años por ansiedad, depresión, duelo, autocrítica o dificultades de regulación emocional. No atiendo adultos mayores de 25 ni terapia de pareja; si es tu caso, te oriento en la llamada inicial y te remito a un colega.',
+  },
+  {
+    q: '¿Atienden por EPS o seguro médico?',
+    a: 'No. Es una práctica privada, particular, con pago anticipado del programa contratado. Aplica a todos los servicios. Los programas por ciclo admiten cuotas estructuradas con financiamiento interno, o pago con tarjeta de crédito a través de la pasarela.',
+  },
+  {
+    q: '¿Puedo pedir solo una sesión para ver cómo va?',
+    a: 'No hay sesiones sueltas. Lo que sí existe es la llamada de orientación inicial: gratuita, 20 minutos, para saber si el caso es pertinente. Ese es el espacio para conocerse sin contratar nada.',
+  },
+  {
+    q: '¿Cuánto dura un proceso?',
+    a: 'La evaluación — Funcional Clínica en niñez y adolescencia, Clínica Inicial en jóvenes adultos — es un proceso corto y delimitado. El programa de intervención es un ciclo de 16 sesiones, con reportes mensuales de progreso y criterios definidos de avance y cierre. Si al final del ciclo hace falta continuar, se decide con datos, no por inercia.',
+  },
+  {
+    q: 'Ya tenemos un diagnóstico. ¿Hay que repetir la evaluación?',
+    a: 'No necesariamente. Un informe diagnóstico externo vigente, no mayor a 12 meses, puede habilitar el ingreso al programa de intervención, sujeto a validación en la llamada de orientación inicial.',
+  },
+  {
+    q: '¿La consulta online funciona igual con niños?',
+    a: 'Depende del caso y de la edad. Buena parte del trabajo con niños pequeños ocurre con los cuidadores, y eso se sostiene bien en modalidad virtual. La evaluación con ADOS-2 requiere observación presencial en Bogotá.',
+  },
+  {
+    q: '¿Qué pasa si mi caso no es para esta práctica?',
+    a: 'Se te dice en la llamada, y se te orienta sobre qué tipo de profesional o servicio corresponde. Aceptar un caso que no es pertinente no ayuda a nadie.',
+  },
+];
+
+/**
+ * Datos estructurados de FAQ. Se generan desde la misma lista de arriba,
+ * asi el schema nunca se desincroniza del texto visible.
+ */
+const schemaFaq = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: PREGUNTAS.map((p) => ({
+    '@type': 'Question',
+    name: p.q,
+    acceptedAnswer: { '@type': 'Answer', text: p.a },
+  })),
+};
+---
+
+<script type="application/ld+json" set:html={JSON.stringify(schemaFaq)} is:inline />
+
+<section id="faq" class="faq">
+  <div class="caja">
+    <div class="rotulo"><span class="cejilla">09 / Antes de escribir</span></div>
+
+    <h2>Preguntas frecuentes</h2>
+
+    <div class="lista">
+      {
+        PREGUNTAS.map((p, i) => (
+          <div class="item">
+            <button type="button" class="item-cab toque" aria-expanded="false" aria-controls={`faq-p${i}`}>
+              <span>{p.q}</span>
+              <span class="ico">+</span>
+            </button>
+            <p class="respuesta" id={`faq-p${i}`} hidden>
+              {p.a}
+            </p>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .faq {
+    background: #fff;
+    padding: clamp(4rem, 8vw, 6.5rem) 0;
+  }
+
+  .caja {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+  }
+
+  h2 {
+    font-family: var(--fuente-titular);
+    font-stretch: 115%;
+    font-weight: 800;
+    font-size: clamp(1.9rem, 4vw, 3.2rem);
+    line-height: 1;
+    letter-spacing: -0.03em;
+    color: var(--azul-oscuro);
+    text-transform: uppercase;
+    margin-top: 2rem;
+  }
+
+  .lista {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    margin-top: 2.5rem;
+    border-top: 1px solid var(--azul-oscuro);
+  }
+
+  .item {
+    border-bottom: 1px solid var(--azul-oscuro);
+    padding: 1.4rem 0;
+  }
+
+  .item-cab {
+    width: 100%;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1.5rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+    text-align: left;
+    font-family: var(--fuente-titular);
+    font-stretch: 110%;
+    font-weight: 700;
+    font-size: 1.05rem;
+    line-height: 1.35;
+    color: var(--azul-oscuro);
+  }
+
+  /*
+   * --azul-medio, no --cian: sobre blanco el cian da 2,92:1 y el minimo para
+   * un control es 3:1. El azul-medio da 5,89:1 y ya es el color de la cejilla.
+   */
+  .ico {
+    color: var(--azul-medio);
+    font-size: 1.3rem;
+    line-height: 1;
+  }
+
+  .respuesta {
+    font-size: 0.95rem;
+    line-height: 1.75;
+    margin-top: 1rem;
+    max-width: 66ch;
+  }
+
+  .respuesta[hidden] {
+    display: none;
+  }
+</style>
+
+<script>
+  document.querySelectorAll<HTMLButtonElement>('#faq .item-cab').forEach((boton) => {
+    boton.addEventListener('click', () => {
+      const id = boton.getAttribute('aria-controls');
+      const panel = id ? document.getElementById(id) : null;
+      if (!panel) return;
+      const abierto = !panel.hidden;
+      panel.hidden = abierto;
+      boton.setAttribute('aria-expanded', String(!abierto));
+      const ico = boton.querySelector('.ico');
+      if (ico) ico.textContent = abierto ? '+' : '−';
+    });
+  });
+</script>

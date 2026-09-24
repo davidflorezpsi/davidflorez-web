@@ -1,0 +1,146 @@
+---
+/**
+ * CTA fijo en móvil.
+ *
+ * Aparece cuando se pasa el hero y se esconde al llegar a la sección Agenda,
+ * donde los mismos botones ya están a la vista: tapar contenido con un botón
+ * redundante es peor que no tenerlo.
+ *
+ * El alto de la barra se publica como --alto-barra para que el <body> reserve
+ * ese espacio y la barra no tape el pie de página.
+ */
+import { CAL_COM, wa } from '../data/contacto';
+---
+
+<div class="barra" id="barra-movil" data-oculta aria-label="Acciones rápidas">
+  <a href={CAL_COM} target="_blank" rel="noopener noreferrer" class="btn principal">
+    Llamada gratuita
+  </a>
+  <a
+    href={wa('Hola, escribo desde la web. Quiero orientación sobre un caso.')}
+    target="_blank"
+    rel="noopener noreferrer"
+    class="btn secundario"
+    aria-label="Escribir por WhatsApp"
+  >
+    <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true">
+      <path
+        d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38c1.45.79 3.08 1.21 4.79 1.21 5.46 0 9.91-4.45 9.91-9.91C21.95 6.45 17.5 2 12.04 2zm0 18.02c-1.53 0-3.02-.41-4.32-1.19l-.31-.18-3.21.84.86-3.13-.2-.32a8.2 8.2 0 01-1.26-4.38c0-4.54 3.7-8.24 8.25-8.24 2.2 0 4.27.86 5.83 2.42a8.19 8.19 0 012.41 5.83c0 4.55-3.7 8.25-8.25 8.25zm4.53-6.18c-.25-.12-1.47-.72-1.69-.81-.23-.08-.39-.12-.56.13-.16.24-.64.8-.78.97-.15.16-.29.18-.53.06-.25-.13-1.05-.39-1.99-1.23-.74-.66-1.23-1.47-1.38-1.71-.14-.25-.01-.38.11-.5.11-.11.25-.29.37-.44.12-.14.16-.25.25-.41.08-.17.04-.31-.02-.43-.06-.13-.56-1.35-.77-1.84-.2-.48-.4-.42-.55-.43h-.48c-.16 0-.43.06-.65.31-.22.24-.86.84-.86 2.05s.88 2.38 1 2.54c.13.17 1.73 2.64 4.19 3.7.59.25 1.04.4 1.4.52.59.18 1.12.16 1.54.1.47-.07 1.47-.6 1.67-1.18.21-.58.21-1.07.15-1.18-.06-.11-.22-.17-.47-.29z"
+      ></path>
+    </svg>
+    <span>WhatsApp</span>
+  </a>
+</div>
+
+<style>
+  .barra {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 90;
+    display: none;
+    gap: 1px;
+    background: rgba(0, 51, 70, 0.25);
+    border-top: 1px solid var(--azul-oscuro);
+    padding-bottom: env(safe-area-inset-bottom, 0);
+    transform: translateY(0);
+    transition: transform 0.35s var(--salida);
+  }
+
+  .barra[data-oculta] {
+    transform: translateY(110%);
+  }
+
+  .btn {
+    flex: 1 1 auto;
+    min-height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.55rem;
+    font-family: var(--fuente-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+    text-align: center;
+    padding: 0 0.9rem;
+  }
+
+  .principal {
+    background: var(--cian);
+    color: var(--azul-oscuro);
+  }
+
+  .principal:hover,
+  .principal:active {
+    color: var(--azul-oscuro);
+  }
+
+  .secundario {
+    flex: 0 0 auto;
+    background: var(--azul-oscuro);
+    color: #fff;
+    padding: 0 1.2rem;
+  }
+
+  .secundario:hover,
+  .secundario:active {
+    color: #fff;
+  }
+
+  /* Solo por debajo del umbral móvil del header. */
+  @media (max-width: 1080px) {
+    .barra {
+      display: flex;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .barra {
+      transition: none;
+    }
+  }
+</style>
+
+<script>
+  const barra = document.getElementById('barra-movil');
+  const hero = document.getElementById('inicio');
+  const agenda = document.getElementById('agenda');
+
+  if (barra && hero) {
+    let pasoElHero = false;
+    let enAgenda = false;
+
+    const pintar = () => {
+      const mostrar = pasoElHero && !enAgenda;
+      if (mostrar) barra.removeAttribute('data-oculta');
+      else barra.setAttribute('data-oculta', '');
+      // El <body> reserva el alto real de la barra para no tapar el pie.
+      document.body.style.paddingBottom =
+        mostrar && window.innerWidth <= 1080 ? `${barra.offsetHeight}px` : '';
+    };
+
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(
+        ([e]) => {
+          pasoElHero = !e.isIntersecting;
+          pintar();
+        },
+        { threshold: 0 },
+      ).observe(hero);
+
+      if (agenda) {
+        new IntersectionObserver(
+          ([e]) => {
+            enAgenda = e.isIntersecting;
+            pintar();
+          },
+          { threshold: 0 },
+        ).observe(agenda);
+      }
+    }
+
+    window.addEventListener('resize', pintar, { passive: true });
+  }
+</script>

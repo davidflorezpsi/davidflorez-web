@@ -1,55 +1,241 @@
 ---
+/**
+ * Índice de artículos.
+ *
+ * Los borradores solo aparecen en `npm run dev`, marcados como tales, para que
+ * David pueda leerlos antes de aprobarlos. En producción no se publican.
+ */
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+const posts = (await getCollection('blog', ({ data }) => import.meta.env.DEV || data.draft !== true))
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+
+/** timeZone UTC: la fecha del frontmatter es medianoche UTC y en Colombia retrocederia un dia. */
+const fmt = (d: Date) =>
+  d.toLocaleDateString('es-CO', { year: 'numeric', month: 'short', day: 'numeric', timeZone: 'UTC' });
+
+const SECCIONES = [
+  ['/#marco', 'El marco clínico: qué es la terapia basada en procesos'],
+  ['/#servicios', 'Servicios, precios y condiciones de ingreso'],
+  ['/#pertinencia', '¿Es mi caso? Cuatro preguntas para saberlo'],
+  ['/#faq', 'Preguntas frecuentes'],
+];
 ---
+
 <BaseLayout
-  title="Artículos | David Flórez · Psicólogo Clínico"
-  description="Contenido clínico basado en evidencia para familias, adolescentes y profesionales de salud mental."
+  title="Artículos de psicoeducación clínica | David Flórez"
+  description="Psicoeducación basada en evidencia para familias y colegas: evaluación, terapia basada en procesos, entrenamiento a cuidadores y formulación clínica de casos."
 >
-  <section class="blog-hero">
-    <div class="container">
+  <section class="indice">
+    <div class="caja">
+      <div class="rotulo"><span class="cejilla">Psicoeducación</span></div>
+
       <h1>Artículos</h1>
       <p class="lead">
-        Próximamente — contenido clínico basado en evidencia para familias y profesionales.
+        Lo que explico en consulta, escrito para que no se pierda al salir. Para familias que están
+        decidiendo, y para colegas que trabajan con población infantojuvenil.
       </p>
-      <a href="/#agenda" class="btn-back">Agendar consulta</a>
+
+      {
+        posts.length > 0 ? (
+          <ul class="lista">
+            {posts.map((p) => (
+              <li>
+                <a href={`/blog/${p.slug}/`}>
+                  <span class="meta">
+                    <span class="categoria">{p.data.tags?.[0] ?? 'Artículo'}</span>
+                    <span class="fecha">{fmt(p.data.pubDate)}</span>
+                    {p.data.draft && <span class="borrador">Borrador</span>}
+                  </span>
+                  <h2>{p.data.title}</h2>
+                  <p>{p.data.description}</p>
+                  <span class="leer">Leer →</span>
+                </a>
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p class="vacio">Próximamente.</p>
+        )
+      }
+
+      <nav class="mientras" aria-label="Secciones de la página principal">
+        <p class="mientras-et">También te puede servir</p>
+        <ul>
+          {SECCIONES.map(([href, texto]) => <li><a href={href}>{texto}</a></li>)}
+        </ul>
+      </nav>
     </div>
   </section>
 </BaseLayout>
 
 <style>
-  .blog-hero {
-    min-height: 60vh;
-    display: flex;
-    align-items: center;
+  .indice {
     background: #fff;
+    padding: clamp(2.5rem, 6vw, 4.5rem) 0 clamp(3rem, 7vw, 5rem);
+  }
+
+  .caja {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
   }
 
   h1 {
-    font-size: clamp(2rem, 5vw, 3rem);
-    color: #003346;
-    margin-bottom: 1rem;
+    font-family: var(--fuente-titular);
+    font-stretch: 118%;
+    font-weight: 900;
+    font-size: clamp(2.2rem, 6vw, 3.6rem);
+    line-height: 0.98;
+    letter-spacing: -0.035em;
+    color: var(--azul-oscuro);
+    text-transform: uppercase;
+    margin-top: 1.75rem;
   }
 
   .lead {
-    font-size: 1.1rem;
-    color: #555;
-    max-width: 540px;
-    line-height: 1.7;
-    margin-bottom: 2rem;
-  }
-
-  .btn-back {
-    display: inline-block;
-    background: #05a3d4;
-    color: #fff;
-    padding: 0.75rem 1.75rem;
-    border-radius: 4px;
+    font-size: 1.05rem;
+    line-height: 1.65;
+    color: var(--azul-oscuro);
     font-weight: 600;
-    font-size: 0.95rem;
-    transition: background 0.2s;
+    margin-top: 1.25rem;
+    max-width: 54ch;
+    text-wrap: pretty;
   }
 
-  .btn-back:hover {
-    background: #047fb5;
+  .lista {
+    margin-top: clamp(2rem, 5vw, 3rem);
+    border-top: 1px solid var(--azul-oscuro);
+    display: flex;
+    flex-direction: column;
+  }
+
+  .lista li {
+    border-bottom: 1px solid var(--azul-oscuro);
+  }
+
+  .lista a {
+    display: block;
+    padding: 1.75rem 0;
+    color: var(--azul-oscuro);
+    transition:
+      background 0.2s ease,
+      padding-left 0.2s ease;
+  }
+
+  .lista a:hover {
+    background: var(--gris-claro);
+    padding-left: 0.75rem;
+    color: var(--azul-oscuro);
+  }
+
+  .meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem 1rem;
+    align-items: baseline;
+    font-family: var(--fuente-mono);
+    font-size: 0.64rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+  }
+
+  .categoria {
+    color: var(--azul-medio);
+  }
+
+  .fecha {
+    color: var(--tinta-suave);
+  }
+
+  .borrador {
+    background: var(--mostaza);
+    color: var(--azul-oscuro);
+    padding: 0.15rem 0.5rem;
+    letter-spacing: 0.12em;
+  }
+
+  .lista h2 {
+    font-family: var(--fuente-titular);
+    font-stretch: 112%;
+    font-weight: 800;
+    font-size: clamp(1.2rem, 2.6vw, 1.6rem);
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    margin-top: 0.75rem;
+    text-wrap: balance;
+  }
+
+  .lista p {
+    font-size: 0.95rem;
+    line-height: 1.7;
+    color: var(--tinta-suave);
+    margin-top: 0.6rem;
+    max-width: 62ch;
+    text-wrap: pretty;
+  }
+
+  .leer {
+    display: inline-block;
+    margin-top: 0.9rem;
+    font-family: var(--fuente-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--azul-medio);
+  }
+
+  .vacio {
+    margin-top: 2rem;
+    font-family: var(--fuente-mono);
+    font-size: 0.8rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--azul-medio);
+  }
+
+  .mientras {
+    margin-top: clamp(2.5rem, 6vw, 4rem);
+    border-top: 1px solid rgba(0, 51, 70, 0.25);
+    padding-top: 1.25rem;
+  }
+
+  .mientras-et {
+    font-family: var(--fuente-mono);
+    font-size: 0.66rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--azul-medio);
+  }
+
+  .mientras ul {
+    display: flex;
+    flex-direction: column;
+    margin-top: 0.9rem;
+  }
+
+  .mientras a {
+    display: flex;
+    align-items: center;
+    min-height: 48px;
+    color: var(--azul-oscuro);
+    font-size: 0.95rem;
+    border-bottom: 1px solid rgba(0, 51, 70, 0.12);
+    transition:
+      color 0.2s ease,
+      padding-left 0.2s ease;
+  }
+
+  .mientras a:hover {
+    color: var(--azul-medio);
+    padding-left: 0.4rem;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .lista a,
+    .mientras a {
+      transition: none;
+    }
   }
 </style>

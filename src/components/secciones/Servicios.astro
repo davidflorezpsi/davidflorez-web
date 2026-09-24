@@ -1,0 +1,715 @@
+---
+/**
+ * 05 / Servicios — catálogo por audiencia, con precio y reserva.
+ *
+ * La ruta curva no es decoración: es el índice de los servicios. Cada parada se
+ * posiciona sobre la curva con getPointAtLength y está acoplada en ambos
+ * sentidos con su tarjeta (hover y clic van de la parada a la tarjeta y al revés).
+ *
+ * El cajón de detalle es UNO SOLO a ancho completo bajo la fila de tarjetas,
+ * nunca dentro de la tarjeta, y su estado es una única clave global.
+ */
+import ServiceCard from '../ServiceCard.astro';
+import { PESTANAS } from '../../data/servicios';
+
+const RUTA_D = 'M18 186 C70 186 78 130 120 122 C160 114 168 148 206 132 C246 115 240 52 286 34';
+const PUNTOS_X = [20, 70, 120, 170, 220, 270];
+const PUNTOS_Y = [20, 70, 120, 170];
+const HITOS = [1, 2, 3, 4];
+
+const PAGOS = [
+  {
+    titulo: 'Pago anticipado',
+    texto: 'Un solo pago del programa contratado, antes de la primera sesión.',
+  },
+  {
+    titulo: 'Cuotas estructuradas',
+    texto:
+      'Financiamiento interno para los programas por ciclo: se acuerda en el encuadre y queda firmado antes de iniciar. Las evaluaciones van como paquete.',
+  },
+  {
+    titulo: 'Tarjeta de crédito',
+    texto: 'Pago con tarjeta y cuotas a través de la pasarela, sin trámite adicional.',
+  },
+];
+---
+
+<section id="servicios" class="servicios">
+  <div class="container">
+    <div class="rotulo"><span class="cejilla">05 / Servicios</span></div>
+
+    <div class="intro">
+      <div class="intro-texto">
+        <h2>Primero el mapa,<br /><span class="calado">después la ruta</span></h2>
+        <p>
+          Nadie escala sin saber dónde está: toda intervención aquí empieza por entender qué sostiene
+          la conducta. Programas clínicos estructurados. Sin sesiones sueltas.
+        </p>
+      </div>
+
+      <div class="ruta-col">
+        <svg
+          id="ruta-svg"
+          viewBox="0 0 320 220"
+          width="100%"
+          role="img"
+          aria-label="Ruta curva sobre una retícula: cada parada es un servicio del programa"
+        >
+          <g fill="#003346" opacity="0.28">
+            {PUNTOS_Y.map((y) => PUNTOS_X.map((x) => <circle cx={x} cy={y} r="1.6" />))}
+          </g>
+
+          <path
+            d={RUTA_D}
+            fill="none"
+            stroke="#88b6c0"
+            stroke-width="1.4"
+            stroke-dasharray="3 5"
+            opacity="0.75"></path>
+          <path id="ruta-linea" d={RUTA_D} fill="none" stroke="#05a3d4" stroke-width="2.4" stroke-linecap="round"
+          ></path>
+
+          <rect x="13.5" y="181.5" width="9" height="9" fill="#05a3d4"></rect>
+          <path d="M274 34 L286 34 L286 46" fill="none" stroke="#003346" stroke-width="2" stroke-linejoin="round"
+          ></path>
+
+          {
+            HITOS.map((i) => (
+              <g
+                id={`hito-${i}`}
+                class="hito"
+                data-hito={i}
+                role="button"
+                tabindex="0"
+                aria-label={`Parada ${i} de la ruta`}
+              >
+                <circle r="16" fill="transparent" />
+                <circle data-anillo r="6" fill="#fff" stroke="#003346" stroke-width="1.6" />
+                <text
+                  data-num
+                  y="-13"
+                  text-anchor="middle"
+                  font-family="IBM Plex Mono, monospace"
+                  font-size="8.5"
+                  letter-spacing="1"
+                  fill="#036c92"
+                >
+                  0{i}
+                </text>
+              </g>
+            ))
+          }
+        </svg>
+
+        <p id="ruta-out">Toca una parada de la ruta</p>
+      </div>
+    </div>
+
+    <div class="pestanas" role="tablist" aria-label="Servicios por audiencia">
+      {
+        PESTANAS.map((p, i) => (
+          <button
+            type="button"
+            role="tab"
+            class="pestana"
+            id={`tab-${p.key}`}
+            data-tab={p.key}
+            aria-selected={i === 0 ? 'true' : 'false'}
+            aria-controls={`panel-${p.key}`}
+            tabindex={i === 0 ? 0 : -1}
+          >
+            {p.label}
+          </button>
+        ))
+      }
+    </div>
+
+    {
+      PESTANAS.map((p, i) => (
+        <div class="panel" id={`panel-${p.key}`} data-panel={p.key} role="tabpanel" aria-labelledby={`tab-${p.key}`} hidden={i !== 0}>
+          <div class="rejilla">
+            {p.servicios.map((s) => (
+              <ServiceCard servicio={s} />
+            ))}
+          </div>
+
+          {p.servicios.map((s, j) => (
+            <div class="cajon" id={`cajon-${s.id}`} data-cajon={s.id} hidden={j !== 0}>
+              <div class="cajon-cab">
+                <p class="cajon-titulo">
+                  {s.detalle.cejilla} · <span>{s.detalle.titulo}</span>
+                </p>
+                <button type="button" class="cerrar toque" data-cierra={s.id}>
+                  Cerrar ✕
+                </button>
+              </div>
+
+              <div class="cajon-cols">
+                {s.detalle.columnas.map((c) => (
+                  <div class="cajon-col">
+                    <p class="col-titulo">{c.titulo}</p>
+                    {c.items && (
+                      <ul class="incluye">
+                        {c.items.map((it) => (
+                          <li>{it}</li>
+                        ))}
+                      </ul>
+                    )}
+                    {c.texto && <p class="col-texto">{c.texto}</p>}
+                  </div>
+                ))}
+              </div>
+
+              {s.detalle.pie && <p class="cajon-pie">{s.detalle.pie}</p>}
+            </div>
+          ))}
+        </div>
+      ))
+    }
+
+    <div class="pagos">
+      <div class="pagos-cab">
+        <p class="et-fuerte">Cómo se paga</p>
+        <p class="et-suave">Valores en pesos colombianos</p>
+      </div>
+      <div class="pagos-fila">
+        {
+          PAGOS.map((p) => (
+            <div class="pago">
+              <p class="pago-titulo">{p.titulo}</p>
+              <p class="pago-texto">{p.texto}</p>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+
+    <p class="cola">
+      No se ofrece — sesiones sueltas / psicoterapia ecléctica / servicios por EPS / atención de
+      urgencias
+    </p>
+  </div>
+</section>
+
+<style>
+  .servicios {
+    background: #fff;
+    padding: clamp(4rem, 8vw, 6.5rem) 0;
+  }
+
+  .intro {
+    display: flex;
+    flex-wrap: wrap;
+    gap: clamp(2rem, 4vw, 3.5rem);
+    margin-top: 2.5rem;
+    align-items: center;
+  }
+
+  .intro-texto {
+    flex: 1 1 440px;
+    min-width: min(100%, 300px);
+  }
+
+  h2 {
+    font-family: var(--fuente-titular);
+    font-stretch: 115%;
+    font-weight: 800;
+    font-size: clamp(1.8rem, 3.6vw, 3rem);
+    line-height: 1;
+    letter-spacing: -0.03em;
+    color: var(--azul-oscuro);
+    text-transform: uppercase;
+  }
+
+  .intro-texto p {
+    font-size: 1.08rem;
+    line-height: 1.6;
+    color: var(--azul-oscuro);
+    font-weight: 600;
+    margin-top: 1.5rem;
+    max-width: 48ch;
+    text-wrap: pretty;
+  }
+
+  .ruta-col {
+    flex: 0 1 320px;
+    min-width: min(100%, 250px);
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+  }
+
+  #ruta-svg {
+    display: block;
+    overflow: visible;
+  }
+
+  .hito {
+    cursor: pointer;
+  }
+
+  .hito:focus-visible {
+    outline: 2px solid var(--cian);
+    outline-offset: 2px;
+  }
+
+  #ruta-out {
+    font-family: var(--fuente-mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--azul-medio);
+    line-height: 1.6;
+    border-left: 2px solid var(--cian);
+    padding-left: 0.7rem;
+    min-height: 2.6em;
+  }
+
+  .pestanas {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0;
+    margin-top: 3rem;
+    border-top: 1px solid var(--azul-oscuro);
+    border-bottom: 1px solid var(--azul-oscuro);
+  }
+
+  .pestana {
+    flex: 1 1 170px;
+    background: none;
+    border: none;
+    border-right: 1px solid var(--azul-oscuro);
+    cursor: pointer;
+    padding: 1.1rem 1.25rem;
+    text-align: left;
+    transition:
+      background 0.25s ease,
+      color 0.25s ease;
+    font-family: var(--fuente-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+    color: var(--azul-oscuro);
+  }
+
+  .pestana:last-of-type {
+    border-right: none;
+  }
+
+  /* La pestaña activa no reacciona al cursor: la selección es la señal fuerte. */
+  .pestana:not([aria-selected='true']):hover {
+    background: rgba(0, 51, 70, 0.07);
+    color: var(--azul-medio);
+  }
+
+  .pestana[aria-selected='true'] {
+    background: var(--azul-oscuro);
+    color: #fff;
+  }
+
+  .panel[hidden],
+  .cajon[hidden] {
+    display: none;
+  }
+
+  /*
+   * Las 7 pistas que comparten todas las tarjetas vía subgrid:
+   * cejilla · título · descripción (1fr) · inversión · botón · chips · acciones.
+   */
+  .rejilla {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    grid-template-rows: auto auto 1fr auto auto auto auto;
+    gap: 0;
+    border-left: 1px solid rgba(0, 51, 70, 0.25);
+  }
+
+  .cajon {
+    border: 1px solid rgba(0, 51, 70, 0.25);
+    border-top: 3px solid var(--cian);
+    background: #fff;
+    padding: clamp(1.5rem, 3vw, 2.25rem);
+  }
+
+  .cajon-cab {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem 1.5rem;
+    align-items: baseline;
+    justify-content: space-between;
+    border-bottom: 1px solid rgba(0, 51, 70, 0.2);
+    padding-bottom: 0.9rem;
+  }
+
+  .cajon-titulo {
+    font-family: var(--fuente-mono);
+    font-size: 0.66rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--azul-medio);
+  }
+
+  .cajon-titulo span {
+    color: var(--azul-oscuro);
+  }
+
+  .cerrar {
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    font-family: var(--fuente-mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--azul-medio);
+  }
+
+  .cajon-cols {
+    display: flex;
+    flex-wrap: wrap;
+    gap: clamp(1.5rem, 4vw, 3rem);
+    margin-top: 1.5rem;
+  }
+
+  .cajon-col {
+    flex: 1 1 320px;
+    min-width: min(100%, 260px);
+  }
+
+  .col-titulo {
+    font-family: var(--fuente-mono);
+    font-size: 0.66rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--azul-oscuro);
+  }
+
+  .incluye {
+    margin-top: 0.85rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .incluye li {
+    font-size: 0.9rem;
+    line-height: 1.6;
+    color: var(--tinta-suave);
+    padding-left: 1rem;
+    border-left: 2px solid var(--cian);
+  }
+
+  .col-texto {
+    font-size: 0.9rem;
+    line-height: 1.75;
+    color: var(--tinta-suave);
+    margin-top: 0.85rem;
+    text-wrap: pretty;
+  }
+
+  .cajon-pie {
+    font-family: var(--fuente-mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--azul-medio);
+    margin-top: 1.5rem;
+    border-top: 1px solid rgba(0, 51, 70, 0.2);
+    padding-top: 0.9rem;
+  }
+
+  .pagos {
+    margin-top: clamp(2rem, 4vw, 3rem);
+    border: 1px solid rgba(0, 51, 70, 0.25);
+    padding: clamp(1.25rem, 3vw, 2rem);
+  }
+
+  .pagos-cab {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1.5rem;
+    justify-content: space-between;
+    align-items: baseline;
+    border-bottom: 1px solid rgba(0, 51, 70, 0.2);
+    padding-bottom: 0.75rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .et-fuerte,
+  .et-suave {
+    font-family: var(--fuente-mono);
+    text-transform: uppercase;
+  }
+
+  .et-fuerte {
+    font-size: 0.68rem;
+    letter-spacing: 0.14em;
+    color: var(--azul-medio);
+  }
+
+  .et-suave {
+    font-size: 0.6rem;
+    letter-spacing: 0.13em;
+    color: var(--tinta-suave);
+  }
+
+  .pagos-fila {
+    display: flex;
+    flex-wrap: wrap;
+    gap: clamp(1.25rem, 3vw, 2.5rem);
+  }
+
+  .pago {
+    flex: 1 1 220px;
+    min-width: min(100%, 200px);
+    border-top: 2px solid var(--azul-oscuro);
+    padding-top: 0.8rem;
+  }
+
+  .pago-titulo {
+    font-family: var(--fuente-mono);
+    font-size: 0.64rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--azul-oscuro);
+  }
+
+  .pago-texto {
+    font-size: 0.85rem;
+    line-height: 1.6;
+    color: var(--tinta-suave);
+    margin-top: 0.5rem;
+    text-wrap: pretty;
+  }
+
+  .cola {
+    font-family: var(--fuente-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--azul-oscuro);
+    margin-top: 2rem;
+    border-top: 1px solid rgba(0, 51, 70, 0.25);
+    padding-top: 1rem;
+  }
+</style>
+
+<script>
+  const seccion = document.getElementById('servicios');
+  const linea = document.getElementById('ruta-linea') as SVGPathElement | null;
+  const svgRuta = document.getElementById('ruta-svg');
+  const salida = document.getElementById('ruta-out');
+
+  if (seccion && linea && svgRuta) {
+    const paneles = [...seccion.querySelectorAll<HTMLElement>('[data-panel]')];
+
+    /**
+     * Los nombres de la ruta y el cajón inicial se leen del DOM: el copy ya está
+     * en el HTML, así que no hace falta volver a enviarlo como JSON al navegador.
+     */
+    const NOMBRES: Record<string, string[]> = {};
+    const INICIAL: Record<string, string> = {};
+    paneles.forEach((p) => {
+      const k = p.dataset.panel as string;
+      const cards = [...p.querySelectorAll<HTMLElement>('[data-serv]')];
+      NOMBRES[k] = cards.map((c) => c.querySelector('h3')?.textContent?.trim() ?? '');
+      INICIAL[k] = cards[0]?.dataset.id ?? '';
+    });
+
+    let tab = paneles[0]?.dataset.panel ?? 'ninos';
+    let parada = 0; // 0 = ninguna
+    let detalle: string | null = INICIAL[tab];
+    let largoRuta = 0;
+
+    const panelActivo = () => seccion.querySelector<HTMLElement>(`[data-panel="${tab}"]`);
+
+    const textoRuta = (i: number) => {
+      if (!salida) return;
+      const lista = NOMBRES[tab] || [];
+      salida.textContent = i && lista[i - 1] ? `0${i} · ${lista[i - 1]}` : 'Toca una parada de la ruta';
+    };
+
+    /** Reparte las paradas sobre la curva: t = 0.17 + i * (0.68 / (N - 1)). */
+    const pintarRuta = () => {
+      const N = (NOMBRES[tab] || []).length;
+      if (!largoRuta) {
+        try {
+          largoRuta = linea.getTotalLength();
+        } catch {
+          return;
+        }
+      }
+
+      for (let i = 1; i <= 4; i++) {
+        const g = document.getElementById(`hito-${i}`);
+        if (!g) continue;
+        if (i > N) {
+          g.style.display = 'none';
+          continue;
+        }
+        g.style.display = '';
+        const t = N > 1 ? 0.17 + (i - 1) * (0.68 / (N - 1)) : 0.5;
+        const p = linea.getPointAtLength(t * largoRuta);
+        g.setAttribute('transform', `translate(${p.x.toFixed(1)},${p.y.toFixed(1)})`);
+
+        const sel = parada === i;
+        const anillo = g.querySelector('[data-anillo]');
+        if (anillo) {
+          anillo.setAttribute('r', sel ? '7.5' : '6');
+          anillo.setAttribute('fill', sel ? '#05a3d4' : '#fff');
+          anillo.setAttribute('stroke-width', sel ? '2.2' : '1.6');
+        }
+        const num = g.querySelector('[data-num]');
+        if (num) {
+          num.setAttribute('y', sel ? '-15' : '-13');
+          num.setAttribute('fill', sel ? '#003346' : '#036c92');
+        }
+      }
+
+      textoRuta(parada);
+
+      panelActivo()
+        ?.querySelectorAll<HTMLElement>('[data-serv]')
+        .forEach((c) => {
+          c.style.boxShadow =
+            parseInt(c.dataset.serv || '0', 10) === parada ? 'inset 0 0 0 2px #05a3d4' : 'none';
+        });
+    };
+
+    /** La ruta se dibuja con el scroll. */
+    const rutaScroll = () => {
+      if (!largoRuta) {
+        try {
+          largoRuta = linea.getTotalLength();
+        } catch {
+          return;
+        }
+      }
+      const r = svgRuta.getBoundingClientRect();
+      const vh = window.innerHeight || 800;
+      const p = Math.max(0, Math.min(1, (vh * 0.85 - r.top) / (r.height * 0.85 + 60)));
+      linea.setAttribute('stroke-dasharray', largoRuta.toFixed(1));
+      linea.setAttribute('stroke-dashoffset', (largoRuta * (1 - p)).toFixed(1));
+    };
+
+    const pintarCajones = () => {
+      seccion.querySelectorAll<HTMLElement>('[data-cajon]').forEach((c) => {
+        c.hidden = c.dataset.cajon !== detalle;
+      });
+      seccion.querySelectorAll<HTMLElement>('[data-detalle]').forEach((b) => {
+        const abierto = b.dataset.detalle === detalle;
+        b.setAttribute('aria-expanded', String(abierto));
+        const signo = b.querySelector('.signo');
+        if (signo) signo.textContent = abierto ? '−' : '+';
+      });
+    };
+
+    const botonesTab = [...seccion.querySelectorAll<HTMLButtonElement>('[data-tab]')];
+
+    const pintarTabs = () => {
+      botonesTab.forEach((b) => {
+        const activa = b.dataset.tab === tab;
+        b.setAttribute('aria-selected', String(activa));
+        // Tabulación móvil: solo la pestaña activa recibe el foco desde el teclado;
+        // entre pestañas se navega con las flechas (patrón ARIA de tablist).
+        b.tabIndex = activa ? 0 : -1;
+      });
+      seccion.querySelectorAll<HTMLElement>('[data-panel]').forEach((p) => {
+        p.hidden = p.dataset.panel !== tab;
+      });
+    };
+
+    const elegirTab = (clave: string, mover = false) => {
+      tab = clave;
+      parada = 0;
+      detalle = INICIAL[tab];
+      pintarTabs();
+      pintarCajones();
+      pintarRuta();
+      if (mover) seccion.querySelector<HTMLButtonElement>(`[data-tab="${clave}"]`)?.focus();
+    };
+
+    // --- Pestañas de audiencia ---------------------------------------------
+    botonesTab.forEach((b, i) => {
+      b.addEventListener('click', () => elegirTab(b.dataset.tab as string));
+
+      b.addEventListener('keydown', (ev) => {
+        const saltos: Record<string, number> = {
+          ArrowRight: 1,
+          ArrowLeft: -1,
+          Home: -i,
+          End: botonesTab.length - 1 - i,
+        };
+        const d = saltos[ev.key];
+        if (d === undefined) return;
+        ev.preventDefault();
+        const destino = botonesTab[(i + d + botonesTab.length) % botonesTab.length];
+        elegirTab(destino.dataset.tab as string, true);
+      });
+    });
+
+    // --- Botón "qué incluye" de cada tarjeta --------------------------------
+    seccion.querySelectorAll<HTMLButtonElement>('[data-detalle]').forEach((b) => {
+      b.addEventListener('click', () => {
+        const k = b.dataset.detalle as string;
+        detalle = detalle === k ? null : k;
+        pintarCajones();
+      });
+    });
+
+    seccion.querySelectorAll<HTMLButtonElement>('[data-cierra]').forEach((b) => {
+      b.addEventListener('click', () => {
+        detalle = null;
+        pintarCajones();
+      });
+    });
+
+    // --- Acoplamiento parada ↔ tarjeta, en ambos sentidos -------------------
+    const resaltar = (i: number, on: boolean) => {
+      if (parada === i) return; // lo ya seleccionado no reacciona al cursor
+      const g = document.getElementById(`hito-${i}`);
+      const anillo = g?.querySelector('[data-anillo]');
+      if (anillo) {
+        anillo.setAttribute('fill', on ? '#d6ecf4' : '#fff');
+        anillo.setAttribute('r', on ? '7' : '6');
+      }
+      const card = panelActivo()?.querySelector<HTMLElement>(`[data-serv="${i}"]`);
+      if (card) card.style.boxShadow = on ? 'inset 0 0 0 1px #88b6c0' : 'none';
+      textoRuta(on ? i : parada);
+    };
+
+    const alternarParada = (i: number) => {
+      parada = parada === i ? 0 : i;
+      pintarRuta();
+    };
+
+    seccion.querySelectorAll<SVGGElement>('[data-hito]').forEach((g) => {
+      const i = parseInt(g.dataset.hito || '0', 10);
+      g.addEventListener('click', () => alternarParada(i));
+      g.addEventListener('keydown', (ev) => {
+        if (ev.key !== 'Enter' && ev.key !== ' ') return;
+        ev.preventDefault();
+        alternarParada(i);
+      });
+      g.addEventListener('mouseenter', () => resaltar(i, true));
+      g.addEventListener('mouseleave', () => resaltar(i, false));
+      g.addEventListener('focus', () => resaltar(i, true));
+      g.addEventListener('blur', () => resaltar(i, false));
+    });
+
+    seccion.querySelectorAll<HTMLElement>('[data-serv]').forEach((card) => {
+      const i = parseInt(card.dataset.serv || '0', 10);
+      card.addEventListener('mouseenter', () => resaltar(i, true));
+      card.addEventListener('mouseleave', () => resaltar(i, false));
+    });
+
+    window.addEventListener('scroll', rutaScroll, { passive: true });
+    window.addEventListener('resize', rutaScroll, { passive: true });
+
+    pintarTabs();
+    pintarCajones();
+    pintarRuta();
+    rutaScroll();
+  }
+</script>

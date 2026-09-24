@@ -1,0 +1,531 @@
+---
+/**
+ * 02 / Quién soy — un único expediente de archivador.
+ *
+ * La pestaña de carpeta no es interactiva (la práctica es individual), pero
+ * conserva el lenguaje de expediente: radio 3px 15px 0 0, borde navy y el
+ * cuerpo blanco pegado justo debajo.
+ *
+ * El retrato va por <Image> de Astro: la fuente es 1168×1460 (4:5) y Astro
+ * emite un WebP del tamaño exacto que se muestra.
+ */
+import { Image } from 'astro:assets';
+import retrato from '../../assets/david-florez-retrato.png';
+
+const CAMPOS = [
+  ['Población', 'Niñez, adolescencia y juventud'],
+  ['Enfoques', 'Conductual - Contextual'],
+  ['Certificaciones', 'Especialista en Psicología Clínica · ACT · ADOS-2 / ADI-R · PEERS'],
+  ['En clínica desde', '2022'],
+];
+
+const MODELOS = [
+  { id: 'act', sigla: 'ACT', bg: '#f8d17b', familia: 'Marco', nombre: 'Aceptación y Compromiso', desc: 'Menos pelea con lo que se siente, más acción en la dirección que importa.' },
+  { id: 'dbt', sigla: 'DBT', bg: '#fff', familia: 'Marco', nombre: 'Dialéctica Conductual', desc: 'Habilidades concretas de regulación emocional, tolerancia al malestar y vínculos.' },
+  { id: 'fap', sigla: 'FAP', bg: '#fff', familia: 'Marco', nombre: 'Analítico Funcional', desc: 'Lo que ocurre dentro de la sesión se usa como muestra viva de lo que ocurre afuera.' },
+  { id: 'pmt', sigla: 'PMT', bg: '#88b6c0', familia: 'Neuro', nombre: 'Entrenamiento a cuidadores', desc: 'El cuidador practica en vivo, con acompañamiento, la interacción de la casa.' },
+  { id: 'af', sigla: 'AF', bg: '#fff', familia: 'Marco', nombre: 'Análisis funcional', desc: 'Qué pasa antes y después de la conducta. Es la base sobre la que se decide todo lo demás.' },
+  { id: 'peers', sigla: 'PEERS', bg: '#f8d17b', familia: 'Neuro', nombre: 'Habilidades sociales · UCLA', desc: 'Reglas sociales concretas para adolescentes, practicadas en tareas reales.' },
+  { id: 'ados', sigla: 'ADOS-2', bg: '#05a3d4', familia: 'Evaluación', nombre: 'Observación diagnóstica TEA', desc: 'Observación estructurada de referencia internacional, por nivel de lenguaje.' },
+  { id: 'adir', sigla: 'ADI-R', bg: '#05a3d4', familia: 'Evaluación', nombre: 'Historia de desarrollo', desc: 'Entrevista con cuidadores. Complementa al ADOS-2 en el diagnóstico.' },
+];
+---
+
+<section id="equipo" class="equipo">
+  <div class="container">
+    <div class="rotulo"><span class="cejilla">02 / Quién soy</span></div>
+
+    <div class="intro">
+      <h2>Un clínico,<br />un <span class="calado">método</span></h2>
+      <p>
+        Cada consultante entra por el modelo que su caso pide, no por el que el terapeuta domina.
+        Atiendo niñez, adolescencia y adultez joven, siempre con la familia cerca — y si tu caso pide
+        otra especialidad, te lo digo en la primera llamada y te remito.
+      </p>
+    </div>
+
+    <div class="archivador">
+      <div class="archivador-cab">
+        <p class="etiqueta-fuerte">Expediente del psicólogo</p>
+        <p class="etiqueta-suave">EXP-01</p>
+      </div>
+
+      <div class="pestanas">
+        <div class="pestana">
+          <span class="pestana-cod">
+            <span class="punto"></span>
+            <span>EXP-01</span>
+          </span>
+          <span class="pestana-ape">Flórez Rojas</span>
+          <span class="pestana-pop">Niñez y adolescencia</span>
+        </div>
+      </div>
+
+      <div class="hoja">
+        <div class="hoja-cols">
+          <div class="col-foto">
+            <div class="marco-foto">
+              <Image
+                src={retrato}
+                alt="Erwin David Flórez Rojas, psicólogo clínico, en bata sobre uniforme azul"
+                width={456}
+                height={570}
+                loading="lazy"
+                decoding="async"
+              />
+            </div>
+            <span class="pie-foto">EXP-01 · foto 4:5</span>
+          </div>
+
+          <div class="col-ficha">
+            <div class="identidad">
+              <h3>Erwin David<br />Flórez Rojas</h3>
+              <p class="tp">Psicólogo clínico · T.P. 205129</p>
+            </div>
+
+            <dl>
+              {
+                CAMPOS.map(([k, v]) => (
+                  <>
+                    <dt>{k}</dt>
+                    <dd>{v}</dd>
+                  </>
+                ))
+              }
+            </dl>
+
+            <div class="bio">
+              <p>
+                Especialista en clínica, con experiencia desde 2022 en evaluación e intervención de
+                trastornos afectivos, conductuales y del neurodesarrollo.
+              </p>
+              <p>
+                Certificaciones internacionales en evaluación diagnóstica del espectro autista
+                (ADOS-2 / ADI-R) e intervención en habilidades sociales para adolescentes (PEERS).
+                Diplomados en Terapia de Aceptación y Compromiso (ACT) y en Terapias Conductuales y
+                Contextuales en Infato Juveniles y Adultos.
+              </p>
+            </div>
+
+            <div class="rubik-bloque">
+              <div class="rubik-cab">
+                <p class="etiqueta-fuerte chico">Modelos con los que trabaja</p>
+                <p class="etiqueta-suave chico">Toca un modelo</p>
+              </div>
+
+              <div class="rubik-fila">
+                <div class="rubik">
+                  {
+                    MODELOS.map((m) => (
+                      <button
+                        type="button"
+                        class="ficha"
+                        data-mod={m.id}
+                        data-bg={m.bg}
+                        data-nom={m.nombre}
+                        data-desc={m.desc}
+                        style={`background:${m.bg}`}
+                        aria-label={`${m.sigla} · ${m.nombre}`}
+                        aria-pressed={m.id === 'act' ? 'true' : 'false'}
+                      >
+                        <span class="sigla">{m.sigla}</span>
+                        <span class="familia">{m.familia}</span>
+                      </button>
+                    ))
+                  }
+                </div>
+                <p id="mod-out">
+                  Aceptación y Compromiso · Menos pelea con lo que se siente, más acción en la
+                  dirección que importa.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .equipo {
+    background: var(--gris-claro);
+    padding: clamp(4rem, 8vw, 6.5rem) 0;
+  }
+
+  .intro {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    gap: clamp(1.5rem, 4vw, 3rem);
+    margin-top: 2.5rem;
+  }
+
+  .intro h2 {
+    flex: 1 1 380px;
+    font-family: var(--fuente-titular);
+    font-stretch: 118%;
+    font-weight: 900;
+    font-size: clamp(1.9rem, 4.2vw, 3.3rem);
+    line-height: 0.95;
+    letter-spacing: -0.035em;
+    color: var(--azul-oscuro);
+    text-transform: uppercase;
+  }
+
+  .intro p {
+    flex: 1 1 340px;
+    max-width: 52ch;
+    font-size: 1.02rem;
+    line-height: 1.65;
+    color: var(--azul-oscuro);
+    text-wrap: pretty;
+  }
+
+  .archivador {
+    margin-top: clamp(2rem, 4vw, 3rem);
+  }
+
+  .archivador-cab,
+  .rubik-cab {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1.5rem;
+    justify-content: space-between;
+    align-items: baseline;
+    border-bottom: 1px solid rgba(0, 51, 70, 0.2);
+    padding-bottom: 0.75rem;
+    margin-bottom: 1.1rem;
+  }
+
+  .etiqueta-fuerte,
+  .etiqueta-suave {
+    font-family: var(--fuente-mono);
+    text-transform: uppercase;
+  }
+
+  .etiqueta-fuerte {
+    font-size: 0.68rem;
+    letter-spacing: 0.14em;
+    color: var(--azul-medio);
+  }
+
+  .etiqueta-suave {
+    font-size: 0.6rem;
+    letter-spacing: 0.13em;
+    color: var(--tinta-suave);
+  }
+
+  .etiqueta-fuerte.chico {
+    font-size: 0.62rem;
+  }
+
+  .etiqueta-suave.chico {
+    font-size: 0.55rem;
+    letter-spacing: 0.12em;
+  }
+
+  .pestanas {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 5px;
+    align-items: flex-end;
+  }
+
+  .pestana {
+    flex: 0 1 300px;
+    min-width: 0;
+    text-align: left;
+    background: #fff;
+    border: 1px solid var(--azul-oscuro);
+    border-bottom: none;
+    border-radius: 3px 15px 0 0;
+    padding: 0.95rem 1rem;
+    margin-bottom: -1px;
+    display: flex;
+    flex-direction: column;
+    gap: 0.32rem;
+  }
+
+  .pestana-cod {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+    font-family: var(--fuente-mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--azul-medio);
+  }
+
+  .punto {
+    flex: 0 0 auto;
+    width: 7px;
+    height: 7px;
+    background: var(--cian);
+  }
+
+  .pestana-ape,
+  .pestana-pop {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .pestana-ape {
+    font-family: var(--fuente-titular);
+    font-stretch: 112%;
+    font-weight: 800;
+    font-size: 0.98rem;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    color: var(--azul-oscuro);
+    text-transform: uppercase;
+  }
+
+  .pestana-pop {
+    font-family: var(--fuente-mono);
+    font-size: 0.57rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--tinta-suave);
+  }
+
+  .hoja {
+    background: #fff;
+    border: 1px solid var(--azul-oscuro);
+    padding: clamp(1.25rem, 3vw, 2rem);
+  }
+
+  .hoja-cols {
+    display: flex;
+    flex-wrap: wrap;
+    gap: clamp(1.25rem, 3vw, 2.25rem);
+  }
+
+  .col-foto {
+    flex: 0 1 228px;
+    min-width: 168px;
+    display: flex;
+    flex-direction: column;
+    gap: 0.55rem;
+  }
+
+  .marco-foto {
+    width: 100%;
+    aspect-ratio: 4 / 5;
+    border: 1px solid rgba(0, 51, 70, 0.35);
+    background: var(--gris-claro);
+    overflow: hidden;
+  }
+
+  .marco-foto :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .pie-foto {
+    font-family: var(--fuente-mono);
+    font-size: 0.57rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--tinta-suave);
+  }
+
+  .col-ficha {
+    flex: 1 1 330px;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .identidad {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .identidad h3 {
+    font-family: var(--fuente-titular);
+    font-stretch: 112%;
+    font-weight: 800;
+    font-size: clamp(1.4rem, 2.4vw, 1.95rem);
+    line-height: 1.02;
+    letter-spacing: -0.03em;
+    color: var(--azul-oscuro);
+    text-transform: uppercase;
+  }
+
+  .tp {
+    font-family: var(--fuente-mono);
+    font-size: 0.67rem;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+    color: var(--azul-medio);
+    line-height: 1.6;
+  }
+
+  dl {
+    display: grid;
+    grid-template-columns: minmax(0, 8rem) minmax(0, 1fr);
+    border-top: 1px solid rgba(0, 51, 70, 0.22);
+  }
+
+  dt,
+  dd {
+    border-bottom: 1px solid rgba(0, 51, 70, 0.14);
+  }
+
+  dt {
+    font-family: var(--fuente-mono);
+    font-size: 0.58rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--azul-medio);
+    padding: 0.6rem 1rem 0.6rem 0;
+  }
+
+  dd {
+    font-size: 0.88rem;
+    line-height: 1.55;
+    color: var(--azul-oscuro);
+    padding: 0.6rem 0;
+  }
+
+  .bio {
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+  }
+
+  .bio p {
+    font-size: 0.92rem;
+    line-height: 1.7;
+    color: var(--tinta-suave);
+    text-wrap: pretty;
+  }
+
+  .rubik-bloque {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    margin-top: 0.25rem;
+  }
+
+  .rubik-cab {
+    margin-bottom: 0;
+    padding-bottom: 0.55rem;
+    gap: 0.35rem 1.25rem;
+  }
+
+  .rubik-fila {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.9rem 1.1rem;
+    align-items: stretch;
+  }
+
+  .rubik {
+    flex: 0 1 352px;
+    min-width: 200px;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-auto-rows: 82px;
+    gap: 5px;
+  }
+
+  .ficha {
+    text-align: left;
+    border: 1px solid var(--azul-oscuro);
+    padding: 0.55rem;
+    cursor: pointer;
+    transition:
+      box-shadow 0.18s ease,
+      transform 0.18s ease,
+      background 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 0.3rem;
+    overflow: hidden;
+  }
+
+  .sigla {
+    font-family: var(--fuente-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.01em;
+    font-weight: 600;
+    color: var(--azul-oscuro);
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .familia {
+    font-family: var(--fuente-mono);
+    font-size: 0.5rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--azul-oscuro);
+    opacity: 0.6;
+  }
+
+  /* Ficha elegida: fondo navy, sigla cyan. */
+  .ficha[aria-pressed='true'] {
+    background: var(--azul-oscuro) !important;
+  }
+
+  .ficha[aria-pressed='true'] .sigla {
+    color: var(--cian);
+  }
+
+  .ficha[aria-pressed='true'] .familia {
+    color: var(--teal-claro);
+    opacity: 1;
+  }
+
+  #mod-out {
+    flex: 1 1 220px;
+    min-width: 0;
+    align-self: center;
+    font-size: 0.82rem;
+    line-height: 1.6;
+    color: var(--tinta-suave);
+    border-left: 2px solid var(--cian);
+    padding-left: 0.85rem;
+    text-wrap: pretty;
+  }
+</style>
+
+<script>
+  const fichas = document.querySelectorAll<HTMLButtonElement>('.ficha[data-mod]');
+  const salida = document.getElementById('mod-out');
+
+  const elegir = (ficha: HTMLButtonElement) => {
+    fichas.forEach((f) => {
+      f.setAttribute('aria-pressed', String(f === ficha));
+      f.style.boxShadow = 'none';
+      f.style.transform = 'none';
+    });
+    if (salida) salida.textContent = `${ficha.dataset.nom} · ${ficha.dataset.desc}`;
+  };
+
+  fichas.forEach((ficha) => {
+    ficha.addEventListener('click', () => elegir(ficha));
+
+    // Regla transversal: la ficha ya elegida no reacciona al cursor.
+    const hover = (on: boolean) => {
+      if (ficha.getAttribute('aria-pressed') === 'true') return;
+      const anillo = ficha.dataset.bg === '#05a3d4' ? '#003346' : '#05a3d4';
+      ficha.style.boxShadow = on ? `inset 0 0 0 2.5px ${anillo}` : 'none';
+      ficha.style.transform = on ? 'translateY(-2px)' : 'none';
+    };
+    ficha.addEventListener('mouseenter', () => hover(true));
+    ficha.addEventListener('mouseleave', () => hover(false));
+    ficha.addEventListener('focus', () => hover(true));
+    ficha.addEventListener('blur', () => hover(false));
+  });
+</script>

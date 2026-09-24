@@ -1,0 +1,976 @@
+---
+/**
+ * 03 / Marco clínico — la terapia es un andamio.
+ *
+ * Mecanismo principal: cinco líneas cruzan una divisoria punteada de
+ * "lo sostiene la terapia" a "lo sostiene la casa". Se retiran de arriba
+ * hacia abajo; si se toca una de abajo, tiembla y avisa.
+ *
+ * En el hueco que dejan los bloques aparece una casa dibujada de un solo trazo,
+ * revelada por una banda de recorte que crece de arriba hacia abajo.
+ */
+const APOYOS = [
+  { n: 5, titulo: 'Sesiones semanales', dice: 'Se espacian: la práctica ya ocurre entre sesiones, no dentro de ellas.' },
+  { n: 4, titulo: 'Guion de tareas', dice: 'El plan de la semana lo arma el consultante, no el terapeuta.' },
+  { n: 3, titulo: 'Registro del terapeuta', dice: 'El registro pasa a manos de la familia: mismos datos, otra mano.' },
+  { n: 2, titulo: 'Plan de crisis dirigido', dice: 'La familia ejecuta el plan sin llamada previa.' },
+  { n: 1, titulo: 'Seguimiento mensual', dice: 'Alta con criterios cumplidos: sostiene sola.' },
+];
+
+const DEFINICIONES = [
+  {
+    num: '01',
+    cejilla: 'Con qué se levanta',
+    titulo: 'Terapia Basada en Procesos (PBT)',
+    texto:
+      'Desarrollada por Hayes y Hofmann (2018). Integra coherentemente herramientas de ACT, DBT y análisis funcional del comportamiento para identificar y modificar los procesos psicológicos que mantienen el sufrimiento. Este no es solo un espacio para "hablar de tus problemas": cada proceso comienza con una hipótesis, avanza con datos y termina con criterios de cierre definidos.',
+  },
+  {
+    num: '02',
+    cejilla: 'Por qué no se improvisa',
+    titulo: 'Contra el eclecticismo no declarado',
+    texto:
+      'La mayoría de la psicología infantil disponible en Bogotá combina técnicas de distintos modelos sin justificación funcional. El resultado son procesos abiertos, objetivos difusos y progreso difícil de medir. Aquí cada intervención está justificada por el análisis funcional del caso, los objetivos son conductuales y verificables, y el progreso se registra sistemáticamente.',
+  },
+  {
+    num: '03',
+    cejilla: 'Sobre qué se trabaja',
+    titulo: 'Procesos, no contenido',
+    texto:
+      'La TCC clásica trabaja sobre el contenido del pensamiento; el psicoanálisis, sobre la historia. Esta práctica trabaja sobre los procesos: los patrones funcionales que conectan el contexto con la conducta problema. No importa qué piensa el consultante; importa cómo eso que piensa funciona en su vida y qué procesos psicológicos lo sostienen.',
+  },
+  {
+    num: '04',
+    cejilla: 'Qué es',
+    titulo: 'Una especialización dentro de las ciencias del comportamiento',
+    texto:
+      'La aplicación sistemática de principios derivados de la investigación básica sobre el comportamiento humano al tratamiento de psicopatologías complejas en niños y adolescentes.',
+  },
+  {
+    num: '05',
+    cejilla: 'Qué no es',
+    titulo: 'No es orientación, coaching ni acompañamiento',
+    tachados: ['Orientación', 'Coaching', 'Acompañamiento'],
+    texto:
+      'Cada uno tiene su lugar, pero ninguno es un tratamiento con hipótesis, datos y criterios de cierre — y por eso ninguno se puede retirar como se retira un andamio.',
+  },
+];
+---
+
+<section id="marco" class="marco">
+  <div class="container">
+    <div class="rotulo-progreso">
+      <span id="marco-prog"></span>
+      <span class="cejilla">03 / Marco clínico</span>
+    </div>
+
+    <div class="intro">
+      <h2>La terapia<br />es un <span class="calado">andamio</span></h2>
+      <p>
+        Se levanta alrededor de lo que se está construyendo, sostiene mientras hace falta, y se
+        retira cuando la casa ya sostiene sola. Un andamio que no se retira no es cuidado, es
+        dependencia.
+      </p>
+    </div>
+
+    <div class="panel" data-reveal="mp">
+      <div class="lectura">
+        <div class="lectura-cab">
+          <p class="et-fuerte">Traspaso de carga</p>
+          <p id="and-cuenta" class="et-suave">Apoyos en la terapia · 5 de 5</p>
+        </div>
+
+        <div class="contador">
+          <span id="and-pct">100%</span>
+          <span class="contador-pie">Lo sostiene<br />la terapia</span>
+        </div>
+
+        <div class="riel"><div id="and-bar"></div></div>
+
+        <p class="explica">
+          Cada línea es algo que hoy pone la terapia, no la familia. Se traspasan de arriba hacia
+          abajo: lo que cruza la línea punteada, lo sostiene la casa.
+        </p>
+
+        <p id="and-out">
+          Toca N5 para traspasar el primer apoyo. Si intentas mover uno de abajo, avisa: todavía
+          carga.
+        </p>
+
+        <div class="lectura-pie">
+          <button type="button" id="and-reset" class="toque">Volver al inicio</button>
+          <p class="fuente">Hayes &amp; Hofmann, 2018 · PBT</p>
+        </div>
+      </div>
+
+      <div class="pistas-col">
+        <div class="pistas-cab">
+          <span class="pistas-cab-par">
+            <span>Lo sostiene la terapia</span>
+            <span class="der">Lo sostiene la casa</span>
+          </span>
+          <span></span>
+        </div>
+
+        <div id="and-pistas">
+          <span class="casa-capa" aria-hidden="true">
+            <span class="casa-caja">
+              <svg id="and-casa-svg" viewBox="0 0 190 285" preserveAspectRatio="xMidYMid meet" aria-hidden="true" focusable="false">
+                <defs>
+                  <clipPath id="casa-banda">
+                    <rect id="casa-banda-r" x="-60" y="0" width="320" height="0"></rect>
+                  </clipPath>
+                </defs>
+                <path
+                  clip-path="url(#casa-banda)"
+                  d="M-20 262 Q-4 257 12 264 Q17 266 21 262 Q18 195 15 130 L8 133 Q30 100 50 69 L49 36 Q49 33 53 33 L67 34 L68 47 Q82 30 95 13 Q140 62 182 127 L175 124 Q172 196 169 263 Q186 269 200 263 Q206 261 210 263"
+                  fill="none"
+                  stroke="#003346"
+                  stroke-width="2.4"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  vector-effect="non-scaling-stroke"></path>
+              </svg>
+            </span>
+            <span></span>
+          </span>
+
+          {
+            APOYOS.map((a) => (
+              <button type="button" class="fila" id={`and-f${a.n}`} data-niv={a.n} data-dice={a.dice}>
+                <span class="carril">
+                  <span class="divisoria" />
+                  <span class="bloque" data-blk>
+                    <span data-blk-n>N{a.n}</span>
+                    <span data-blk-t>{a.titulo}</span>
+                  </span>
+                </span>
+                <span class="estado" data-est>
+                  Retirar
+                </span>
+              </button>
+            ))
+          }
+
+          <span id="and-guia" aria-hidden="true"></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="definiciones">
+      <div class="definiciones-cab">
+        <p class="et-fuerte">
+          El andamio se puede retirar porque hay un marco que decide qué se pone y qué se quita
+        </p>
+        <p class="et-suave oscuro">Cinco definiciones</p>
+      </div>
+
+      {
+        DEFINICIONES.map((d, i) => (
+          <div class="def" data-reveal={`d${i + 1}`} style={`--retraso:${(i + 1) * 70}ms`}>
+            <button
+              type="button"
+              class="def-cab"
+              id={`def-b${i + 1}`}
+              data-def={i + 1}
+              aria-expanded={i === 0 ? 'true' : 'false'}
+              aria-controls={`def-p${i + 1}`}
+            >
+              <span class="def-num" data-def-num>
+                {d.num}
+              </span>
+              <span class="def-texto">
+                <span class="def-cejilla" data-def-eye>
+                  {d.cejilla}
+                </span>
+                <span class="def-titulo">{d.titulo}</span>
+              </span>
+              <span class="def-ico" data-def-ico>
+                {i === 0 ? '–' : '+'}
+              </span>
+            </button>
+            <div class="def-panel" id={`def-p${i + 1}`} style={i === 0 ? 'height:auto' : undefined}>
+              <div class="def-cuerpo">
+                {d.tachados && (
+                  <ul class="tachados">
+                    {d.tachados.map((t) => (
+                      <li>{t}</li>
+                    ))}
+                  </ul>
+                )}
+                <p>{d.texto}</p>
+              </div>
+            </div>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .marco {
+    background: #fff;
+    padding: clamp(4rem, 8vw, 6.5rem) 0;
+  }
+
+  /* La regla del rótulo es la barra de progreso de la sección. */
+  .rotulo-progreso {
+    position: relative;
+    border-top: 2px solid rgba(0, 51, 70, 0.2);
+    padding-top: 1rem;
+  }
+
+  #marco-prog {
+    position: absolute;
+    top: -2px;
+    left: 0;
+    width: 0%;
+    height: 2px;
+    background: var(--cian);
+  }
+
+  .intro {
+    display: flex;
+    flex-wrap: wrap;
+    gap: clamp(2rem, 5vw, 4rem);
+    margin-top: 2.5rem;
+    align-items: flex-end;
+  }
+
+  .intro h2 {
+    flex: 1 1 380px;
+    font-family: var(--fuente-titular);
+    font-stretch: 118%;
+    font-weight: 900;
+    font-size: clamp(2rem, 4.4vw, 3.5rem);
+    line-height: 0.95;
+    letter-spacing: -0.035em;
+    color: var(--azul-oscuro);
+    text-transform: uppercase;
+  }
+
+  .intro p {
+    flex: 1 1 380px;
+    max-width: 50ch;
+    font-size: 1.1rem;
+    line-height: 1.6;
+    color: var(--azul-oscuro);
+    font-weight: 600;
+    text-wrap: pretty;
+  }
+
+  .panel {
+    display: flex;
+    flex-wrap: wrap;
+    gap: clamp(1.5rem, 4vw, 3rem);
+    align-items: flex-start;
+    margin-top: 2.5rem;
+    border-top: 1px solid var(--azul-oscuro);
+    border-bottom: 1px solid var(--azul-oscuro);
+    padding: 2rem 0;
+  }
+
+  /* Revelado por scroll: el script pone data-visible cuando entra en cuadro. */
+  [data-reveal] {
+    opacity: 0;
+    transform: translateY(16px);
+    transition:
+      opacity 0.7s ease var(--retraso, 0ms),
+      transform 0.7s var(--salida) var(--retraso, 0ms);
+  }
+
+  [data-reveal][data-visible] {
+    opacity: 1;
+    transform: none;
+  }
+
+  .lectura {
+    flex: 1 1 300px;
+    min-width: min(100%, 260px);
+    max-width: 400px;
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+  }
+
+  .lectura-cab,
+  .definiciones-cab {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem 1.25rem;
+    justify-content: space-between;
+    align-items: baseline;
+    border-bottom: 1px solid rgba(0, 51, 70, 0.2);
+    padding-bottom: 0.6rem;
+  }
+
+  .et-fuerte,
+  .et-suave,
+  .fuente {
+    font-family: var(--fuente-mono);
+    text-transform: uppercase;
+  }
+
+  .et-fuerte {
+    font-size: 0.68rem;
+    letter-spacing: 0.14em;
+    color: var(--azul-oscuro);
+  }
+
+  .et-suave {
+    font-size: 0.6rem;
+    letter-spacing: 0.13em;
+    color: var(--azul-medio);
+  }
+
+  .et-suave.oscuro {
+    color: var(--tinta-suave);
+  }
+
+  .contador {
+    display: flex;
+    align-items: flex-end;
+    gap: 0.8rem;
+  }
+
+  #and-pct {
+    font-family: var(--fuente-titular);
+    font-stretch: 118%;
+    font-weight: 900;
+    font-size: clamp(2.6rem, 6vw, 3.8rem);
+    line-height: 0.82;
+    letter-spacing: -0.04em;
+    color: var(--azul-oscuro);
+  }
+
+  .contador-pie {
+    font-family: var(--fuente-mono);
+    font-size: 0.57rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--azul-medio);
+    line-height: 1.5;
+    padding-bottom: 0.35rem;
+  }
+
+  .riel {
+    height: 3px;
+    background: rgba(0, 51, 70, 0.12);
+  }
+
+  #and-bar {
+    width: 100%;
+    height: 3px;
+    background: var(--cian);
+    transition: width 0.55s var(--salida);
+  }
+
+  .explica,
+  #and-out {
+    font-size: 0.85rem;
+    line-height: 1.6;
+    color: var(--tinta-suave);
+    text-wrap: pretty;
+  }
+
+  #and-out {
+    min-height: 3.4rem;
+    border-left: 2px solid var(--cian);
+    padding-left: 0.8rem;
+  }
+
+  .lectura-pie {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    align-items: baseline;
+    justify-content: space-between;
+  }
+
+  #and-reset {
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    font-family: var(--fuente-mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--azul-medio);
+    border-bottom: 1px solid var(--azul-medio);
+    visibility: hidden;
+  }
+
+  .fuente {
+    font-size: 0.62rem;
+    letter-spacing: 0.14em;
+    color: var(--azul-medio);
+  }
+
+  .pistas-col {
+    flex: 1.3 1 360px;
+    min-width: min(100%, 300px);
+  }
+
+  .pistas-cab {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 62px;
+    gap: 0.6rem;
+    padding-bottom: 0.5rem;
+  }
+
+  .pistas-cab-par {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    font-family: var(--fuente-mono);
+    font-size: 0.57rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--azul-oscuro);
+  }
+
+  .pistas-cab-par .der {
+    color: var(--azul-medio);
+    padding-left: 0.7rem;
+  }
+
+  #and-pistas {
+    position: relative;
+  }
+
+  .casa-capa {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 62px;
+    gap: 0.6rem;
+  }
+
+  .casa-caja {
+    position: relative;
+    overflow: hidden;
+  }
+
+  #and-casa-svg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: calc(50% - 7px);
+  }
+
+  #casa-banda-r {
+    transition: height 0.6s var(--salida);
+  }
+
+  .fila {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 62px;
+    align-items: center;
+    gap: 0.6rem;
+    position: relative;
+    width: 100%;
+    text-align: left;
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid rgba(0, 51, 70, 0.14);
+    padding: 0.5rem 0;
+    cursor: pointer;
+    transition: background 0.25s ease;
+  }
+
+  .fila:first-of-type {
+    border-top: 1px solid rgba(0, 51, 70, 0.14);
+  }
+
+  .carril {
+    position: relative;
+    display: block;
+    height: 40px;
+  }
+
+  .divisoria {
+    position: absolute;
+    top: 2px;
+    bottom: 2px;
+    left: 50%;
+    width: 1px;
+    background: repeating-linear-gradient(
+      to bottom,
+      rgba(0, 51, 70, 0.35) 0 3px,
+      transparent 3px 6px
+    );
+  }
+
+  .bloque {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: calc(50% - 7px);
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+    padding: 0 0.7rem;
+    background: var(--azul-oscuro);
+    border: 1px solid transparent;
+    transition:
+      left 0.55s var(--salida),
+      background 0.3s ease,
+      border-color 0.3s ease,
+      box-shadow 0.2s ease;
+  }
+
+  .bloque [data-blk-n] {
+    font-family: var(--fuente-mono);
+    font-size: 0.55rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--cian);
+  }
+
+  .bloque [data-blk-t] {
+    font-size: 0.82rem;
+    line-height: 1.25;
+    color: #fff;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .estado {
+    font-family: var(--fuente-mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--azul-oscuro);
+    text-align: right;
+  }
+
+  /* Guía horizontal que sigue el cursor, como cursor de gráfico. */
+  #and-guia {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    height: 1px;
+    background: var(--cian);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease;
+  }
+
+  .definiciones {
+    margin-top: clamp(2.5rem, 5vw, 3.5rem);
+  }
+
+  .definiciones-cab {
+    padding-bottom: 0.75rem;
+  }
+
+  .definiciones-cab .et-fuerte {
+    color: var(--azul-medio);
+  }
+
+  .def {
+    border-top: 1px solid var(--azul-oscuro);
+  }
+
+  .def-cab {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    align-items: center;
+    gap: clamp(0.8rem, 2vw, 1.4rem);
+    width: 100%;
+    text-align: left;
+    background: none;
+    border: none;
+    padding: 1.4rem 0;
+    cursor: pointer;
+    transition: transform 0.25s var(--salida);
+  }
+
+  .def-cab:hover {
+    transform: translateX(5px);
+  }
+
+  .def-num {
+    font-family: var(--fuente-titular);
+    font-stretch: 118%;
+    font-weight: 900;
+    font-size: 2.2rem;
+    line-height: 0.85;
+    color: transparent;
+    -webkit-text-stroke: 2px var(--azul-oscuro);
+    transition:
+      -webkit-text-stroke 0.25s ease,
+      color 0.25s ease;
+  }
+
+  .def-cab:hover .def-num {
+    -webkit-text-stroke: 2px var(--cian);
+  }
+
+  .def-cab[aria-expanded='true'] .def-num {
+    color: var(--azul-oscuro);
+    -webkit-text-stroke: 0px var(--azul-oscuro);
+  }
+
+  .def-texto {
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+    min-width: 0;
+  }
+
+  .def-cejilla {
+    font-family: var(--fuente-mono);
+    font-size: 0.63rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--azul-medio);
+    transition: color 0.25s ease;
+  }
+
+  .def-cab:hover .def-cejilla {
+    color: var(--cian);
+  }
+
+  .def-titulo {
+    font-family: var(--fuente-titular);
+    font-stretch: 110%;
+    font-weight: 700;
+    font-size: clamp(1rem, 1.7vw, 1.3rem);
+    line-height: 1.25;
+    letter-spacing: -0.02em;
+    color: var(--azul-oscuro);
+    text-wrap: pretty;
+  }
+
+  .def-ico {
+    font-family: var(--fuente-mono);
+    font-size: 1rem;
+    color: var(--azul-medio);
+    transition:
+      color 0.25s ease,
+      transform 0.3s ease;
+  }
+
+  .def-cab[aria-expanded='true'] .def-ico {
+    color: var(--azul-oscuro);
+  }
+
+  .def-panel {
+    overflow: hidden;
+    height: 0;
+    transition: height 0.45s var(--salida);
+  }
+
+  .def-cuerpo {
+    padding: 0 0 1.75rem;
+    max-width: 70ch;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .def-cuerpo p {
+    font-size: 0.95rem;
+    line-height: 1.75;
+    color: var(--tinta-suave);
+    text-wrap: pretty;
+  }
+
+  .tachados {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1.75rem;
+  }
+
+  .tachados li {
+    font-family: var(--fuente-titular);
+    font-stretch: 112%;
+    font-weight: 800;
+    font-size: 1.2rem;
+    text-transform: uppercase;
+    letter-spacing: -0.01em;
+    color: var(--azul-oscuro);
+    text-decoration: line-through;
+    text-decoration-thickness: 2px;
+    text-decoration-color: var(--cian);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    [data-reveal] {
+      opacity: 1;
+      transform: none;
+      transition: none;
+    }
+  }
+</style>
+
+<script>
+  // ---------------------------------------------------------------- Andamio
+  const pistas = document.getElementById('and-pistas');
+  let retirados = 0;
+
+  const pintarAndamio = () => {
+    const siguiente = 5 - retirados;
+
+    for (let n = 5; n >= 1; n--) {
+      const fila = document.getElementById(`and-f${n}`) as HTMLButtonElement | null;
+      if (!fila) continue;
+      const fuera = n > siguiente;
+      const blk = fila.querySelector<HTMLElement>('[data-blk]');
+      const est = fila.querySelector<HTMLElement>('[data-est]');
+      const bn = fila.querySelector<HTMLElement>('[data-blk-n]');
+      const bt = fila.querySelector<HTMLElement>('[data-blk-t]');
+
+      fila.style.cursor = fuera ? 'default' : 'pointer';
+      fila.style.background = 'transparent';
+
+      if (blk) {
+        blk.style.left = fuera ? 'calc(50% + 7px)' : '0px';
+        blk.style.background = fuera ? '#fff' : n === siguiente ? '#05a3d4' : '#003346';
+        blk.style.borderColor = fuera ? '#05a3d4' : 'transparent';
+        blk.style.boxShadow = 'none';
+      }
+      if (bn) bn.style.color = fuera ? '#036c92' : n === siguiente ? '#003346' : '#05a3d4';
+      if (bt) bt.style.color = fuera || n === siguiente ? '#003346' : '#fff';
+      if (est) {
+        est.textContent = fuera ? 'En casa' : n === siguiente ? 'Retirar' : 'Aún carga';
+        est.style.color = fuera ? '#036c92' : n === siguiente ? '#003346' : '#2c3f47';
+        est.style.opacity = fuera || n === siguiente ? '1' : '0.75';
+      }
+    }
+
+    casaBanda();
+
+    const pct = 100 - retirados * 20;
+    const num = document.getElementById('and-pct');
+    if (num) num.textContent = `${pct}%`;
+    const bar = document.getElementById('and-bar');
+    if (bar) bar.style.width = `${pct}%`;
+
+    const cuenta = document.getElementById('and-cuenta');
+    if (cuenta) {
+      cuenta.textContent =
+        retirados >= 5 ? 'Traspaso completo' : `Apoyos en la terapia · ${5 - retirados} de 5`;
+    }
+
+    const reset = document.getElementById('and-reset');
+    if (reset) reset.style.visibility = retirados > 0 ? 'visible' : 'hidden';
+
+    const out = document.getElementById('and-out');
+    if (out && retirados > 0) {
+      if (retirados >= 5) {
+        out.textContent =
+          'Traspaso completo: la casa sostiene sola. El proceso se cierra con criterios cumplidos, no cuando el andamio se vuelve costumbre.';
+      } else {
+        const f = document.getElementById(`and-f${6 - retirados}`);
+        if (f) out.textContent = (f as HTMLElement).dataset.dice || '';
+      }
+    }
+  };
+
+  /**
+   * La banda de recorte se calcula en píxeles reales de la columna, teniendo en
+   * cuenta la escala del preserveAspectRatio y el margen vertical. Sin esto, en
+   * pantallas angostas la tinta aparece detrás de bloques que aún están puestos.
+   */
+  const casaBanda = () => {
+    const svg = document.getElementById('and-casa-svg');
+    const banda = document.getElementById('casa-banda-r');
+    if (!svg || !banda) return;
+    const r = svg.getBoundingClientRect();
+    const W = r.width;
+    const H = r.height;
+    if (!W || !H) return;
+    const esc = Math.min(W / 190, H / 285);
+    const offY = (H - 285 * esc) / 2;
+    const libre = (retirados / 5) * H;
+    const h = Math.max(0, Math.min(285, (libre - offY) / esc));
+    banda.setAttribute('height', h.toFixed(1));
+  };
+
+  document.querySelectorAll<HTMLButtonElement>('.fila[data-niv]').forEach((fila) => {
+    const n = parseInt(fila.dataset.niv || '0', 10);
+
+    fila.addEventListener('click', () => {
+      const siguiente = 5 - retirados;
+      if (n > siguiente) return;
+
+      // Se retiran de arriba hacia abajo: si se toca una de abajo, tiembla y avisa.
+      if (n < siguiente) {
+        fila.style.animation = 'none';
+        void fila.getBoundingClientRect().width;
+        fila.style.animation = 'and-tiembla 0.4s ease';
+        const out = document.getElementById('and-out');
+        if (out) {
+          out.textContent = `N${n} todavía carga. El andamio se desarma desde arriba: primero N${siguiente}.`;
+        }
+        return;
+      }
+
+      retirados += 1;
+      pintarAndamio();
+    });
+
+    const hover = (on: boolean) => {
+      if (n > 5 - retirados) return;
+      fila.style.background = on ? 'rgba(5,163,212,0.07)' : 'transparent';
+      const blk = fila.querySelector<HTMLElement>('[data-blk]');
+      if (blk) blk.style.boxShadow = on ? '0 3px 12px rgba(0,51,70,0.22)' : 'none';
+    };
+    fila.addEventListener('mouseenter', () => hover(true));
+    fila.addEventListener('mouseleave', () => hover(false));
+    fila.addEventListener('focus', () => hover(true));
+    fila.addEventListener('blur', () => hover(false));
+  });
+
+  document.getElementById('and-reset')?.addEventListener('click', () => {
+    retirados = 0;
+    const out = document.getElementById('and-out');
+    if (out) {
+      out.textContent =
+        'Toca N5 para traspasar el primer apoyo. Si intentas mover uno de abajo, avisa: todavía carga.';
+    }
+    pintarAndamio();
+  });
+
+  // Guía horizontal que sigue el cursor sobre las líneas.
+  if (pistas) {
+    const guia = document.getElementById('and-guia');
+    pistas.addEventListener(
+      'mousemove',
+      (ev) => {
+        if (!guia) return;
+        const r = pistas.getBoundingClientRect();
+        guia.style.transform = `translateY(${Math.round(ev.clientY - r.top)}px)`;
+        guia.style.opacity = '0.5';
+      },
+      { passive: true },
+    );
+    pistas.addEventListener('mouseleave', () => {
+      if (guia) guia.style.opacity = '0';
+    });
+  }
+
+  // ----------------------------------------------------------- Definiciones
+  const abiertas: Record<number, boolean> = { 1: true };
+
+  const pintarDefs = () => {
+    for (let i = 1; i <= 5; i++) {
+      const on = !!abiertas[i];
+      const boton = document.getElementById(`def-b${i}`);
+      const panel = document.getElementById(`def-p${i}`) as (HTMLElement & { _t?: number }) | null;
+
+      if (boton) {
+        boton.setAttribute('aria-expanded', on ? 'true' : 'false');
+        const ico = boton.querySelector<HTMLElement>('[data-def-ico]');
+        if (ico) ico.textContent = on ? '–' : '+';
+      }
+
+      if (panel) {
+        const inner = panel.firstElementChild as HTMLElement | null;
+        const h = inner ? inner.offsetHeight : 0;
+        if (panel._t) {
+          clearTimeout(panel._t);
+          panel._t = undefined;
+        }
+        if (on) {
+          if (panel.style.height !== 'auto') {
+            panel.style.height = `${h}px`;
+            // Al terminar la transición se suelta a auto para que el contenido pueda crecer.
+            panel._t = window.setTimeout(() => {
+              if (abiertas[i]) panel.style.height = 'auto';
+            }, 480);
+          }
+        } else {
+          if (panel.style.height === 'auto') {
+            panel.style.height = `${h}px`;
+            void panel.offsetHeight;
+          }
+          panel.style.height = '0px';
+        }
+      }
+    }
+  };
+
+  document.querySelectorAll<HTMLButtonElement>('[data-def]').forEach((boton) => {
+    boton.addEventListener('click', () => {
+      const i = parseInt(boton.dataset.def || '0', 10);
+      abiertas[i] = !abiertas[i];
+      pintarDefs();
+    });
+  });
+
+  // ------------------------------------------------- Revelado y progreso
+  /**
+   * El revelado va por IntersectionObserver y no por posición de scroll: así
+   * funciona también cuando se entra directo a #marco (ahí no llega ningún
+   * evento de scroll y el contenido se quedaba invisible).
+   *
+   * La clave de cada elemento (data-reveal) se guarda fuera del DOM para que
+   * nada pueda borrar el estado de "ya revelado".
+   */
+  const revelados: Record<string, boolean> = {};
+  const objetivos = [...document.querySelectorAll<HTMLElement>('#marco [data-reveal]')];
+
+  const marcar = (el: HTMLElement) => {
+    revelados[el.dataset.reveal as string] = true;
+    el.setAttribute('data-visible', '');
+  };
+
+  if ('IntersectionObserver' in window) {
+    const obs = new IntersectionObserver(
+      (entradas) => {
+        entradas.forEach((e) => {
+          if (!e.isIntersecting) return;
+          marcar(e.target as HTMLElement);
+          obs.unobserve(e.target);
+        });
+      },
+      { rootMargin: '0px 0px -10% 0px' },
+    );
+    objetivos.forEach((el) => obs.observe(el));
+  } else {
+    objetivos.forEach(marcar);
+  }
+
+  const seccion = document.getElementById('marco');
+
+  const alScroll = () => {
+    casaBanda();
+    const pr = document.getElementById('marco-prog');
+    if (pr && seccion) {
+      const vh = window.innerHeight || 800;
+      const r = seccion.getBoundingClientRect();
+      const t = (vh - r.top) / (r.height + vh * 0.55);
+      pr.style.width = `${Math.max(0, Math.min(1, t)) * 100}%`;
+    }
+  };
+
+  window.addEventListener('scroll', alScroll, { passive: true });
+  window.addEventListener('resize', alScroll, { passive: true });
+
+  // El navegador congela las transiciones en pestañas ocultas: al volver,
+  // se fuerza el estado final de lo que ya estaba revelado.
+  document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState !== 'visible') return;
+    objetivos.forEach((el) => {
+      if (!revelados[el.dataset.reveal as string]) return;
+      el.style.transition = 'none';
+      el.setAttribute('data-visible', '');
+      void el.offsetWidth;
+      el.style.transition = '';
+    });
+    alScroll();
+  });
+
+  pintarAndamio();
+  pintarDefs();
+  alScroll();
+</script>

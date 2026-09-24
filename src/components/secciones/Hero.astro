@@ -1,0 +1,754 @@
+---
+/**
+ * Hero + juego del nudo.
+ *
+ * El nudo es una cuerda cerrada que pasa por 11 aros arrastrables. El script
+ * detecta los cruces por intersección de segmentos y los marca con un anillo
+ * durazno. Cuando no queda ninguno, se activa el descuento.
+ */
+import { NUDO_D } from '../../data/geometria';
+import { wa } from '../../data/contacto';
+
+/** La retícula de fondo viene apagada (es el valor por defecto del prototipo). */
+const reticula = false;
+
+const AROS = [
+  [70, 300], [330, 92], [122, 112], [300, 302], [214, 196], [392, 222],
+  [150, 224], [252, 58], [60, 180], [380, 330], [210, 320],
+];
+---
+
+<section id="inicio" class="hero">
+  {reticula && <div aria-hidden="true" class="reticula"></div>}
+
+  <div class="container envoltorio">
+    <div class="columnas">
+      <div class="izq">
+        <div class="cejilla-fila">
+          <svg aria-hidden="true" viewBox="0 0 74 16" width="74" height="16" class="onda">
+            <path
+              d="M2 8 C7 0.5, 13 0.5, 18 8 C23 15.5, 29 15.5, 34 8 C39 0.5, 45 0.5, 50 8 C55 15.5, 61 15.5, 66 8 C68 4.9, 70 3.6, 72 3.6"
+              fill="none"
+              stroke="#05a3d4"
+              stroke-width="2.6"
+              stroke-linecap="round"></path>
+          </svg>
+          <span class="cejilla-hero"
+            >Bogotá · consulta online · niñez, adolescencia y adultez joven</span
+          >
+        </div>
+
+        <h1>
+          Psicología clínica<br /><span class="calado">basada en</span>
+          <span class="cian">procesos</span>
+        </h1>
+
+        <p class="entrada">
+          Una forma distinta de acompañar: evaluación e intervención para niñez, adolescencia y
+          adultez joven, con objetivos definidos y progreso medible.
+        </p>
+
+        <div class="acciones">
+          <a href={wa()} target="_blank" rel="noopener noreferrer" class="btn-wa">
+            <svg viewBox="0 0 24 24" width="19" height="19" fill="currentColor" aria-hidden="true">
+              <path
+                d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38c1.45.79 3.08 1.21 4.79 1.21 5.46 0 9.91-4.45 9.91-9.91C21.95 6.45 17.5 2 12.04 2zm0 18.02c-1.53 0-3.02-.41-4.32-1.19l-.31-.18-3.21.84.86-3.13-.2-.32a8.2 8.2 0 01-1.26-4.38c0-4.54 3.7-8.24 8.25-8.24 2.2 0 4.27.86 5.83 2.42a8.19 8.19 0 012.41 5.83c0 4.55-3.7 8.25-8.25 8.25zm4.53-6.18c-.25-.12-1.47-.72-1.69-.81-.23-.08-.39-.12-.56.13-.16.24-.64.8-.78.97-.15.16-.29.18-.53.06-.25-.13-1.05-.39-1.99-1.23-.74-.66-1.23-1.47-1.38-1.71-.14-.25-.01-.38.11-.5.11-.11.25-.29.37-.44.12-.14.16-.25.25-.41.08-.17.04-.31-.02-.43-.06-.13-.56-1.35-.77-1.84-.2-.48-.4-.42-.55-.43h-.48c-.16 0-.43.06-.65.31-.22.24-.86.84-.86 2.05s.88 2.38 1 2.54c.13.17 1.73 2.64 4.19 3.7.59.25 1.04.4 1.4.52.59.18 1.12.16 1.54.1.47-.07 1.47-.6 1.67-1.18.21-.58.21-1.07.15-1.18-.06-.11-.22-.17-.47-.29z"
+              ></path>
+            </svg>
+            <span>Escríbenos por WhatsApp</span>
+          </a>
+          <a href="#pertinencia" class="btn-linea">¿Es mi caso?</a>
+        </div>
+
+        <p class="nota">
+          Respuesta directa, sin formularios · <a href="#agenda">o agenda 20 min sin costo</a>
+        </p>
+      </div>
+
+      <div class="der">
+        <div class="panel" id="nudo-panel">
+          <div class="panel-cab">
+            <span class="panel-titulo">El nudo · juego</span>
+            <span id="nudo-cruces-n" class="panel-cuenta">— cruces</span>
+          </div>
+
+          <div class="tablero" id="nudo-tablero">
+            <svg
+              id="nudo-svg"
+              viewBox="0 0 440 380"
+              preserveAspectRatio="xMidYMid meet"
+              role="img"
+              aria-label="Nudo interactivo: arrastra los aros hasta que la cuerda deje de cruzarse"
+            >
+              <path
+                id="nudo-casing"
+                d={NUDO_D}
+                fill="none"
+                stroke="#e8f4f9"
+                stroke-width="21"
+                stroke-linejoin="round"
+                stroke-linecap="round"></path>
+              <path
+                id="nudo-core"
+                d={NUDO_D}
+                fill="none"
+                stroke="#05a3d4"
+                stroke-width="13"
+                stroke-linejoin="round"
+                stroke-linecap="round"></path>
+              <path
+                id="nudo-tex"
+                d={NUDO_D}
+                fill="none"
+                stroke="#003346"
+                stroke-width="9"
+                stroke-dasharray="2 12"
+                stroke-linejoin="round"
+                opacity="0.35"></path>
+              <g id="nudo-cruces"></g>
+              <g id="nudo-aros">
+                {
+                  AROS.map((p, i) => (
+                    <g id={`nudo-p${i}`} class="aro" transform={`translate(${p[0]},${p[1]})`}>
+                      <circle r="30" fill="transparent" />
+                      <circle r="16" fill="#003346" stroke="#e8f4f9" stroke-width="3" />
+                      <circle r="5.5" fill="#05a3d4" />
+                    </g>
+                  ))
+                }
+              </g>
+            </svg>
+          </div>
+
+          <div class="pie-tablero" id="nudo-fila">
+            <p id="nudo-tip">Arrastra los aros · deshaz cada cruce</p>
+            <button type="button" id="nudo-reset" class="toque">Reiniciar</button>
+          </div>
+
+          <p id="nudo-premio">
+            Deja la cuerda sin un solo cruce&nbsp; y se activa un <strong>5 % de descuento</strong> sobre
+            tu primer programa.
+          </p>
+
+          <div class="porque">
+            <span>Por qué</span>
+            <p>
+              Un nudo no se deshace tirando más fuerte: se afloja al ver qué hilo mover primero, y en
+              qué orden. Eso es, literalmente, el trabajo clínico.
+            </p>
+          </div>
+
+          <div id="nudo-ok" hidden>
+            <p class="ok-titulo">Nudo deshecho · descuento activo</p>
+            <p class="ok-texto">
+              5 % sobre tu primer programa. Manda el código <strong>NUDO-5</strong> por WhatsApp y queda
+              aplicado.
+            </p>
+            <a
+              href={wa('Hola, escribo desde la web. Deshice el nudo: quiero reclamar el código NUDO-5 (5 % sobre el primer programa).')}
+              target="_blank"
+              rel="noopener noreferrer">Reclamar por WhatsApp</a
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero {
+    position: relative;
+    background: #fff;
+    padding: 0;
+    overflow: hidden;
+  }
+
+  .reticula {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(90deg, rgba(0, 51, 70, 0.07) 1px, transparent 1px),
+      linear-gradient(rgba(0, 51, 70, 0.07) 1px, transparent 1px);
+    background-size: 74px 74px;
+    pointer-events: none;
+  }
+
+  .envoltorio {
+    position: relative;
+  }
+
+  .columnas {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: stretch;
+    gap: 0;
+  }
+
+  .izq {
+    flex: 1 1 520px;
+    min-width: min(100%, 320px);
+    padding: 4.5rem clamp(1.5rem, 4vw, 3.5rem) 3.5rem 0;
+  }
+
+  .cejilla-fila {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+  }
+
+  .onda {
+    flex: 0 0 auto;
+    overflow: visible;
+  }
+
+  .cejilla-hero {
+    font-family: var(--fuente-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--azul-oscuro);
+    line-height: 1.7;
+  }
+
+  h1 {
+    font-family: var(--fuente-titular);
+    font-stretch: 118%;
+    font-weight: 800;
+    font-size: clamp(2.15rem, 4.9vw, 3.75rem);
+    line-height: 0.98;
+    letter-spacing: -0.035em;
+    color: var(--azul-oscuro);
+    margin-top: 2rem;
+    text-transform: uppercase;
+    text-wrap: balance;
+  }
+
+  h1 .calado {
+    display: inline-block;
+  }
+
+  .cian {
+    color: var(--cian);
+  }
+
+  .entrada {
+    font-size: 1.08rem;
+    line-height: 1.65;
+    color: var(--tinta-suave);
+    margin-top: 2rem;
+    max-width: 46ch;
+    text-wrap: pretty;
+  }
+
+  .acciones {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0;
+    margin-top: 2.5rem;
+  }
+
+  .btn-wa,
+  .btn-linea {
+    display: flex;
+    align-items: center;
+    padding: 1.05rem 1.9rem;
+    font-family: var(--fuente-mono);
+    font-size: 0.76rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    transition:
+      background 0.2s ease,
+      color 0.2s ease;
+  }
+
+  .btn-wa {
+    gap: 0.7rem;
+    background: var(--azul-oscuro);
+    color: #fff;
+  }
+
+  .btn-wa svg {
+    flex: 0 0 auto;
+  }
+
+  .btn-wa:hover {
+    background: #25d366;
+    color: var(--azul-oscuro);
+  }
+
+  .btn-linea {
+    border: 1px solid var(--azul-oscuro);
+    color: var(--azul-oscuro);
+  }
+
+  .btn-linea:hover {
+    background: var(--azul-oscuro);
+    color: #fff;
+  }
+
+  .nota {
+    font-family: var(--fuente-mono);
+    font-size: 0.66rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--azul-medio);
+    margin-top: 1rem;
+  }
+
+  .nota a {
+    color: var(--azul-medio);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .der {
+    flex: 1 1 400px;
+    min-width: min(100%, 300px);
+    display: flex;
+    align-items: stretch;
+    padding: 4.5rem 0 3.5rem clamp(1.5rem, 4vw, 3rem);
+    position: relative;
+  }
+
+  /* El panel se estira a la altura de la columna izquierda. */
+  .panel {
+    position: absolute;
+    top: 4.5rem;
+    bottom: 3.5rem;
+    left: clamp(1.5rem, 4vw, 3rem);
+    right: 0;
+    display: flex;
+    flex-direction: column;
+    background: var(--azul-oscuro);
+    padding: clamp(1.1rem, 2.2vw, 1.6rem);
+  }
+
+  .panel-cab {
+    flex: 0 0 auto;
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+    border-bottom: 1px solid rgba(136, 182, 192, 0.4);
+    padding-bottom: 0.7rem;
+  }
+
+  .panel-titulo,
+  .panel-cuenta {
+    font-family: var(--fuente-mono);
+    font-size: 0.66rem;
+    text-transform: uppercase;
+  }
+
+  .panel-titulo {
+    letter-spacing: 0.18em;
+    color: var(--cian);
+  }
+
+  .panel-cuenta {
+    letter-spacing: 0.14em;
+    color: var(--durazno);
+  }
+
+  .tablero {
+    flex: 1 1 auto;
+    min-height: 150px;
+    display: flex;
+    margin: 0.5rem 0 0;
+  }
+
+  #nudo-svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+    touch-action: pan-y;
+  }
+
+  .aro {
+    cursor: grab;
+    touch-action: none;
+  }
+
+  .pie-tablero {
+    flex: 0 0 auto;
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-top: 0.7rem;
+  }
+
+  .pie-tablero[hidden],
+  #nudo-premio[hidden],
+  #nudo-ok[hidden] {
+    display: none;
+  }
+
+  #nudo-tip,
+  #nudo-reset {
+    font-family: var(--fuente-mono);
+    font-size: 0.66rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--teal-claro);
+    line-height: 1.7;
+  }
+
+  #nudo-reset {
+    flex: 0 0 auto;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    font-size: 0.64rem;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  #nudo-premio {
+    flex: 0 0 auto;
+    font-size: 0.9rem;
+    line-height: 1.6;
+    color: var(--hielo);
+    margin-top: 0.5rem;
+  }
+
+  #nudo-premio strong {
+    color: var(--mostaza);
+  }
+
+  .porque {
+    flex: 0 0 auto;
+    display: flex;
+    gap: 0.85rem;
+    margin-top: 0.9rem;
+    padding-top: 0.9rem;
+    border-top: 1px solid rgba(136, 182, 192, 0.3);
+  }
+
+  .porque span {
+    flex: 0 0 auto;
+    font-family: var(--fuente-mono);
+    font-size: 0.64rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--teal-claro);
+    padding-top: 0.15rem;
+  }
+
+  .porque p {
+    font-size: 0.85rem;
+    line-height: 1.6;
+    color: var(--hielo);
+  }
+
+  #nudo-ok {
+    flex: 0 0 auto;
+    border: 1px solid var(--mostaza);
+    padding: 1rem 1.15rem;
+    margin-top: 0.5rem;
+  }
+
+  .ok-titulo {
+    font-family: var(--fuente-mono);
+    font-size: 0.64rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--mostaza);
+  }
+
+  .ok-texto {
+    color: #fff;
+    font-size: 0.92rem;
+    line-height: 1.6;
+    margin-top: 0.5rem;
+  }
+
+  .ok-texto strong {
+    font-family: var(--fuente-mono);
+    color: var(--mostaza);
+    letter-spacing: 0.08em;
+  }
+
+  #nudo-ok a {
+    display: inline-block;
+    margin-top: 1rem;
+    background: var(--mostaza);
+    color: var(--azul-oscuro);
+    padding: 0.8rem 1.35rem;
+    font-family: var(--fuente-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    transition: background 0.2s ease;
+  }
+
+  #nudo-ok a:hover {
+    background: #fff;
+  }
+
+  /* Bajo el umbral el panel deja de flotar y el tablero crece. */
+  @media (max-width: 1080px) {
+    .izq {
+      padding: 4.5rem 0 2.5rem;
+    }
+
+    .der {
+      padding: 0 0 2.5rem;
+    }
+
+    .panel {
+      position: static;
+      width: 100%;
+    }
+
+    .tablero {
+      min-height: 260px;
+      max-height: min(56vh, 420px);
+    }
+  }
+</style>
+
+<script>
+  const svg = document.getElementById('nudo-svg') as SVGSVGElement | null;
+
+  if (svg) {
+    const N_AROS = 11;
+    const estado = {
+      p: [
+        [70, 300], [330, 92], [122, 112], [300, 302], [214, 196], [392, 222],
+        [150, 224], [252, 58], [60, 180], [380, 330], [210, 320],
+      ] as number[][],
+      drag: null as number | null,
+      listo: false,
+    };
+
+    /** Convierte coordenadas de pantalla a coordenadas del viewBox. */
+    const aSvg = (ev: PointerEvent): number[] | null => {
+      const m = svg.getScreenCTM();
+      if (!m) return null;
+      const pt = svg.createSVGPoint();
+      pt.x = ev.clientX;
+      pt.y = ev.clientY;
+      const r = pt.matrixTransform(m.inverse());
+      return [r.x, r.y];
+    };
+
+    /** Catmull-Rom cerrado: cada aro es un punto de paso de la cuerda. */
+    const tramos = () => {
+      const p = estado.p;
+      const n = p.length;
+      const out: number[][][] = [];
+      for (let i = 0; i < n; i++) {
+        const p0 = p[(i - 1 + n) % n];
+        const p1 = p[i];
+        const p2 = p[(i + 1) % n];
+        const p3 = p[(i + 2) % n];
+        out.push([
+          p1,
+          [p1[0] + (p2[0] - p0[0]) / 7, p1[1] + (p2[1] - p0[1]) / 7],
+          [p2[0] - (p3[0] - p1[0]) / 7, p2[1] - (p3[1] - p1[1]) / 7],
+          p2,
+        ]);
+      }
+      return out;
+    };
+
+    const path = () => {
+      const t = tramos();
+      let d = `M${t[0][0][0].toFixed(1)} ${t[0][0][1].toFixed(1)}`;
+      t.forEach((s) => {
+        d += ` C${s[1][0].toFixed(1)} ${s[1][1].toFixed(1)}, ${s[2][0].toFixed(1)} ${s[2][1].toFixed(1)}, ${s[3][0].toFixed(1)} ${s[3][1].toFixed(1)}`;
+      });
+      return `${d}Z`;
+    };
+
+    /** Muestrea la curva en segmentos rectos para poder buscar intersecciones. */
+    const poly = () => {
+      const t = tramos();
+      const k = 8;
+      const out: number[][] = [];
+      t.forEach((s) => {
+        for (let j = 0; j < k; j++) {
+          const u = j / k;
+          const v = 1 - u;
+          out.push([
+            v * v * v * s[0][0] + 3 * v * v * u * s[1][0] + 3 * v * u * u * s[2][0] + u * u * u * s[3][0],
+            v * v * v * s[0][1] + 3 * v * v * u * s[1][1] + 3 * v * u * u * s[2][1] + u * u * u * s[3][1],
+          ]);
+        }
+      });
+      return out;
+    };
+
+    const corte = (a: number[], b: number[], c: number[], d: number[]): number[] | null => {
+      const rx = b[0] - a[0];
+      const ry = b[1] - a[1];
+      const sx = d[0] - c[0];
+      const sy = d[1] - c[1];
+      const den = rx * sy - ry * sx;
+      if (!den) return null;
+      const t = ((c[0] - a[0]) * sy - (c[1] - a[1]) * sx) / den;
+      const u = ((c[0] - a[0]) * ry - (c[1] - a[1]) * rx) / den;
+      if (t <= 0.0001 || t >= 0.9999 || u <= 0.0001 || u >= 0.9999) return null;
+      return [a[0] + t * rx, a[1] + t * ry];
+    };
+
+    const cruces = () => {
+      const q = poly();
+      const n = q.length;
+      const cl: number[][] = [];
+      for (let i = 0; i < n; i++) {
+        const a = q[i];
+        const b = q[(i + 1) % n];
+        for (let j = i + 2; j < n; j++) {
+          if (i === 0 && j === n - 1) continue;
+          const x = corte(a, b, q[j], q[(j + 1) % n]);
+          if (!x) continue;
+          let nuevo = true;
+          for (let k = 0; k < cl.length; k++) {
+            if (Math.abs(cl[k][0] - x[0]) < 18 && Math.abs(cl[k][1] - x[1]) < 18) {
+              nuevo = false;
+              break;
+            }
+          }
+          if (nuevo) cl.push(x);
+        }
+      }
+      return cl;
+    };
+
+    const pintar = () => {
+      const d = path();
+      ['nudo-casing', 'nudo-core', 'nudo-tex'].forEach((id) => {
+        document.getElementById(id)?.setAttribute('d', d);
+      });
+      estado.p.forEach((p, i) => {
+        const g = document.getElementById(`nudo-p${i}`);
+        if (!g) return;
+        g.setAttribute('transform', `translate(${p[0].toFixed(1)},${p[1].toFixed(1)})`);
+        const anillo = g.children[1];
+        if (anillo) {
+          const on = estado.drag === i;
+          anillo.setAttribute('stroke', on ? '#f8d17b' : '#e8f4f9');
+          anillo.setAttribute('r', on ? '18' : '16');
+        }
+      });
+      if (estado.listo) return;
+      const cr = cruces();
+      const g = document.getElementById('nudo-cruces');
+      if (g) {
+        g.innerHTML = cr
+          .map(
+            (c) =>
+              `<circle cx="${c[0].toFixed(1)}" cy="${c[1].toFixed(1)}" r="12" fill="none" stroke="#ff9e89" stroke-width="2.5"></circle>`,
+          )
+          .join('');
+      }
+      const t = document.getElementById('nudo-cruces-n');
+      if (t) t.textContent = cr.length === 1 ? '1 cruce' : `${cr.length} cruces`;
+    };
+
+    /**
+     * Reparte los aros al azar con separación mínima, y se queda con el reparto
+     * que deje entre 9 y 18 cruces: menos es trivial, más es desesperante.
+     */
+    const barajar = () => {
+      const sep = 66 * 66;
+      let mejor: number[][] | null = null;
+      let mejorC = -1;
+      for (let intento = 0; intento < 60; intento++) {
+        const p: number[][] = [];
+        let fallos = 0;
+        while (p.length < N_AROS && fallos < 900) {
+          const q = [46 + Math.random() * 348, 46 + Math.random() * 288];
+          let ok = true;
+          for (let i = 0; i < p.length; i++) {
+            const dx = p[i][0] - q[0];
+            const dy = p[i][1] - q[1];
+            if (dx * dx + dy * dy < sep) {
+              ok = false;
+              break;
+            }
+          }
+          if (ok) p.push(q);
+          else fallos++;
+        }
+        if (p.length < N_AROS) continue;
+        estado.p = p;
+        const c = cruces().length;
+        if (c > mejorC) {
+          mejorC = c;
+          mejor = p;
+        }
+        if (c >= 9 && c <= 18) break;
+      }
+      if (mejor) estado.p = mejor;
+      pintar();
+    };
+
+    const exito = () => {
+      estado.listo = true;
+      const g = document.getElementById('nudo-cruces');
+      if (g) g.innerHTML = '';
+      document.getElementById('nudo-casing')?.setAttribute('stroke', '#f8d17b');
+      const t = document.getElementById('nudo-cruces-n');
+      if (t) {
+        t.textContent = 'sin cruces';
+        t.style.color = '#f8d17b';
+      }
+      estado.p.forEach((_, i) => {
+        document.getElementById(`nudo-p${i}`)?.children[2]?.setAttribute('fill', '#f8d17b');
+      });
+      ['nudo-fila', 'nudo-premio'].forEach((id) => {
+        const el = document.getElementById(id);
+        if (el) el.hidden = true;
+      });
+      const ok = document.getElementById('nudo-ok');
+      if (ok) ok.hidden = false;
+    };
+
+    for (let i = 0; i < N_AROS; i++) {
+      const g = document.getElementById(`nudo-p${i}`);
+      g?.addEventListener('pointerdown', (ev) => {
+        if (estado.listo) return;
+        ev.preventDefault();
+        estado.drag = i;
+        pintar();
+      });
+    }
+
+    document.getElementById('nudo-reset')?.addEventListener('click', () => {
+      if (estado.listo) return;
+      barajar();
+    });
+
+    window.addEventListener(
+      'pointermove',
+      (ev) => {
+        if (estado.drag === null || estado.listo) return;
+        const q = aSvg(ev);
+        if (!q) return;
+        ev.preventDefault();
+        estado.p[estado.drag] = [
+          Math.max(30, Math.min(410, q[0])),
+          Math.max(30, Math.min(350, q[1])),
+        ];
+        pintar();
+      },
+      { passive: false },
+    );
+
+    const soltar = () => {
+      if (estado.drag === null) return;
+      estado.drag = null;
+      pintar();
+      if (!estado.listo && cruces().length === 0) exito();
+    };
+    window.addEventListener('pointerup', soltar);
+    window.addEventListener('pointercancel', soltar);
+
+    barajar();
+  }
+</script>
