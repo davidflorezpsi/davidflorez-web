@@ -103,7 +103,7 @@ export const PESTANAS: Pestana[] = [
         chips: ['Presencial · Bogotá'],
         acciones: [
           { label: 'Reservar y pagar', msg: 'Hola, escribo desde la web. Quiero reservar Espectro autista · ADOS-2 / ADI-R ($1.050.000) y recibir el link de pago.', primaria: true },
-          { label: 'Financiar a cuotas', msg: 'Hola, escribo desde la web. Quiero financiar a cuotas Espectro autista · ADOS-2 / ADI-R ($1.050.000). ¿Me cuentan las opciones?', primaria: false },
+          { label: 'Financiar a cuotas', msg: 'Hola, escribo desde la web. Quiero financiar a cuotas Espectro autista · ADOS-2 / ADI-R ($1.050.000). ¿Me cuentas las opciones?', primaria: false },
         ],
         detalle: {
           cejilla: '02 / Evaluación especializada',
@@ -133,7 +133,7 @@ export const PESTANAS: Pestana[] = [
         chips: ['Presencial · Bogotá', 'Telepresencial'],
         acciones: [
           { label: 'Reservar y pagar', msg: 'Hola, escribo desde la web. Quiero reservar Programa de Intervención Individual ($2.400.000) y recibir el link de pago.', primaria: true },
-          { label: 'Financiar a cuotas', msg: 'Hola, escribo desde la web. Quiero financiar a cuotas Programa de Intervención Individual ($2.400.000). ¿Me cuentan las opciones?', primaria: false },
+          { label: 'Financiar a cuotas', msg: 'Hola, escribo desde la web. Quiero financiar a cuotas Programa de Intervención Individual ($2.400.000). ¿Me cuentas las opciones?', primaria: false },
         ],
         detalle: {
           cejilla: '03 / Intervención',
@@ -163,7 +163,7 @@ export const PESTANAS: Pestana[] = [
         alterna: true,
         acciones: [
           { label: 'Reservar y pagar', msg: 'Hola, escribo desde la web. Quiero reservar Entrenamiento conductual a cuidadores ($1.440.000) y recibir el link de pago.', primaria: true },
-          { label: 'Financiar a cuotas', msg: 'Hola, escribo desde la web. Quiero financiar a cuotas Entrenamiento conductual a cuidadores ($1.440.000). ¿Me cuentan las opciones?', primaria: false },
+          { label: 'Financiar a cuotas', msg: 'Hola, escribo desde la web. Quiero financiar a cuotas Entrenamiento conductual a cuidadores ($1.440.000). ¿Me cuentas las opciones?', primaria: false },
         ],
         detalle: {
           cejilla: '04 / Padres',
@@ -226,7 +226,7 @@ export const PESTANAS: Pestana[] = [
         chips: ['Presencial · Bogotá'],
         acciones: [
           { label: 'Reservar y pagar', msg: 'Hola, escribo desde la web. Quiero reservar Espectro autista en adolescentes ($1.050.000 – $1.200.000) y recibir el link de pago.', primaria: true },
-          { label: 'Financiar a cuotas', msg: 'Hola, escribo desde la web. Quiero financiar a cuotas Espectro autista en adolescentes ($1.050.000 – $1.200.000). ¿Me cuentan las opciones?', primaria: false },
+          { label: 'Financiar a cuotas', msg: 'Hola, escribo desde la web. Quiero financiar a cuotas Espectro autista en adolescentes ($1.050.000 – $1.200.000). ¿Me cuentas las opciones?', primaria: false },
         ],
         detalle: {
           cejilla: '02 / Evaluación especializada',
@@ -255,7 +255,7 @@ export const PESTANAS: Pestana[] = [
         chips: ['Presencial · Bogotá', 'Telepresencial'],
         acciones: [
           { label: 'Reservar y pagar', msg: 'Hola, escribo desde la web. Quiero reservar Programa de Intervención Individual ($2.400.000) y recibir el link de pago.', primaria: true },
-          { label: 'Financiar a cuotas', msg: 'Hola, escribo desde la web. Quiero financiar a cuotas Programa de Intervención Individual ($2.400.000). ¿Me cuentan las opciones?', primaria: false },
+          { label: 'Financiar a cuotas', msg: 'Hola, escribo desde la web. Quiero financiar a cuotas Programa de Intervención Individual ($2.400.000). ¿Me cuentas las opciones?', primaria: false },
         ],
         detalle: {
           cejilla: '03 / Intervención',
@@ -285,7 +285,7 @@ export const PESTANAS: Pestana[] = [
         alterna: true,
         acciones: [
           { label: 'Reservar y pagar', msg: 'Hola, escribo desde la web. Quiero reservar PEERS · Habilidades sociales ($1.680.000) y recibir el link de pago.', primaria: true },
-          { label: 'Financiar a cuotas', msg: 'Hola, escribo desde la web. Quiero financiar a cuotas PEERS · Habilidades sociales ($1.680.000). ¿Me cuentan las opciones?', primaria: false },
+          { label: 'Financiar a cuotas', msg: 'Hola, escribo desde la web. Quiero financiar a cuotas PEERS · Habilidades sociales ($1.680.000). ¿Me cuentas las opciones?', primaria: false },
         ],
         detalle: {
           cejilla: '04 / Habilidades sociales',
@@ -348,7 +348,7 @@ export const PESTANAS: Pestana[] = [
         chips: ['Presencial · Bogotá', 'Telepresencial'],
         acciones: [
           { label: 'Reservar y pagar', msg: 'Hola, escribo desde la web. Quiero reservar Programa de Intervención Individual ($2.400.000) y recibir el link de pago.', primaria: true },
-          { label: 'Financiar a cuotas', msg: 'Hola, escribo desde la web. Quiero financiar a cuotas Programa de Intervención Individual ($2.400.000). ¿Me cuentan las opciones?', primaria: false },
+          { label: 'Financiar a cuotas', msg: 'Hola, escribo desde la web. Quiero financiar a cuotas Programa de Intervención Individual ($2.400.000). ¿Me cuentas las opciones?', primaria: false },
         ],
         detalle: {
           cejilla: '02 / Intervención',
