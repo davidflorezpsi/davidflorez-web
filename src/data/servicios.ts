@@ -118,7 +118,7 @@ export const PESTANAS: Pestana[] = [
             ] },
             { titulo: '¿Para quién?', texto: 'Familias con sospecha de condición del espectro autista, o que requieren confirmación o segunda opinión sobre un diagnóstico previo.' },
           ],
-          pie: 'Certificación ADOS-2 / ADI-R · ADIPA 2026',
+          pie: 'Acreditación clínica internacional ADOS-2 (24 h) y ADI-R (16 h) · ADIPA 2026',
         },
       },
       {

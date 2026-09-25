@@ -16,6 +16,7 @@ import {
   direccionCompleta,
 } from '../data/contacto';
 import { NOMBRE_COMPLETO, SITIO, TARJETA_PROFESIONAL } from '../data/identidad';
+import { CREDENCIALES } from '../data/credenciales';
 
 function tablaPrecios(): string {
   // Un mismo servicio con el mismo precio en varias pestañas va en una fila,
@@ -60,6 +61,12 @@ El método es Terapia Basada en Procesos (PBT, Hayes y Hofmann 2018): cada proce
 empieza con una hipótesis explícita, avanza con datos registrados y termina con
 criterios de cierre definidos. No se ofrecen sesiones sueltas, psicoterapia
 ecléctica, atención por EPS ni servicio de urgencias.
+
+## Formación y credenciales
+
+${CREDENCIALES.map((c) => `- ${c.nombre} — ${c.emisor}, ${c.fecha}${c.verificacion ? ` (${c.verificacion.texto})` : ''}`).join('\n')}
+
+Detalle: [Sobre mí](${SITIO}/sobre-mi/).
 
 ## Qué atiende
 

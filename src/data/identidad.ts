@@ -6,6 +6,7 @@
  * privacidad no vuelvan a desincronizarse.
  */
 import { WHATSAPP, CAL_COM, INSTAGRAM, SEDES } from './contacto';
+import { CREDENCIALES, UNIVERSIDADES } from './credenciales';
 
 export const SITIO = 'https://davidflorez.co';
 
@@ -61,7 +62,7 @@ export function grafoBase(
       familyName: 'Flórez Rojas',
       alternateName: NOMBRE_CORTO,
       jobTitle: 'Psicólogo clínico',
-      url: `${SITIO}/#equipo`,
+      url: `${SITIO}/sobre-mi/`,
       identifier: {
         '@type': 'PropertyValue',
         propertyID: 'Tarjeta profesional de psicólogo (Colombia)',
@@ -78,6 +79,14 @@ export function grafoBase(
         'PEERS · Habilidades sociales',
         'ADOS-2 y ADI-R · Evaluación del espectro autista',
       ],
+      alumniOf: UNIVERSIDADES.map((name) => ({ '@type': 'CollegeOrUniversity', name })),
+      hasCredential: CREDENCIALES.map((c) => ({
+        '@type': 'EducationalOccupationalCredential',
+        name: c.nombre,
+        credentialCategory: c.categoria,
+        dateCreated: c.fechaISO,
+        recognizedBy: { '@type': 'Organization', name: c.emisor },
+      })),
       worksFor: { '@id': ID_PRACTICA },
       sameAs: PERFILES,
     },
