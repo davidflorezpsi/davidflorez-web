@@ -26,6 +26,8 @@ const enlaces = [
   { href: '/#proceso', texto: 'Proceso', movil: 'Cómo empezamos' },
   { href: '/#recursos', texto: 'Blog', movil: 'Blog' },
   { href: '/contacto/', texto: 'Sedes', movil: 'Contacto y sedes' },
+  // En escritorio no cabe un enlace más; "Quién soy" ya enlaza al perfil.
+  { href: '/sobre-mi/', texto: '', movil: 'Sobre mí y credenciales', soloMovil: true },
 ];
 ---
 
@@ -42,7 +44,7 @@ const enlaces = [
 
       <nav class="nav" id="nav-esc" aria-label="Navegación principal">
         <span class="pastilla" id="nav-pastilla" aria-hidden="true"></span>
-        {enlaces.map((e) => <a href={e.href} data-nav>{e.texto}</a>)}
+        {enlaces.filter((e) => !e.soloMovil).map((e) => <a href={e.href} data-nav>{e.texto}</a>)}
         <a href="/#agenda" class="cta">Llamada gratuita</a>
       </nav>
 
