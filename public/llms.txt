@@ -27,6 +27,7 @@ Modelos de trabajo: ACT, DBT, FAP, análisis funcional del comportamiento, entre
 - Personas mayores de 25 años
 - Atención por EPS o seguro médico (es práctica privada particular)
 - Sesiones sueltas sin programa
+- Intervención en crisis y atención de urgencias
 - Urgencias psiquiátricas (en riesgo inmediato: línea 123 en Colombia)
 
 Si un caso pide otra especialidad, se dice en la llamada de orientación inicial y se remite a un colega.
@@ -41,19 +42,28 @@ se remite.
 
 | Servicio | Precio |
 | --- | --- |
-| Evaluación Funcional Clínica (3 sesiones) | $450.000 |
-| Evaluación del espectro autista · ADOS-2 / ADI-R (6 sesiones) | $1.050.000 – $1.200.000 |
-| Programa de Intervención Individual (ciclo de 16 sesiones) | $2.400.000 |
-| Entrenamiento conductual a cuidadores (8 sesiones) | $1.440.000 |
-| PEERS · Habilidades sociales (ciclo completo) | $1.680.000 por adolescente |
+| Evaluación Funcional o Clínica Inicial (3 sesiones) | $390.000 |
+| Evaluación del espectro autista · ADOS-2 / ADI-R (6 sesiones) | $1.050.000 |
+| Programa de Intervención Individual · niñez y adolescencia | $2.750.000 |
+| Programa de Intervención Individual · jóvenes adultos (16 sesiones) | $2.080.000 |
+| Entrenamiento conductual a cuidadores (8 sesiones) | $1.040.000 |
+| PEERS · Habilidades sociales (14 sesiones en grupo) | $1.400.000 por adolescente |
+| Coaching parental | $130.000 por sesión |
 | Asesoría institucional | $185.000 por hora |
 | Taller para colegios | $1.800.000 por grupo |
 | Charla abierta a familias | $90.000 por persona |
-| Intervención en crisis · Coaching parental | se acuerda en la llamada |
+
+La tarifa base es de $130.000 por sesión. Las evaluaciones del espectro autista
+cuestan más por sesión ($175.000) porque incluyen la aplicación y corrección de
+ADOS-2 y ADI-R. El formato grupal cuesta menos por sesión ($100.000 en PEERS).
+
+El programa de niñez y adolescencia son 16 sesiones con el consultante, 4 sesiones
+mensuales con los cuidadores y una asesoría al colegio durante el ciclo. Esa asesoría
+va incluida a $150.000; contratada por fuera, la hora institucional es de $185.000.
 
 Formas de pago: anticipado, cuotas con financiamiento interno (programas por ciclo),
-o tarjeta de crédito por pasarela. El pago siempre se hace por link seguro emitido
-por la clínica, nunca por WhatsApp ni a cuentas personales.
+o tarjeta de crédito por pasarela. El pago siempre se hace por link seguro de la
+pasarela de pago, nunca por WhatsApp ni a cuentas personales.
 
 ## Cómo se empieza
 

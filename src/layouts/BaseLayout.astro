@@ -38,7 +38,7 @@ const fichaNegocio = {
   image: String(ogImageURL),
   description,
   telephone: `+${WHATSAPP}`,
-  priceRange: '$450.000 – $2.400.000 COP',
+  priceRange: '$390.000 – $2.750.000 COP',
   currenciesAccepted: 'COP',
   address: {
     '@type': 'PostalAddress',
@@ -76,11 +76,13 @@ const fichaNegocio = {
     '@type': 'OfferCatalog',
     name: 'Servicios clínicos',
     itemListElement: [
-      ['Evaluación Funcional Clínica', 'Proceso diagnóstico estructurado de 3 sesiones', '450000'],
+      ['Evaluación Funcional Clínica', 'Proceso estructurado de 3 sesiones, con análisis funcional e informe', '390000'],
       ['Evaluación del espectro autista · ADOS-2 / ADI-R', '6 sesiones, incluye protocolos', '1050000'],
-      ['Programa de Intervención Individual', 'Ciclo de 16 sesiones con criterios de cierre', '2400000'],
-      ['Entrenamiento conductual a cuidadores', 'Ciclo de 8 sesiones con práctica en vivo y registro diario', '1440000'],
-      ['PEERS · Habilidades sociales', 'Ciclo completo por adolescente', '1680000'],
+      ['Programa de Intervención Individual · niñez y adolescencia', '16 sesiones, 4 sesiones con cuidadores y una asesoría al colegio', '2750000'],
+      ['Programa de Intervención Individual · jóvenes adultos', 'Ciclo de 16 sesiones con criterios de cierre', '2080000'],
+      ['Entrenamiento conductual a cuidadores', 'Ciclo de 8 sesiones con práctica en vivo y registro diario', '1040000'],
+      ['PEERS · Habilidades sociales', 'Ciclo de 14 sesiones en grupo, por adolescente', '1400000'],
+      ['Coaching parental', 'Sesiones con cuidadores, número acordado en la llamada', '130000'],
     ].map(([nombre, desc, precio]) => ({
       '@type': 'Offer',
       itemOffered: { '@type': 'Service', name: nombre, description: desc },
