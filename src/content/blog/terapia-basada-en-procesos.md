@@ -2,6 +2,8 @@
 title: "Tu hijo no necesita una etiqueta: necesita un plan"
 description: "Qué es la terapia basada en procesos, en qué se diferencia de recibir un diagnóstico, y qué deberías poder preguntarle a tu terapeuta en la cuarta sesión."
 pubDate: 2026-09-24
+updatedDate: 2026-09-25
+servicio: psicologo-infantil-bogota
 tags: ["Para padres", "PBT", "método clínico"]
 draft: false
 ---
@@ -42,7 +44,7 @@ Sí sirve, y mucho. Solo que no sirve para lo que la gente cree.
 El diagnóstico sirve para tres cosas concretas:
 
 1. **Pronóstico.** Saber qué esperar del curso del cuadro y qué vigilar.
-2. **Acceso.** Sin diagnóstico formal no hay ajustes en el colegio, no hay Plan Individual de Ajustes Razonables, no hay ruta en el sistema de salud.
+2. **Acceso.** La ruta del sistema de salud pide un diagnóstico. En el colegio es distinto, aunque muchos lo pidan: en Colombia, los ajustes razonables no dependen de un diagnóstico médico, sino de las barreras que el estudiante encuentra para aprender y participar, y el Plan Individual de Ajustes Razonables (PIAR) se construye sobre la valoración pedagógica (Decreto 1421 de 2017, compilado en el [Decreto 1075 de 2015](https://www1.funcionpublica.gov.co/eva/gestornormativo/norma.php?i=77913)). El diagnóstico aporta información clínica útil para coordinar esos apoyos; la valoración pedagógica y el trabajo conjunto entre colegio, familia y profesionales son los que orientan el PIAR.
 3. **Lenguaje común.** Permite que el neuropediatra, el colegio y el psicólogo estén hablando del mismo niño.
 
 Lo que el diagnóstico **no** hace es decirte qué trabajar el martes. Eso lo hace la formulación del caso. Son dos cosas distintas y las dos hacen falta.
@@ -83,3 +85,9 @@ La terapia basada en procesos no hace que un proceso de dieciséis sesiones se r
 Lo que sí cambia, y lo notan casi todas las familias, es la sensación de estar en un proceso con dirección en vez de en una sala de espera larga.
 
 *La verdadera locura es no crecer con evidencia.*
+
+## Referencias
+
+- Hayes, S. C. y Hofmann, S. G. (Eds.). (2018). *Process-based CBT: The science and core clinical competencies of cognitive behavioral therapy*. New Harbinger.
+- Hofmann, S. G. y Hayes, S. C. (2019). The future of intervention science: Process-based therapy. *Clinical Psychological Science, 7*(1), 37–50. [https://doi.org/10.1177/2167702618772296](https://doi.org/10.1177/2167702618772296)
+- Decreto 1421 de 2017, por el cual se reglamenta la atención educativa a la población con discapacidad en el marco de la educación inclusiva. Compilado en el [Decreto 1075 de 2015](https://www1.funcionpublica.gov.co/eva/gestornormativo/norma.php?i=77913).

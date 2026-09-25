@@ -2,22 +2,33 @@
 import Analytics from '../components/Analytics.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
-import { WHATSAPP, CAL_COM, INSTAGRAM } from '../data/contacto';
+import Consentimiento from '../components/Consentimiento.astro';
+import { grafoBase, DESCRIPCION_PRACTICA } from '../data/identidad';
+import '@fontsource-variable/archivo/wdth.css';
+import '@fontsource-variable/nunito/wght.css';
+import '@fontsource/ibm-plex-mono/400.css';
+import '@fontsource/ibm-plex-mono/500.css';
+import '@fontsource/ibm-plex-mono/600.css';
+import archivoLatin from '@fontsource-variable/archivo/files/archivo-latin-wdth-normal.woff2?url';
+import nunitoLatin from '@fontsource-variable/nunito/files/nunito-latin-wght-normal.woff2?url';
 import '../styles/global.css';
 
 interface Props {
   title?: string;
   description?: string;
   ogImage?: string;
-  /** Los datos estructurados solo tienen sentido en la home. */
-  datosEstructurados?: boolean;
+  /** Propiedades extra para la ficha de la práctica (la home añade el catálogo). */
+  extraPractica?: Record<string, unknown>;
+  /** Nodos de schema propios de la página (BreadcrumbList, Service, BlogPosting…). */
+  schema?: Record<string, unknown>[];
 }
 
 const {
   title = 'David Flórez | Psicólogo Clínico Infantojuvenil y Adultez Joven | Bogotá',
-  description = 'Psicología clínica basada en procesos para niñez, adolescencia y adultez joven. Evaluación e intervención con objetivos y progreso medible. Bogotá y online.',
+  description = DESCRIPCION_PRACTICA,
   ogImage = '/og-image.png',
-  datosEstructurados = false,
+  extraPractica = {},
+  schema = [],
 } = Astro.props;
 
 const siteUrl = Astro.site ?? 'https://davidflorez.co';
@@ -25,71 +36,13 @@ const canonicalURL = new URL(Astro.url.pathname, siteUrl);
 const ogImageURL = new URL(ogImage, siteUrl);
 
 /**
- * Ficha de la práctica para buscadores. Psychologist es un subtipo de
- * MedicalBusiness: describe quién atiende, dónde, a quién y con qué servicios.
+ * Un solo grafo por página: web, persona y práctica en todas (así el autor de
+ * un artículo o el proveedor de un servicio resuelven a una entidad definida
+ * en el mismo documento), más los nodos propios de cada página.
  */
-const fichaNegocio = {
+const grafo = {
   '@context': 'https://schema.org',
-  '@type': 'Psychologist',
-  '@id': `${siteUrl}#practica`,
-  name: 'Erwin David Flórez Rojas — Psicología Clínica',
-  alternateName: 'David Flórez · Psicólogo Clínico',
-  url: String(siteUrl),
-  image: String(ogImageURL),
-  description,
-  telephone: `+${WHATSAPP}`,
-  priceRange: '$390.000 – $2.750.000 COP',
-  currenciesAccepted: 'COP',
-  address: {
-    '@type': 'PostalAddress',
-    addressLocality: 'Bogotá',
-    addressCountry: 'CO',
-  },
-  areaServed: [
-    { '@type': 'City', name: 'Bogotá' },
-    { '@type': 'Country', name: 'Colombia' },
-    { '@type': 'Place', name: 'Latinoamérica y España (online)' },
-  ],
-  availableLanguage: 'es',
-  sameAs: [INSTAGRAM],
-  founder: {
-    '@type': 'Person',
-    name: 'Erwin David Flórez Rojas',
-    jobTitle: 'Psicólogo clínico',
-    identifier: 'T.P. 205129',
-    knowsAbout: [
-      'Terapia Basada en Procesos (PBT)',
-      'Terapia de Aceptación y Compromiso (ACT)',
-      'Terapia Dialéctica Conductual (DBT)',
-      'Psicoterapia Analítico Funcional (FAP)',
-      'Entrenamiento conductual a cuidadores',
-      'PEERS · Habilidades sociales',
-      'ADOS-2 y ADI-R · Evaluación del espectro autista',
-    ],
-  },
-  potentialAction: {
-    '@type': 'ReserveAction',
-    name: 'Llamada de orientación gratuita de 20 minutos',
-    target: CAL_COM,
-  },
-  hasOfferCatalog: {
-    '@type': 'OfferCatalog',
-    name: 'Servicios clínicos',
-    itemListElement: [
-      ['Evaluación Funcional Clínica', 'Proceso estructurado de 3 sesiones, con análisis funcional e informe', '390000'],
-      ['Evaluación del espectro autista · ADOS-2 / ADI-R', '6 sesiones, incluye protocolos', '1050000'],
-      ['Programa de Intervención Individual · niñez y adolescencia', '16 sesiones, 4 sesiones con cuidadores y una asesoría al colegio', '2750000'],
-      ['Programa de Intervención Individual · jóvenes adultos', 'Ciclo de 16 sesiones con criterios de cierre', '2080000'],
-      ['Entrenamiento conductual a cuidadores', 'Ciclo de 8 sesiones con práctica en vivo y registro diario', '1040000'],
-      ['PEERS · Habilidades sociales', 'Ciclo de 14 sesiones en grupo, por adolescente', '1400000'],
-      ['Coaching parental', 'Sesiones con cuidadores, número acordado en la llamada', '130000'],
-    ].map(([nombre, desc, precio]) => ({
-      '@type': 'Offer',
-      itemOffered: { '@type': 'Service', name: nombre, description: desc },
-      price: precio,
-      priceCurrency: 'COP',
-    })),
-  },
+  '@graph': [...grafoBase(extraPractica), ...schema],
 };
 ---
 
@@ -103,16 +56,12 @@ const fichaNegocio = {
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 
     <!--
-      Las fuentes se piden desde el <head>, no con @import dentro del CSS:
-      el @import encadena HTML → CSS → CSS de fuentes → archivos de fuente,
-      y retrasa el primer pintado.
+      Las fuentes se sirven desde el propio dominio. Se precargan las dos que
+      pinta la primera pantalla (titular y cuerpo, subconjunto latino); la mono
+      es pequeña y llega con font-display: swap.
     -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=IBM+Plex+Mono:wght@400;500;600&family=Nunito:wght@400;600;700;800&display=swap"
-    />
+    <link rel="preload" href={archivoLatin} as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href={nunitoLatin} as="font" type="font/woff2" crossorigin />
 
     <title>{title}</title>
     <meta name="description" content={description} />
@@ -134,11 +83,7 @@ const fichaNegocio = {
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImageURL} />
 
-    {
-      datosEstructurados && (
-        <script type="application/ld+json" set:html={JSON.stringify(fichaNegocio)} />
-      )
-    }
+    <script type="application/ld+json" set:html={JSON.stringify(grafo)} />
 
     <Analytics />
   </head>
@@ -149,6 +94,7 @@ const fichaNegocio = {
       <slot />
     </main>
     <Footer />
+    <Consentimiento />
   </body>
 </html>
 

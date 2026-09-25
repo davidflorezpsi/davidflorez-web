@@ -15,7 +15,8 @@ import retrato from '../../assets/david-florez-retrato.png';
 const CAMPOS = [
   ['Población', 'Niñez, adolescencia y juventud'],
   ['Enfoques', 'Conductual - Contextual'],
-  ['Certificaciones', 'Especialista en Psicología Clínica · ACT · ADOS-2 / ADI-R · PEERS'],
+  ['Formación', 'Especialista en Psicología Clínica · UPB'],
+  ['Acreditaciones', 'ADOS-2 · ADI-R · ADIPA 2026'],
   ['En clínica desde', '2022'],
 ];
 
@@ -96,14 +97,18 @@ const MODELOS = [
 
             <div class="bio">
               <p>
-                Especialista en clínica, con experiencia desde 2022 en evaluación e intervención de
-                trastornos afectivos, conductuales y del neurodesarrollo.
+                Especialista en Psicología Clínica (Universidad Pontificia Bolivariana), con
+                experiencia desde 2022 en evaluación e intervención de trastornos afectivos,
+                conductuales y del neurodesarrollo.
               </p>
               <p>
-                Certificaciones internacionales en evaluación diagnóstica del espectro autista
-                (ADOS-2 / ADI-R) e intervención en habilidades sociales para adolescentes (PEERS).
-                Diplomados en Terapia de Aceptación y Compromiso (ACT) y en Terapias Conductuales y
-                Contextuales en Infato Juveniles y Adultos.
+                Acreditaciones clínicas internacionales en ADOS-2 y ADI-R (ADIPA, 2026) para la
+                evaluación del espectro autista. Formación en PEERS para habilidades sociales en
+                adolescentes y diplomados en Terapia de Aceptación y Compromiso (ACT) y en Terapias
+                Conductuales y Contextuales en Infanto-Juveniles y Adultos.
+              </p>
+              <p class="verificable">
+                <a href="/sobre-mi/">Formación y credenciales verificables →</a>
               </p>
             </div>
 
@@ -125,7 +130,7 @@ const MODELOS = [
                         data-nom={m.nombre}
                         data-desc={m.desc}
                         style={`background:${m.bg}`}
-                        aria-label={`${m.sigla} · ${m.nombre}`}
+                        aria-label={`${m.sigla} ${m.familia}: ${m.nombre}`}
                         aria-pressed={m.id === 'act' ? 'true' : 'false'}
                       >
                         <span class="sigla">{m.sigla}</span>
@@ -464,13 +469,17 @@ const MODELOS = [
     text-overflow: ellipsis;
   }
 
+  .verificable a {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
   .familia {
     font-family: var(--fuente-mono);
     font-size: 0.5rem;
     letter-spacing: 0.1em;
     text-transform: uppercase;
     color: var(--azul-oscuro);
-    opacity: 0.6;
   }
 
   /* Ficha elegida: fondo navy, sigla cyan. */

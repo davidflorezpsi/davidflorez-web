@@ -14,9 +14,45 @@ import Faq from '../components/secciones/Faq.astro';
 import Agenda from '../components/secciones/Agenda.astro';
 import Instagram from '../components/secciones/Instagram.astro';
 import BarraMovil from '../components/BarraMovil.astro';
+import { PESTANAS } from '../data/servicios';
+import { paginaDeServicio, precioNumerico } from '../data/paginas-servicio';
+
+/**
+ * Catálogo de la práctica para el schema de la home. Se deriva de las mismas
+ * tarjetas que se ven en la sección de servicios, así los precios no pueden
+ * desincronizarse. Solo entran servicios con un precio único.
+ */
+const vistos = new Set<string>();
+const catalogo = {
+  hasOfferCatalog: {
+    '@type': 'OfferCatalog',
+    name: 'Servicios clínicos',
+    itemListElement: PESTANAS.flatMap((p) => p.servicios)
+      .filter((s) => {
+        const clave = `${s.titulo}|${s.precio}`;
+        if (!precioNumerico(s.precio) || vistos.has(clave)) return false;
+        vistos.add(clave);
+        return true;
+      })
+      .map((s) => {
+        const pagina = paginaDeServicio(s.id);
+        return {
+          '@type': 'Offer',
+          itemOffered: {
+            '@type': 'Service',
+            name: s.titulo,
+            description: s.notaPrecio ? `${s.desc} (${s.notaPrecio})` : s.desc,
+            ...(pagina && { url: `https://davidflorez.co/${pagina.slug}/` }),
+          },
+          price: precioNumerico(s.precio),
+          priceCurrency: 'COP',
+        };
+      }),
+  },
+};
 ---
 
-<BaseLayout datosEstructurados>
+<BaseLayout extraPractica={catalogo}>
   <Hero />
   <Resumen />
   <Pertinencia />

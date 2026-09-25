@@ -1,7 +1,7 @@
 /*
- * Las familias (Archivo, IBM Plex Mono, Nunito) se cargan con <link> desde el
- * <head> en BaseLayout.astro. Aquí no va @import: encadenaría las peticiones
- * y retrasaría el primer pintado.
+ * Las familias (Archivo, IBM Plex Mono, Nunito) se sirven desde el propio
+ * dominio con Fontsource; los @font-face se importan en BaseLayout.astro.
+ * Sin hoja de Google Fonts no hay CSS de terceros bloqueando el primer pintado.
  */
 
 :root {
@@ -9,6 +9,11 @@
   --azul-oscuro: #003346;
   /* Acento, estado seleccionado, CTA teñido */
   --cian: #05a3d4;
+  /*
+   * Cian para texto sobre fondos claros: el de marca da 2.9:1 sobre blanco y
+   * 2.5:1 sobre #ececec; este da 4.2:1 y 3.5:1 (WCAG pide 3:1 en titulares).
+   */
+  --cian-texto: #0086b0;
   /* Cejillas, etiquetas mono, enlaces */
   --azul-medio: #036c92;
   /* Texto de párrafo (color de body) */
@@ -32,9 +37,9 @@
   /* Solo sombra del SVG de la cuerda */
   --sombra-cuerda: #001d28;
 
-  --fuente-titular: 'Archivo', sans-serif;
+  --fuente-titular: 'Archivo Variable', sans-serif;
   --fuente-mono: 'IBM Plex Mono', monospace;
-  --fuente-cuerpo: 'Nunito', sans-serif;
+  --fuente-cuerpo: 'Nunito Variable', sans-serif;
 
   --salida: cubic-bezier(0.2, 0.8, 0.2, 1);
 }
@@ -121,10 +126,10 @@ section[id] {
   text-transform: uppercase;
 }
 
-/* Palabra calada: solo contorno cyan. */
+/* Palabra calada: solo contorno cyan (versión de texto, por contraste). */
 .calado {
   color: transparent;
-  -webkit-text-stroke: 1.5px var(--cian);
+  -webkit-text-stroke: 1.5px var(--cian-texto);
 }
 
 /*

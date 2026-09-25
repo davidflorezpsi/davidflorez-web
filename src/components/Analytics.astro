@@ -1,10 +1,66 @@
 ---
+/**
+ * Google Analytics 4 con modo de consentimiento.
+ *
+ * Por defecto todo va denegado: GA no guarda cookies ni identificadores hasta
+ * que la persona acepta en el aviso (Consentimiento.astro). Sin consentimiento
+ * GA solo recibe señales sin cookies, que no identifican a nadie. Publicidad:
+ * siempre denegada, el sitio no la usa.
+ */
 ---
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-6X804BXQQ9"></script>
-<script>
+<script is:inline>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
+
+  gtag('consent', 'default', {
+    analytics_storage: 'denied',
+    ad_storage: 'denied',
+    ad_user_data: 'denied',
+    ad_personalization: 'denied',
+  });
+  try {
+    if (localStorage.getItem('consentimiento-analitica') === 'si') {
+      gtag('consent', 'update', { analytics_storage: 'granted' });
+    }
+  } catch (_) {}
+
   gtag('js', new Date());
   gtag('config', 'G-6X804BXQQ9');
+
+  /*
+   * Embudo de captación: dos eventos genéricos.
+   *   contact_click  → clic a WhatsApp (interés inicial; no es una consulta)
+   *   booking_click  → clic a la agenda de la llamada gratuita
+   * Parámetros: canal, ubicación del botón y página. Nunca el texto
+   * prellenado, el nombre ni las respuestas del filtro de pertinencia.
+   * Marcar contact_click y booking_click como eventos clave en GA4.
+   */
+  document.addEventListener('click', function (e) {
+    var a = e.target instanceof Element ? e.target.closest('a[href]') : null;
+    if (!a) return;
+    var url;
+    try { url = new URL(a.href); } catch (_) { return; }
+
+    var evento, canal;
+    if (url.hostname === 'wa.me' || url.hostname.endsWith('whatsapp.com')) {
+      evento = 'contact_click'; canal = 'whatsapp';
+    } else if (url.hostname === 'cal.com') {
+      evento = 'booking_click'; canal = 'cal_com';
+    } else {
+      return;
+    }
+
+    var seccion = a.closest('section[id], header, footer, nav, aside');
+    var ubicacion = a.dataset.ubicacion
+      || (seccion && (seccion.id || seccion.tagName.toLowerCase()))
+      || 'sin_ubicacion';
+
+    gtag('event', evento, {
+      canal: canal,
+      ubicacion: ubicacion,
+      pagina: location.pathname,
+      transport_type: 'beacon',
+    });
+  });
 </script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-6X804BXQQ9"></script>

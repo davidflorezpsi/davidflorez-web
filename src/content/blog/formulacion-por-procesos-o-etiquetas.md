@@ -2,6 +2,7 @@
 title: "Formular por procesos o por etiquetas: qué cambia en la decisión clínica"
 description: "Dos casos compuestos con el mismo diagnóstico y tratamientos opuestos. Sobre los límites de la clasificación sindrómica y lo que cuesta, en la práctica colombiana, trabajar por procesos."
 pubDate: 2026-09-24
+updatedDate: 2026-09-25
 tags: ["Para colegas", "PBT", "formulación de caso", "análisis funcional"]
 draft: false
 ---
@@ -48,7 +49,7 @@ Es fácil defender la formulación por procesos en abstracto. Conviene decir tam
 
 **Cuesta tiempo de evaluación.** Una formulación por procesos exige línea base, registro de cuidadores, información de al menos dos contextos, y con frecuencia evaluación de dominios que la remisión no pedía. En el caso A eso significó una evaluación lectora que nadie había solicitado. Ese tiempo es real y hay que sostenerlo frente a familias que llegan pidiendo empezar ya.
 
-**Cuesta traducción institucional.** El sistema con el que trabajamos no está construido para recibir formulaciones. Un Plan Individual de Ajustes Razonables se construye alrededor de un diagnóstico, no de una hipótesis funcional. La ruta de atención en salud pide un código. Un informe que dice *"la conducta se mantiene por escape de demanda lectora"* es clínicamente útil y administrativamente inoperante, salvo que venga acompañado del diagnóstico que el sistema sí lee.
+**Cuesta traducción institucional.** El sistema con el que trabajamos no está construido para recibir formulaciones. La ruta de atención en salud pide un código. Y aunque la norma educativa no lo exige —el [Decreto 1421 de 2017, compilado en el Decreto 1075 de 2015](https://www1.funcionpublica.gov.co/eva/gestornormativo/norma.php?i=77913) establece que los ajustes razonables no dependen de un diagnóstico médico, sino de las barreras del estudiante—, en la práctica muchos colegios siguen esperando uno antes de hablar de PIAR. Un informe que dice *"la conducta se mantiene por escape de demanda lectora"* es clínicamente útil y, para buena parte del sistema, difícil de tramitar, salvo que venga acompañado del diagnóstico que el sistema sí lee.
 
 La respuesta pragmática no es elegir. Es diagnosticar para el sistema y formular para el tratamiento, y tener claro cuál de los dos documentos guía las decisiones de sesión.
 

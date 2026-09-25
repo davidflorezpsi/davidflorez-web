@@ -118,7 +118,7 @@ export const PESTANAS: Pestana[] = [
             ] },
             { titulo: '¿Para quién?', texto: 'Familias con sospecha de condición del espectro autista, o que requieren confirmación o segunda opinión sobre un diagnóstico previo.' },
           ],
-          pie: 'Certificación ADOS-2 / ADI-R · ADIPA 2026',
+          pie: 'Acreditación clínica internacional ADOS-2 (24 h) y ADI-R (16 h) · ADIPA 2026',
         },
       },
       {
@@ -379,7 +379,7 @@ export const PESTANAS: Pestana[] = [
         id: 'f1',
         n: 1,
         cejilla: '01 / Familias',
-        titulo: 'Coaching parental',
+        titulo: 'Consulta con cuidadores',
         desc: 'Trabajo directo con cuidadores sobre las prácticas de crianza que sostienen o modifican la conducta del niño o adolescente. El foco no es el diagnóstico del hijo, es lo que ocurre en la interacción diaria.',
         precio: '$130.000',
         notaPrecio: 'por sesión · el número se acuerda en la llamada',
@@ -387,11 +387,11 @@ export const PESTANAS: Pestana[] = [
         chips: ['Presencial · Bogotá', 'Telepresencial'],
         destacada: true,
         acciones: [
-          { label: 'Reservar y pagar', msg: 'Hola, escribo desde la web. Quiero reservar Coaching parental ($130.000 por sesión) y recibir el link de pago.', primaria: true },
+          { label: 'Reservar y pagar', msg: 'Hola, escribo desde la web. Quiero reservar Consulta con cuidadores ($130.000 por sesión) y recibir el link de pago.', primaria: true },
         ],
         detalle: {
           cejilla: '01 / Familias',
-          titulo: 'Coaching parental',
+          titulo: 'Consulta con cuidadores',
           columnas: [
             { titulo: 'Incluye', items: [
               'Análisis funcional de las situaciones difíciles de la casa',
@@ -399,6 +399,7 @@ export const PESTANAS: Pestana[] = [
               'Revisión de resultados y ajuste de la estrategia',
               'Cuando aplica, se deriva al entrenamiento conductual a cuidadores o al programa individual',
             ] },
+            { titulo: 'Qué es y qué no', texto: 'Se paga por sesión, pero no son sesiones sueltas: el número se acuerda en la llamada, con objetivos y registro entre sesiones. Es consulta clínica con los adultos de la casa, basada en análisis funcional, no coaching ni psicoterapia del niño o adolescente, y no reemplaza el programa de intervención cuando el caso lo pide.' },
           ],
         },
       },
