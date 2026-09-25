@@ -5,7 +5,7 @@
  * de aquí para que la home, el blog, las páginas de servicio y la política de
  * privacidad no vuelvan a desincronizarse.
  */
-import { WHATSAPP, CAL_COM, INSTAGRAM } from './contacto';
+import { WHATSAPP, CAL_COM, INSTAGRAM, SEDES } from './contacto';
 
 export const SITIO = 'https://davidflorez.co';
 
@@ -18,10 +18,13 @@ export const ID_PERSONA = `${SITIO}/#david`;
 export const ID_PRACTICA = `${SITIO}/#practica`;
 export const ID_WEB = `${SITIO}/#web`;
 
+export const idSede = (id: string) => `${SITIO}/contacto/#sede-${id}`;
+
 /**
  * Solo perfiles propios, vigentes y confirmados. Antes de añadir uno
- * (Doctoralia, LinkedIn, registro profesional…) hay que confirmar que los datos
- * que muestra coinciden con los de esta web: teléfono, sedes y precios.
+ * (LinkedIn, registro profesional…) hay que confirmar que los datos que
+ * muestra coinciden con los de esta web: teléfono, sedes y precios.
+ * Doctoralia no entra: el perfil se cierra.
  */
 export const PERFILES = [INSTAGRAM];
 
@@ -30,8 +33,9 @@ export const PERFILES = [INSTAGRAM];
  *
  * La práctica es MedicalBusiness: schema.org no tiene un tipo "Psychologist",
  * y Physician atribuiría una profesión médica que no corresponde.
- * La dirección se limita a la ciudad hasta que haya una sede confirmada y
- * visible en la web: el schema no debe decir más de lo que dice la página.
+ * Cada sede presencial es su propio nodo (así lo pide Google para negocios con
+ * varias ubicaciones), enlazado a la práctica. Sin horarios ni coordenadas:
+ * el schema no debe decir más de lo que dice la página de contacto.
  */
 export const DESCRIPCION_PRACTICA =
   'Psicología clínica basada en procesos para niñez, adolescencia y adultez joven. Evaluación e intervención con objetivos y progreso medible. Bogotá y online.';
@@ -105,6 +109,7 @@ export function grafoBase(
       },
       founder: { '@id': ID_PERSONA },
       employee: { '@id': ID_PERSONA },
+      department: SEDES.map((sede) => ({ '@id': idSede(sede.id) })),
       sameAs: PERFILES,
       potentialAction: {
         '@type': 'ReserveAction',
@@ -113,5 +118,23 @@ export function grafoBase(
       },
       ...extraPractica,
     },
+    ...SEDES.map((sede) => ({
+      '@type': 'MedicalBusiness',
+      '@id': idSede(sede.id),
+      name: `${NOMBRE_CORTO} · Psicología Clínica — ${sede.nombre}`,
+      url: `${SITIO}/contacto/`,
+      image: `${SITIO}/og-image.png`,
+      telephone: `+${WHATSAPP}`,
+      priceRange: '$390.000 – $2.750.000 COP',
+      address: {
+        '@type': 'PostalAddress',
+        streetAddress: [sede.direccion, sede.complemento].filter(Boolean).join(', '),
+        addressLocality: 'Bogotá',
+        addressRegion: 'Bogotá D.C.',
+        addressCountry: 'CO',
+      },
+      parentOrganization: { '@id': ID_PRACTICA },
+      employee: { '@id': ID_PERSONA },
+    })),
   ];
 }

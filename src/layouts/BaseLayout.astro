@@ -2,6 +2,7 @@
 import Analytics from '../components/Analytics.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import Consentimiento from '../components/Consentimiento.astro';
 import { grafoBase, DESCRIPCION_PRACTICA } from '../data/identidad';
 import '@fontsource-variable/archivo/wdth.css';
 import '@fontsource-variable/nunito/wght.css';
@@ -93,6 +94,7 @@ const grafo = {
       <slot />
     </main>
     <Footer />
+    <Consentimiento />
   </body>
 </html>
 

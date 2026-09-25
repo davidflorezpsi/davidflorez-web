@@ -1,0 +1,138 @@
+---
+/**
+ * Aviso de cookies de medición.
+ *
+ * Aparece solo si la persona no ha decidido. No es modal: no bloquea la página
+ * ni atrapa el foco. La decisión se guarda en este navegador y se puede cambiar
+ * desde el pie ("Cookies de medición").
+ */
+---
+
+<div class="aviso" id="aviso-cookies" role="region" aria-label="Cookies de medición" hidden>
+  <p>
+    Uso Google Analytics para saber cuántas personas visitan el sitio y qué botones usan. No hay
+    publicidad y no se envía tu nombre ni el motivo de consulta.
+    Detalles en la <a href="/privacidad/#medicion">política de privacidad</a>.
+  </p>
+  <div class="botones">
+    <button type="button" class="aceptar" data-consentimiento="si">Aceptar medición</button>
+    <button type="button" class="rechazar" data-consentimiento="no">Rechazar</button>
+  </div>
+</div>
+
+<style>
+  .aviso {
+    position: fixed;
+    left: 1rem;
+    right: 1rem;
+    bottom: 1rem;
+    z-index: 150;
+    max-width: 640px;
+    margin: 0 auto;
+    background: #fff;
+    border: 1px solid var(--azul-oscuro);
+    border-radius: 14px;
+    padding: 1rem 1.15rem;
+    box-shadow: 0 12px 34px rgba(0, 51, 70, 0.22);
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.75rem 1.25rem;
+  }
+
+  .aviso[hidden] {
+    display: none;
+  }
+
+  p {
+    flex: 1 1 320px;
+    font-size: 0.9rem;
+    line-height: 1.55;
+    color: var(--azul-oscuro);
+  }
+
+  p a {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .botones {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+
+  button {
+    min-height: 44px;
+    padding: 0.6rem 1.1rem;
+    border-radius: 999px;
+    font-family: var(--fuente-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    cursor: pointer;
+    border: 1.5px solid var(--azul-oscuro);
+  }
+
+  .aceptar {
+    background: var(--azul-oscuro);
+    color: #fff;
+  }
+
+  .rechazar {
+    background: #fff;
+    color: var(--azul-oscuro);
+  }
+</style>
+
+<script>
+  const CLAVE = 'consentimiento-analitica';
+  const aviso = document.getElementById('aviso-cookies');
+
+  const leer = (): string | null => {
+    try {
+      return localStorage.getItem(CLAVE);
+    } catch {
+      return null;
+    }
+  };
+
+  const decidir = (valor: 'si' | 'no') => {
+    try {
+      localStorage.setItem(CLAVE, valor);
+    } catch {
+      /* sin almacenamiento: la decisión vale solo para esta visita */
+    }
+    const w = window as unknown as { gtag?: (...a: unknown[]) => void };
+    w.gtag?.('consent', 'update', { analytics_storage: valor === 'si' ? 'granted' : 'denied' });
+    if (valor === 'no') {
+      // Si antes aceptó, las cookies de GA siguen ahí: se borran.
+      const dominio = location.hostname.replace(/^www\./, '');
+      document.cookie.split(';').forEach((c) => {
+        const nombre = c.split('=')[0].trim();
+        if (!nombre.startsWith('_ga')) return;
+        for (const d of ['', `; domain=${dominio}`, `; domain=.${dominio}`]) {
+          document.cookie = `${nombre}=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/${d}`;
+        }
+      });
+    }
+    if (aviso) aviso.hidden = true;
+  };
+
+  if (aviso) {
+    if (!leer()) aviso.hidden = false;
+    aviso.querySelectorAll<HTMLButtonElement>('[data-consentimiento]').forEach((b) =>
+      b.addEventListener('click', () => decidir(b.dataset.consentimiento === 'si' ? 'si' : 'no')),
+    );
+  }
+
+  // Botón del pie para cambiar la decisión.
+  document.querySelectorAll('[data-abrir-consentimiento]').forEach((b) =>
+    b.addEventListener('click', () => {
+      if (aviso) {
+        aviso.hidden = false;
+        aviso.querySelector<HTMLButtonElement>('.aceptar')?.focus();
+      }
+    }),
+  );
+</script>

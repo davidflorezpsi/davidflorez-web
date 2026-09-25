@@ -3,7 +3,13 @@
  * 01 / Pertinencia — filtro honesto de cuatro preguntas que también dice
  * a quién acudir si el caso no encaja.
  */
-const PREGUNTAS = [
+interface Opcion {
+  v: string;
+  label: string;
+  nota?: string;
+}
+
+const PREGUNTAS: { clave: string; titulo: string; opciones: Opcion[] }[] = [
   {
     clave: 'quien',
     titulo: '¿Para quién buscas atención?',

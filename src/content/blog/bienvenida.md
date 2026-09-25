@@ -3,6 +3,8 @@ title: "Bienvenidos al blog"
 description: "Psicología clínica basada en evidencia para familias, adolescentes y profesionales de salud mental."
 pubDate: 2026-05-01
 tags: ["introducción", "evidencia", "familias"]
+# Despublicado: sin contenido propio. /blog/bienvenida/ redirige a /blog/ (vercel.json).
+draft: true
 ---
 
 # Bienvenidos al blog de David Flórez

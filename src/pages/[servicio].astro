@@ -18,7 +18,8 @@ import {
   edadesDeServicio,
   type PaginaServicio,
 } from '../data/paginas-servicio';
-import { CAL_COM, wa } from '../data/contacto';
+import { CAL_COM, SEDES, wa } from '../data/contacto';
+import { preguntasPorId } from '../data/faq';
 import { ID_PRACTICA, NOMBRE_COMPLETO, TARJETA_PROFESIONAL } from '../data/identidad';
 
 export function getStaticPaths() {
@@ -70,6 +71,10 @@ const schema = [
     };
   }),
 ];
+
+const preguntas = preguntasPorId(pagina.preguntas);
+/** Si ningún servicio de la página tiene modalidad virtual, se dice claro. */
+const soloPresencial = servicios.every((s) => !s.chips.some((c) => c.startsWith('Telepresencial')));
 
 const msgGeneral = `Hola, escribo desde la web (${pagina.nombre}). Quiero orientación sobre un caso.`;
 ---
@@ -169,6 +174,39 @@ const msgGeneral = `Hola, escribo desde la web (${pagina.nombre}). Quiero orient
           ))}
         </section>
       ))
+    }
+
+    <section class="bloque" aria-labelledby="donde-h2">
+      <h2 id="donde-h2">Dónde se atiende</h2>
+      <p>
+        {soloPresencial
+          ? 'Es presencial, en una de las dos sedes de Bogotá:'
+          : 'Presencial en una de las dos sedes de Bogotá, o telepresencial según el caso:'}
+      </p>
+      <ul class="sedes">
+        {
+          SEDES.map((s) => (
+            <li>
+              <a href={`/contacto/#sede-${s.id}`}>{s.nombre}</a>: {s.direccion}
+              {s.complemento && `, ${s.complemento}`}
+            </li>
+          ))
+        }
+      </ul>
+    </section>
+
+    {
+      preguntas.length > 0 && (
+        <section class="bloque" aria-labelledby="preguntas-h2">
+          <h2 id="preguntas-h2">Preguntas frecuentes</h2>
+          {preguntas.map((p) => (
+            <details class="pregunta">
+              <summary>{p.q}</summary>
+              <p>{p.a}</p>
+            </details>
+          ))}
+        </section>
+      )
     }
 
     <aside class="relacionados" aria-labelledby="sigue-h2">
@@ -413,6 +451,43 @@ const msgGeneral = `Hola, escribo desde la web (${pagina.nombre}). Quiero orient
     line-height: 1.8;
     max-width: 68ch;
     text-wrap: pretty;
+  }
+
+  .sedes {
+    margin-top: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .sedes li {
+    padding-left: 0.9rem;
+    border-left: 2px solid var(--cian);
+  }
+
+  .sedes a {
+    font-weight: 700;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .pregunta {
+    margin-top: 1rem;
+    border-bottom: 1px solid rgba(0, 51, 70, 0.15);
+    padding-bottom: 1rem;
+  }
+
+  .pregunta summary {
+    cursor: pointer;
+    font-weight: 700;
+    color: var(--azul-oscuro);
+    min-height: 24px;
+  }
+
+  .pregunta p {
+    margin-top: 0.75rem;
+    line-height: 1.75;
+    max-width: 68ch;
   }
 
   .relacionados ul {

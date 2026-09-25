@@ -1,8 +1,23 @@
 {
   "redirects": [
     {
+      "source": "/blog/bienvenida",
+      "destination": "/blog/",
+      "permanent": true
+    },
+    {
+      "source": "/blog/bienvenida/:rest*",
+      "destination": "/blog/",
+      "permanent": true
+    },
+    {
       "source": "/(.*)",
-      "has": [{ "type": "host", "value": "www.davidflorez.co" }],
+      "has": [
+        {
+          "type": "host",
+          "value": "www.davidflorez.co"
+        }
+      ],
       "destination": "https://davidflorez.co/$1",
       "permanent": true
     }

@@ -1,5 +1,5 @@
 ---
-import { INSTAGRAM } from '../data/contacto';
+import { INSTAGRAM, SEDES, TELEFONO_VISIBLE, wa } from '../data/contacto';
 import { NOMBRE_COMPLETO, TARJETA_PROFESIONAL } from '../data/identidad';
 import { PAGINAS_SERVICIO } from '../data/paginas-servicio';
 
@@ -12,6 +12,25 @@ const anio = new Date().getFullYear();
       <p class="marca">David Flórez</p>
       <p class="descriptor">Psicología clínica infantojuvenil y adultez joven</p>
       <p class="lugar">Bogotá, Colombia · Online LatAm y España</p>
+      <ul class="sedes-pie">
+        {
+          SEDES.map((s) => (
+            <li>
+              <a href={`/contacto/#sede-${s.id}`}>{s.nombre}</a>
+              <br />
+              <span class="credencial">
+                {s.direccion}
+                {s.complemento && ` · ${s.complemento}`}
+              </span>
+            </li>
+          ))
+        }
+        <li>
+          <a href={wa()} target="_blank" rel="noopener noreferrer" data-ubicacion="pie">
+            WhatsApp {TELEFONO_VISIBLE}
+          </a>
+        </li>
+      </ul>
     </div>
 
     <div class="bloque">
@@ -32,8 +51,10 @@ const anio = new Date().getFullYear();
     </nav>
 
     <nav aria-label="Links del pie de página">
+      <a href="/contacto/" class="toque">Contacto y sedes</a>
       <a href="/blog/" class="toque">Blog</a>
       <a href="/privacidad/" class="toque">Privacidad</a>
+      <button type="button" class="toque boton-enlace" data-abrir-consentimiento>Cookies de medición</button>
       <a href={INSTAGRAM} target="_blank" rel="noopener noreferrer" class="toque">Instagram</a>
     </nav>
 
@@ -112,6 +133,12 @@ const anio = new Date().getFullYear();
     color: #fff;
   }
 
+  .sedes-pie a {
+    color: #fff;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
   .credencial {
     font-family: var(--fuente-mono);
     font-size: 0.64rem;
@@ -137,6 +164,23 @@ const anio = new Date().getFullYear();
   }
 
   nav a:hover {
+    color: #fff;
+  }
+
+  .boton-enlace {
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    text-align: left;
+    font-family: var(--fuente-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--cian);
+  }
+
+  .boton-enlace:hover {
     color: #fff;
   }
 

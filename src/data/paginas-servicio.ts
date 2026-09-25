@@ -36,6 +36,8 @@ export interface PaginaServicio {
   relacionadas: string[];
   /** Artículos del blog relacionados (slugs). */
   articulos: string[];
+  /** Preguntas frecuentes de src/data/faq.ts que aplican a esta página (ids). */
+  preguntas: string[];
 }
 
 const COMO_EMPEZAR: Bloque = {
@@ -79,6 +81,7 @@ export const PAGINAS_SERVICIO: PaginaServicio[] = [
     edadMax: 11,
     relacionadas: ['evaluacion-autismo-ados-2-bogota', 'psicologo-adolescentes-bogota'],
     articulos: ['terapia-basada-en-procesos', 'entrenamiento-a-cuidadores-en-vivo', 'despues-del-informe-de-evaluacion'],
+    preguntas: ['online-ninos', 'diagnostico-previo', 'duracion', 'donde', 'eps'],
   },
   {
     slug: 'psicologo-adolescentes-bogota',
@@ -96,6 +99,7 @@ export const PAGINAS_SERVICIO: PaginaServicio[] = [
         titulo: 'Qué se comparte y qué no',
         parrafos: [
           'Con adolescentes el encuadre se negocia al inicio: qué información se comparte con los cuidadores y qué queda en el espacio terapéutico. Los cuidadores participan con cuatro sesiones mensuales durante el programa y reciben reportes de progreso; el trabajo individual sigue siendo del adolescente.',
+          'La confidencialidad tiene un límite, el mismo que fija la ética profesional del psicólogo: si hay riesgo para la vida o la integridad del adolescente o de otra persona, esa información se comparte con los cuidadores y, cuando corresponde, con las autoridades. Ese límite se le explica al adolescente desde la primera sesión, para que nunca sea una sorpresa.',
         ],
       },
       {
@@ -111,6 +115,7 @@ export const PAGINAS_SERVICIO: PaginaServicio[] = [
     edadMax: 17,
     relacionadas: ['peers-adolescentes-bogota', 'evaluacion-autismo-ados-2-bogota', 'psicologo-jovenes-adultos-bogota'],
     articulos: ['terapia-basada-en-procesos'],
+    preguntas: ['diagnostico-previo', 'duracion', 'donde', 'eps', 'no-pertinente'],
   },
   {
     slug: 'evaluacion-autismo-ados-2-bogota',
@@ -144,6 +149,7 @@ export const PAGINAS_SERVICIO: PaginaServicio[] = [
     edadMax: 17,
     relacionadas: ['psicologo-infantil-bogota', 'psicologo-adolescentes-bogota', 'peers-adolescentes-bogota'],
     articulos: ['despues-del-informe-de-evaluacion'],
+    preguntas: ['quien', 'donde', 'eps', 'no-pertinente'],
   },
   {
     slug: 'peers-adolescentes-bogota',
@@ -175,6 +181,7 @@ export const PAGINAS_SERVICIO: PaginaServicio[] = [
     edadMax: 17,
     relacionadas: ['psicologo-adolescentes-bogota', 'evaluacion-autismo-ados-2-bogota'],
     articulos: [],
+    preguntas: ['donde', 'eps', 'no-pertinente'],
   },
   {
     slug: 'psicologo-jovenes-adultos-bogota',
@@ -200,6 +207,7 @@ export const PAGINAS_SERVICIO: PaginaServicio[] = [
     edadMax: 25,
     relacionadas: ['psicologo-adolescentes-bogota'],
     articulos: [],
+    preguntas: ['adultos', 'sesion-suelta', 'duracion', 'diagnostico-previo', 'donde', 'eps'],
   },
 ];
 

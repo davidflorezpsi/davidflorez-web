@@ -100,7 +100,7 @@ const CITA =
                   stroke-dasharray={p.dash}
                   stroke-dashoffset={p.offset}
                   opacity={p.opacity}
-                  stroke-linecap={p.cap}
+                  stroke-linecap={p.cap as 'butt' | 'round' | undefined}
                   stroke-linejoin="round"
                 />
               ))
