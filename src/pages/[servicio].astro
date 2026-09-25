@@ -15,6 +15,7 @@ import {
   paginaPorSlug,
   servicioPorId,
   precioNumerico,
+  edadesDeServicio,
   type PaginaServicio,
 } from '../data/paginas-servicio';
 import { CAL_COM, wa } from '../data/contacto';
@@ -50,6 +51,7 @@ const schema = [
   },
   ...servicios.map((s) => {
     const precio = precioNumerico(s.precio);
+    const [edadMin, edadMax] = edadesDeServicio(s.id) ?? [pagina.edadMin, pagina.edadMax];
     return {
       '@type': 'Service',
       name: s.titulo,
@@ -59,8 +61,8 @@ const schema = [
       areaServed: { '@type': 'City', name: 'Bogotá' },
       audience: {
         '@type': 'PeopleAudience',
-        suggestedMinAge: pagina.edadMin,
-        suggestedMaxAge: pagina.edadMax,
+        suggestedMinAge: edadMin,
+        suggestedMaxAge: edadMax,
       },
       ...(precio && {
         offers: { '@type': 'Offer', price: precio, priceCurrency: 'COP', description: s.notaPrecio },

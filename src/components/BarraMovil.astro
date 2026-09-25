@@ -13,13 +13,13 @@ import { CAL_COM, wa } from '../data/contacto';
 ---
 
 <div class="barra" id="barra-movil" data-oculta aria-label="Acciones rápidas">
-  <a href={CAL_COM} target="_blank" rel="noopener noreferrer" class="btn principal">
+  <a href={CAL_COM} target="_blank" rel="noopener noreferrer" data-ubicacion="barra_movil" class="btn principal">
     Llamada gratuita
   </a>
   <a
     href={wa('Hola, escribo desde la web. Quiero orientación sobre un caso.')}
     target="_blank"
-    rel="noopener noreferrer"
+    rel="noopener noreferrer" data-ubicacion="barra_movil"
     class="btn secundario"
     aria-label="Escribir por WhatsApp"
   >

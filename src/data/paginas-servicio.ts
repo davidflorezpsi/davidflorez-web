@@ -9,7 +9,7 @@
  * publica. Sede, fechas de grupo, cupos o credenciales nuevas se añaden
  * cuando estén confirmados, no antes.
  */
-import { PESTANAS, type Servicio } from './servicios';
+import { PESTANAS, type Audiencia, type Servicio } from './servicios';
 
 export interface Bloque {
   titulo: string;
@@ -209,6 +209,28 @@ export function servicioPorId(id: string): Servicio {
   const s = TODOS.find((x) => x.id === id);
   if (!s) throw new Error(`Servicio desconocido: ${id}`);
   return s;
+}
+
+/**
+ * La página más específica que contiene un servicio (la de menos servicios):
+ * la evaluación del espectro autista enlaza a su página propia, no a la general.
+ */
+export function paginaDeServicio(id: string): PaginaServicio | undefined {
+  return PAGINAS_SERVICIO.filter((p) => p.servicios.includes(id)).sort(
+    (a, b) => a.servicios.length - b.servicios.length,
+  )[0];
+}
+
+/** Edades de cada pestaña, para el público del schema de cada servicio. */
+const EDADES: Partial<Record<Audiencia, [number, number]>> = {
+  ninos: [2, 11],
+  ados: [12, 17],
+  adultos: [18, 25],
+};
+
+export function edadesDeServicio(id: string): [number, number] | undefined {
+  const pestana = PESTANAS.find((p) => p.servicios.some((s) => s.id === id));
+  return pestana ? EDADES[pestana.key] : undefined;
 }
 
 export function paginaPorSlug(slug: string): PaginaServicio {

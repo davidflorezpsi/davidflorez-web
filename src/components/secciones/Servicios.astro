@@ -11,7 +11,7 @@
  */
 import ServiceCard from '../ServiceCard.astro';
 import { PESTANAS } from '../../data/servicios';
-import { PAGINAS_SERVICIO } from '../../data/paginas-servicio';
+import { PAGINAS_SERVICIO, paginaDeServicio } from '../../data/paginas-servicio';
 
 const RUTA_D = 'M18 186 C70 186 78 130 120 122 C160 114 168 148 206 132 C246 115 240 52 286 34';
 const PUNTOS_X = [20, 70, 120, 170, 220, 270];
@@ -164,6 +164,14 @@ const PAGOS = [
               </div>
 
               {s.detalle.pie && <p class="cajon-pie">{s.detalle.pie}</p>}
+
+              {paginaDeServicio(s.id) && (
+                <p class="cajon-enlace">
+                  <a href={`/${paginaDeServicio(s.id)!.slug}/`}>
+                    Página completa: {paginaDeServicio(s.id)!.nombre} →
+                  </a>
+                </p>
+              )}
             </div>
           ))}
         </div>
@@ -427,6 +435,15 @@ const PAGOS = [
     color: var(--tinta-suave);
     margin-top: 0.85rem;
     text-wrap: pretty;
+  }
+
+  .cajon-enlace {
+    margin-top: 1.25rem;
+  }
+
+  .cajon-enlace a {
+    text-decoration: underline;
+    text-underline-offset: 3px;
   }
 
   .cajon-pie {

@@ -2,7 +2,7 @@
 title: "Después del informe: cuándo terminaste y cuándo apenas empiezas"
 description: "Una evaluación entrega dos cosas distintas: la formulación que guía el tratamiento y el diagnóstico que pide el sistema. Y según cuál sea el cuadro, el informe cierra la pregunta o abre una ruta."
 pubDate: 2026-09-24
-servicio: evaluacion-autismo-ados-2-bogota
+servicio: psicologo-infantil-bogota
 tags: ["Para padres", "evaluación", "neurodesarrollo"]
 draft: true
 ---
@@ -27,7 +27,7 @@ Aunque venga en un solo archivo, lo que recibes son dos cosas que sirven para co
 
 **El diagnóstico** responde *a qué categoría pertenece*. Y aquí viene la parte que suele incomodar decir en voz alta: **el diagnóstico está ahí porque el sistema lo exige, no porque sea el objetivo del trabajo clínico.**
 
-Sin diagnóstico formal no hay ruta dentro de la EPS, y es más difícil tener un lenguaje común con el neuropediatra o con el docente de apoyo. Es un requisito administrativo real, y por eso se entrega cuando corresponde. En el colegio, en cambio, la norma no condiciona los ajustes razonables ni el PIAR a un diagnóstico: se definen a partir de las barreras que tu hijo encuentra para aprender ([Decreto 1421 de 2017, compilado en el Decreto 1075 de 2015](https://www1.funcionpublica.gov.co/eva/gestornormativo/norma.php?i=77913)). Aun así, el informe suele ayudar a que el colegio entienda qué apoyos hacen falta. Pero no es lo que hace que una intervención funcione.
+Sin diagnóstico formal no hay ruta dentro de la EPS, y es más difícil tener un lenguaje común con el neuropediatra o con el docente de apoyo. Es un requisito administrativo real, y por eso se entrega cuando corresponde. En el colegio, en cambio, la norma no condiciona los ajustes razonables a un diagnóstico: se definen a partir de las barreras que tu hijo encuentra para aprender, y el PIAR se construye sobre la valoración pedagógica ([Decreto 1421 de 2017, compilado en el Decreto 1075 de 2015](https://www1.funcionpublica.gov.co/eva/gestornormativo/norma.php?i=77913)). Aun así, el informe suele ayudar a que el colegio entienda qué apoyos hacen falta. Pero no es lo que hace que una intervención funcione.
 
 Si alguien te dice que el diagnóstico no sirve para nada, desconfía. Si te dice que con el diagnóstico ya está todo resuelto, desconfía igual.
 
