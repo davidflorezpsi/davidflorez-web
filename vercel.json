@@ -6,7 +6,7 @@
       "permanent": true
     },
     {
-      "source": "/blog/bienvenida/:rest*",
+      "source": "/blog/bienvenida/(.*)",
       "destination": "/blog/",
       "permanent": true
     },
