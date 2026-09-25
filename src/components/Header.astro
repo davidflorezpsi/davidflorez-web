@@ -10,13 +10,21 @@
  * El piso opaco de 0.78 no es decorativo: sin él los enlaces sobre las secciones
  * navy caen a 3.8:1 de contraste. Con él dan 9.6:1.
  */
+/*
+ * Los destinos van con barra inicial ("/#marco", no "#marco") porque el header
+ * también se muestra en /blog y en los artículos, donde esas secciones no
+ * existen: con el ancla suelta el clic no hacía nada.
+ *
+ * Desde la home el navegador resuelve "/#marco" al mismo documento, así que
+ * sigue siendo un desplazamiento suave, sin recargar.
+ */
 const enlaces = [
-  { href: '#pertinencia', texto: '¿Es mi caso?', movil: '¿Es mi caso?' },
-  { href: '#equipo', texto: 'Quién soy', movil: 'Quién soy' },
-  { href: '#marco', texto: 'Marco', movil: 'Marco clínico' },
-  { href: '#servicios', texto: 'Servicios', movil: 'Servicios' },
-  { href: '#proceso', texto: 'Proceso', movil: 'Cómo empezamos' },
-  { href: '#recursos', texto: 'Blog', movil: 'Blog' },
+  { href: '/#pertinencia', texto: '¿Es mi caso?', movil: '¿Es mi caso?' },
+  { href: '/#equipo', texto: 'Quién soy', movil: 'Quién soy' },
+  { href: '/#marco', texto: 'Marco', movil: 'Marco clínico' },
+  { href: '/#servicios', texto: 'Servicios', movil: 'Servicios' },
+  { href: '/#proceso', texto: 'Proceso', movil: 'Cómo empezamos' },
+  { href: '/#recursos', texto: 'Blog', movil: 'Blog' },
 ];
 ---
 
@@ -27,14 +35,14 @@ const enlaces = [
       <span class="especular" id="barra-luz" aria-hidden="true"></span>
       <span class="arco" aria-hidden="true"></span>
 
-      <a href="#inicio" class="logo" aria-label="David Flórez — Inicio">
+      <a href="/#inicio" class="logo" aria-label="David Flórez — Inicio">
         <img src="/images/logo-sobre-claro.svg" alt="David Flórez Psicólogo Clínico" width="200" height="36" />
       </a>
 
       <nav class="nav" id="nav-esc" aria-label="Navegación principal">
         <span class="pastilla" id="nav-pastilla" aria-hidden="true"></span>
         {enlaces.map((e) => <a href={e.href} data-nav>{e.texto}</a>)}
-        <a href="#agenda" class="cta">Llamada gratuita</a>
+        <a href="/#agenda" class="cta">Llamada gratuita</a>
       </nav>
 
       <button type="button" class="hamburguesa" id="menu-boton" aria-label="Abrir menú" aria-expanded="false" aria-controls="menu-movil">
@@ -47,7 +55,7 @@ const enlaces = [
     <nav class="panel" id="menu-movil" aria-label="Menú móvil" hidden>
       <span class="rim" aria-hidden="true"></span>
       {enlaces.map((e) => <a href={e.href} data-cierra>{e.movil}</a>)}
-      <a href="#agenda" class="cta-movil" data-cierra>Llamada gratuita</a>
+      <a href="/#agenda" class="cta-movil" data-cierra>Llamada gratuita</a>
     </nav>
   </div>
 </header>
