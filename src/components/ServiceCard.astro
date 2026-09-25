@@ -9,12 +9,14 @@
  */
 import type { Servicio } from '../data/servicios';
 import { wa } from '../data/contacto';
+import { paginaDeServicio } from '../data/paginas-servicio';
 
 interface Props {
   servicio: Servicio;
 }
 
 const { servicio: s } = Astro.props;
+const pagina = paginaDeServicio(s.id);
 
 const clases = [
   'tarjeta',
@@ -31,7 +33,16 @@ const clases = [
 
   <h3>{s.titulo}</h3>
 
-  <p class="desc">{s.desc}</p>
+  <p class="desc">
+    {s.desc}
+    {
+      pagina && (
+        <a href={`/${pagina.slug}/`} class="ver-pagina">
+          Ver página completa<span class="solo-lectores">: {pagina.nombre}</span> →
+        </a>
+      )
+    }
+  </p>
 
   {
     s.precio && (
@@ -245,6 +256,16 @@ const clases = [
   .oscura .chip {
     border-color: rgba(255, 255, 255, 0.4);
     color: var(--hielo);
+  }
+
+  /* Enlace a la página propia del servicio, al final de la descripción. */
+  .ver-pagina {
+    display: block;
+    width: fit-content;
+    margin-top: 0.75rem;
+    font-weight: 700;
+    text-decoration: underline;
+    text-underline-offset: 3px;
   }
 
   .acciones {
