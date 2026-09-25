@@ -3,7 +3,7 @@ title: "Formular por procesos o por etiquetas: qué cambia en la decisión clín
 description: "Dos casos compuestos con el mismo diagnóstico y tratamientos opuestos. Sobre los límites de la clasificación sindrómica y lo que cuesta, en la práctica colombiana, trabajar por procesos."
 pubDate: 2026-09-24
 tags: ["Para colegas", "PBT", "formulación de caso", "análisis funcional"]
-draft: true
+draft: false
 ---
 
 Dos remisiones llegan la misma semana desde el mismo colegio, con el mismo informe de psicoorientación y prácticamente el mismo listado de criterios marcados: discute con adultos, desafía instrucciones, se irrita con facilidad, culpa a otros. Ambos cumplen criterios DSM-5 para trastorno oposicional desafiante. Ambos, sobre el papel, son el mismo caso.
@@ -36,7 +36,7 @@ El problema aparece cuando la categoría se usa como si fuera una formulación. 
 
 ## Qué propone la aproximación por procesos
 
-Hayes y Hofmann articularon en *Process-Based CBT* (2018) una salida que no exige abandonar el diagnóstico: mover la unidad de análisis de la categoría al proceso. La pregunta clínica deja de ser *a qué grupo pertenece esta persona* y pasa a ser *qué procesos, en qué niveles, están sosteniendo el problema en esta persona, en este contexto, ahora*. La propuesta posterior de un meta-modelo evolutivo extendido organiza esos procesos en dimensiones —afectiva, cognitiva, atencional, motivacional, del self y conductual— atravesadas por variación, selección y retención en contexto. [VERIFICAR FUENTE: referencia exacta del EEMM]
+Hayes y Hofmann articularon en *Process-Based CBT* (2018) una salida que no exige abandonar el diagnóstico: mover la unidad de análisis de la categoría al proceso. La pregunta clínica deja de ser *a qué grupo pertenece esta persona* y pasa a ser *qué procesos, en qué niveles, están sosteniendo el problema en esta persona, en este contexto, ahora*. El desarrollo posterior de esa línea organiza los procesos en dimensiones —afectiva, cognitiva, atencional, motivacional, del self y conductual— y las lee en clave evolutiva: variación, selección y retención en contexto.
 
 Para quienes venimos de análisis funcional esto no es nuevo en su núcleo. La contingencia de tres términos ya hacía la pregunta de mantenimiento, y la distinción entre topografía y función ya resolvía el problema de los casos A y B hace décadas. Lo que aporta la formulación por procesos es la ampliación del rango: permite integrar en el mismo mapa procesos de nivel contingencial, procesos verbales del tipo que trabajan ACT y RFT, y procesos relacionales del tipo que FAP evoca en sesión, sin tener que elegir escuela.
 

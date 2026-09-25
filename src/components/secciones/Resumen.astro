@@ -10,22 +10,27 @@ import { CAL_COM } from '../../data/contacto';
 
 const CLAVES = [
   {
+    href: '#marco',
     et: 'Qué es',
     tx: 'Psicología clínica basada en procesos (PBT): cada caso empieza con una hipótesis, avanza con datos registrados y termina con criterios de cierre. No es acompañamiento abierto.',
   },
   {
+    href: '#pertinencia',
     et: 'Para quién',
     tx: 'Niñez de 2 a 11, adolescencia de 12 a 17 y adultez joven de 18 a 25 años. Presencial en Bogotá, telepresencial en Latinoamérica y España.',
   },
   {
+    href: '#proceso',
     et: 'Cómo empieza',
     tx: 'Con una llamada de orientación de 20 minutos, sin costo. Ahí se valida si el caso es pertinente y qué servicio aplica.',
   },
   {
+    href: '#servicios',
     et: 'Inversión',
     tx: 'Desde $450.000 la evaluación de 3 sesiones hasta $2.400.000 el ciclo de 16. Pago anticipado, cuotas con financiamiento interno o tarjeta.',
   },
   {
+    href: '#faq',
     et: 'Qué no se ofrece',
     tx: 'Sesiones sueltas, psicoterapia ecléctica, terapia de pareja, atención por EPS ni servicio de urgencias.',
   },
@@ -36,19 +41,26 @@ const CLAVES = [
   <div class="container">
     <div class="cab">
       <h2 id="resumen-h2">En resumen</h2>
-      <p class="lectura">Lo esencial en 30 segundos</p>
+      <p class="lectura">Lo esencial en 30 segundos · toca para ir</p>
     </div>
 
-    <dl class="claves">
+    <ul class="claves">
       {
         CLAVES.map((c) => (
-          <div class="clave">
-            <dt>{c.et}</dt>
-            <dd>{c.tx}</dd>
-          </div>
+          <li class="clave">
+            <a href={c.href}>
+              <span class="et">
+                {c.et}
+                <span class="flecha" aria-hidden="true">
+                  →
+                </span>
+              </span>
+              <span class="tx">{c.tx}</span>
+            </a>
+          </li>
         ))
       }
-    </dl>
+    </ul>
 
     <p class="pie">
       ¿No sabes si tu caso encaja? <a href="#pertinencia">Responde cuatro preguntas</a> o
@@ -102,10 +114,26 @@ const CLAVES = [
 
   .clave {
     border-top: 2px solid var(--cian);
-    padding-top: 0.85rem;
   }
 
-  dt {
+  /* El enlace ocupa la clave entera: el área tocable es toda la columna. */
+  .clave a {
+    display: block;
+    padding: 0.85rem 0 0.5rem;
+    color: inherit;
+    transition: padding-left 0.2s var(--salida);
+  }
+
+  .clave a:hover,
+  .clave a:focus-visible {
+    color: inherit;
+    padding-left: 0.4rem;
+  }
+
+  .et {
+    display: flex;
+    align-items: baseline;
+    gap: 0.45rem;
     font-family: var(--fuente-mono);
     font-size: 0.64rem;
     letter-spacing: 0.14em;
@@ -113,12 +141,43 @@ const CLAVES = [
     color: var(--azul-oscuro);
   }
 
-  dd {
+  .flecha {
+    color: var(--azul-medio);
+    opacity: 0;
+    transform: translateX(-4px);
+    transition:
+      opacity 0.2s ease,
+      transform 0.2s var(--salida);
+  }
+
+  .clave a:hover .flecha,
+  .clave a:focus-visible .flecha {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  .tx {
+    display: block;
     font-size: 0.88rem;
     line-height: 1.65;
     color: var(--tinta-suave);
     margin-top: 0.5rem;
     text-wrap: pretty;
+  }
+
+  /* En un dispositivo táctil no hay hover: la flecha se queda visible. */
+  @media (hover: none) {
+    .flecha {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .clave a,
+    .flecha {
+      transition: none;
+    }
   }
 
   .pie {

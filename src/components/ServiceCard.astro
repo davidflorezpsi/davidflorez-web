@@ -317,4 +317,56 @@ const clases = [
     background: var(--cian);
     color: var(--azul-oscuro);
   }
+
+  /*
+   * Versión compacta para móvil.
+   *
+   * Apiladas en una columna, las cuatro tarjetas ocupaban 3 pantallas y el
+   * precio quedaba a mitad de página. Aquí la tarjeta se reduce a lo que sirve
+   * para decidir —qué es, cuánto cuesta, cómo reservar— y la descripción pasa
+   * al cajón de detalle, que ya existe y ahora la incluye.
+   *
+   * En escritorio no cambia nada: el subgrid sigue alineando las siete pistas.
+   */
+  @media (max-width: 720px) {
+    .tarjeta {
+      padding: 1.4rem 1.25rem;
+    }
+
+    .desc {
+      display: none;
+    }
+
+    h3 {
+      margin-top: 0.55rem;
+    }
+
+    .inversion {
+      margin-top: 0.9rem;
+      padding: 0.55rem 0;
+    }
+
+    .ver-detalle {
+      margin-top: 0.85rem;
+      padding-top: 0.55rem;
+    }
+
+    .chips {
+      margin-top: 0.9rem;
+    }
+
+    .acciones {
+      margin-top: 0.9rem;
+      flex-wrap: nowrap;
+      gap: 0.4rem;
+    }
+
+    /* Los dos botones caben en una fila si se aprieta el interletrado. */
+    .accion {
+      min-width: 0;
+      padding: 0.75rem 0.4rem;
+      font-size: 0.62rem;
+      letter-spacing: 0.06em;
+    }
+  }
 </style>

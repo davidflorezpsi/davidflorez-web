@@ -1,6 +1,6 @@
 ---
 /**
- * 05 / Servicios — catálogo por audiencia, con precio y reserva.
+ * 06 / Servicios — catálogo por audiencia, con precio y reserva.
  *
  * La ruta curva no es decoración: es el índice de los servicios. Cada parada se
  * posiciona sobre la curva con getPointAtLength y está acoplada en ambos
@@ -36,7 +36,7 @@ const PAGOS = [
 
 <section id="servicios" class="servicios">
   <div class="container">
-    <div class="rotulo"><span class="cejilla">05 / Servicios</span></div>
+    <div class="rotulo"><span class="cejilla">06 / Servicios</span></div>
 
     <div class="intro">
       <div class="intro-texto">
@@ -143,6 +143,8 @@ const PAGOS = [
                   Cerrar ✕
                 </button>
               </div>
+
+              <p class="cajon-desc">{s.desc}</p>
 
               <div class="cajon-cols">
                 {s.detalle.columnas.map((c) => (
@@ -363,6 +365,17 @@ const PAGOS = [
     letter-spacing: 0.14em;
     text-transform: uppercase;
     color: var(--azul-medio);
+  }
+
+  /* La descripción del servicio: en escritorio repite lo de la tarjeta, en
+     móvil es el único lugar donde aparece. */
+  .cajon-desc {
+    font-size: 0.95rem;
+    line-height: 1.75;
+    color: var(--tinta-suave);
+    margin-top: 1.25rem;
+    max-width: 70ch;
+    text-wrap: pretty;
   }
 
   .cajon-cols {

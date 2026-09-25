@@ -3,7 +3,7 @@ title: "Tu hijo no necesita una etiqueta: necesita un plan"
 description: "Qué es la terapia basada en procesos, en qué se diferencia de recibir un diagnóstico, y qué deberías poder preguntarle a tu terapeuta en la cuarta sesión."
 pubDate: 2026-09-24
 tags: ["Para padres", "PBT", "método clínico"]
-draft: true
+draft: false
 ---
 
 Dos niños con el mismo diagnóstico pueden necesitar tratamientos distintos. Y dos niños con diagnósticos distintos pueden necesitar el mismo.
