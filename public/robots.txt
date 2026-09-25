@@ -1,10 +1,9 @@
 User-agent: *
 Allow: /
 
-# Paginacion: si el blog llega a generar /blog/page/2, esas URLs no deben
-# indexarse (contenido duplicado sin valor propio). El contenido si se rastrea.
-Disallow: /page/
-Disallow: /*/page/
+# Sin reglas para paginación: hoy el blog no pagina, y un Disallow solo impide
+# el rastreo, no la indexación. Si algún día hay /blog/page/2, cada artículo
+# debe seguir enlazado desde HTML y la paginación se trata según su función.
 
 # Astro genera un indice de sitemaps, no un sitemap.xml suelto.
 Sitemap: https://davidflorez.co/sitemap-index.xml

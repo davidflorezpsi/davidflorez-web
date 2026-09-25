@@ -11,6 +11,7 @@
  */
 import ServiceCard from '../ServiceCard.astro';
 import { PESTANAS } from '../../data/servicios';
+import { PAGINAS_SERVICIO } from '../../data/paginas-servicio';
 
 const RUTA_D = 'M18 186 C70 186 78 130 120 122 C160 114 168 148 206 132 C246 115 240 52 286 34';
 const PUNTOS_X = [20, 70, 120, 170, 220, 270];
@@ -81,7 +82,7 @@ const PAGOS = [
                 data-hito={i}
                 role="button"
                 tabindex="0"
-                aria-label={`Parada ${i} de la ruta`}
+                aria-label={`Parada 0${i} de la ruta`}
               >
                 <circle r="16" fill="transparent" />
                 <circle data-anillo r="6" fill="#fff" stroke="#003346" stroke-width="1.6" />
@@ -185,6 +186,13 @@ const PAGOS = [
         }
       </div>
     </div>
+
+    <nav class="por-servicio" aria-label="Páginas de cada servicio">
+      <p class="et-fuerte">Cada servicio en detalle</p>
+      <ul>
+        {PAGINAS_SERVICIO.map((p) => <li><a href={`/${p.slug}/`}>{p.nombre}</a></li>)}
+      </ul>
+    </nav>
 
     <p class="cola">
       No se ofrece — sesiones sueltas / psicoterapia ecléctica / servicios por EPS / atención de
@@ -494,6 +502,22 @@ const PAGOS = [
     color: var(--tinta-suave);
     margin-top: 0.5rem;
     text-wrap: pretty;
+  }
+
+  .por-servicio {
+    margin-top: 2rem;
+  }
+
+  .por-servicio ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1.5rem;
+    margin-top: 0.6rem;
+  }
+
+  .por-servicio a {
+    text-decoration: underline;
+    text-underline-offset: 3px;
   }
 
   .cola {

@@ -1,0 +1,427 @@
+---
+/**
+ * Página de servicio: una por decisión de contratación (niñez, adolescencia,
+ * evaluación del espectro autista, PEERS, jóvenes adultos).
+ *
+ * Las tarjetas salen de servicios.ts; el texto de contexto, de
+ * paginas-servicio.ts. Lo que el visitante necesita para decidir —para quién,
+ * qué incluye, modalidad, precio, cómo empieza— está en el HTML, sin abrir
+ * cajones ni escribir por WhatsApp.
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+import {
+  PAGINAS_SERVICIO,
+  paginaPorSlug,
+  servicioPorId,
+  precioNumerico,
+  type PaginaServicio,
+} from '../data/paginas-servicio';
+import { CAL_COM, wa } from '../data/contacto';
+import { ID_PRACTICA, NOMBRE_COMPLETO, TARJETA_PROFESIONAL } from '../data/identidad';
+
+export function getStaticPaths() {
+  return PAGINAS_SERVICIO.map((pagina) => ({ params: { servicio: pagina.slug }, props: { pagina } }));
+}
+
+interface Props {
+  pagina: PaginaServicio;
+}
+
+const { pagina } = Astro.props;
+const servicios = pagina.servicios.map(servicioPorId);
+const relacionadas = pagina.relacionadas.map(paginaPorSlug);
+
+const publicados = await getCollection('blog', ({ data }) => data.draft !== true);
+const articulos = pagina.articulos
+  .map((slug) => publicados.find((p) => p.slug === slug))
+  .filter((p) => p !== undefined);
+
+const siteUrl = Astro.site ?? 'https://davidflorez.co';
+const url = new URL(`/${pagina.slug}/`, siteUrl).href;
+
+const schema = [
+  {
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Inicio', item: new URL('/', siteUrl).href },
+      { '@type': 'ListItem', position: 2, name: pagina.nombre, item: url },
+    ],
+  },
+  ...servicios.map((s) => {
+    const precio = precioNumerico(s.precio);
+    return {
+      '@type': 'Service',
+      name: s.titulo,
+      description: s.desc,
+      url,
+      provider: { '@id': ID_PRACTICA },
+      areaServed: { '@type': 'City', name: 'Bogotá' },
+      audience: {
+        '@type': 'PeopleAudience',
+        suggestedMinAge: pagina.edadMin,
+        suggestedMaxAge: pagina.edadMax,
+      },
+      ...(precio && {
+        offers: { '@type': 'Offer', price: precio, priceCurrency: 'COP', description: s.notaPrecio },
+      }),
+    };
+  }),
+];
+
+const msgGeneral = `Hola, escribo desde la web (${pagina.nombre}). Quiero orientación sobre un caso.`;
+---
+
+<BaseLayout title={pagina.titulo} description={pagina.descripcion} schema={schema}>
+  <article class="pagina">
+    <nav class="migas" aria-label="Ruta de navegación">
+      <a href="/">Inicio</a>
+      <span aria-hidden="true">/</span>
+      <span aria-current="page">{pagina.nombre}</span>
+    </nav>
+
+    <header class="cabeza">
+      <p class="cejilla">{pagina.cejilla}</p>
+      <h1>{pagina.h1}</h1>
+      <p class="entrada">{pagina.entrada}</p>
+      <p class="firma">
+        Atiende: <a href="/#equipo">{NOMBRE_COMPLETO}</a>, psicólogo clínico · T.P. {TARJETA_PROFESIONAL}
+      </p>
+      <div class="acciones">
+        <a href={CAL_COM} target="_blank" rel="noopener noreferrer" class="btn-solido" data-ubicacion="servicio_cabecera">
+          Agendar llamada gratuita · 20 min
+        </a>
+        <a href={wa(msgGeneral)} target="_blank" rel="noopener noreferrer" class="btn-linea" data-ubicacion="servicio_cabecera">
+          Escribir por WhatsApp
+        </a>
+      </div>
+    </header>
+
+    <section class="servicios" aria-labelledby="servicios-h2">
+      <h2 id="servicios-h2">{servicios.length > 1 ? 'Servicios, precios y qué incluye' : 'Qué incluye y precio'}</h2>
+
+      {
+        servicios.map((s) => (
+          <section class="ficha" aria-labelledby={`s-${s.id}`}>
+            <p class="ficha-cejilla">{s.cejilla.replace(/^\d+\s*\/\s*/, '')}</p>
+            <h3 id={`s-${s.id}`}>{s.titulo}</h3>
+            <p class="ficha-desc">{s.desc}</p>
+
+            <dl class="ficha-datos">
+              {s.precio && (
+                <div>
+                  <dt>Precio</dt>
+                  <dd>
+                    {s.precio} COP{s.notaPrecio && <span> · {s.notaPrecio}</span>}
+                  </dd>
+                </div>
+              )}
+              <div>
+                <dt>Modalidad</dt>
+                <dd>{s.chips.join(' / ')}</dd>
+              </div>
+            </dl>
+
+            <div class="ficha-cols">
+              {s.detalle.columnas.map((c) => (
+                <div>
+                  <h4>{c.titulo}</h4>
+                  {c.items && (
+                    <ul>
+                      {c.items.map((i) => (
+                        <li>{i}</li>
+                      ))}
+                    </ul>
+                  )}
+                  {c.texto && <p>{c.texto}</p>}
+                </div>
+              ))}
+            </div>
+
+            {s.detalle.pie && <p class="ficha-pie">{s.detalle.pie}.</p>}
+
+            <div class="ficha-acciones">
+              {s.acciones.map((a) => (
+                <a
+                  href={wa(a.msg)}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class={a.primaria ? 'btn-solido' : 'btn-linea'}
+                  data-ubicacion="servicio_ficha"
+                >
+                  {a.label}
+                </a>
+              ))}
+            </div>
+          </section>
+        ))
+      }
+    </section>
+
+    {
+      pagina.bloques.map((b) => (
+        <section class="bloque">
+          <h2>{b.titulo}</h2>
+          {b.parrafos.map((p) => (
+            <p>{p}</p>
+          ))}
+        </section>
+      ))
+    }
+
+    <aside class="relacionados" aria-labelledby="sigue-h2">
+      <h2 id="sigue-h2">Sigue por aquí</h2>
+      <ul>
+        {
+          relacionadas.map((r) => (
+            <li>
+              <a href={`/${r.slug}/`}>{r.nombre}</a>
+            </li>
+          ))
+        }
+        {
+          articulos.map((a) => (
+            <li>
+              <a href={`/blog/${a.slug}/`}>{a.data.title}</a>
+            </li>
+          ))
+        }
+        <li><a href="/#pertinencia">¿Es mi caso? Cuatro preguntas para saberlo</a></li>
+        <li><a href="/#faq">Preguntas frecuentes</a></li>
+      </ul>
+    </aside>
+  </article>
+</BaseLayout>
+
+<style>
+  .pagina {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: clamp(2rem, 5vw, 3.5rem) 1.5rem clamp(3rem, 7vw, 5rem);
+  }
+
+  .migas {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    font-family: var(--fuente-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--azul-oscuro);
+  }
+
+  .migas a {
+    color: var(--azul-medio);
+  }
+
+  .cabeza {
+    margin-top: 1.25rem;
+    border-top: 2px solid var(--azul-oscuro);
+    padding-top: 1rem;
+  }
+
+  h1 {
+    font-family: var(--fuente-titular);
+    font-stretch: 115%;
+    font-weight: 800;
+    font-size: clamp(1.9rem, 4.6vw, 3.1rem);
+    line-height: 1.04;
+    letter-spacing: -0.03em;
+    color: var(--azul-oscuro);
+    text-transform: uppercase;
+    margin-top: 1.25rem;
+    text-wrap: balance;
+  }
+
+  .entrada {
+    font-size: 1.08rem;
+    line-height: 1.65;
+    color: var(--azul-oscuro);
+    font-weight: 600;
+    margin-top: 1.25rem;
+    max-width: 62ch;
+    text-wrap: pretty;
+  }
+
+  .firma {
+    margin-top: 1rem;
+    font-size: 0.95rem;
+  }
+
+  .firma a {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .acciones,
+  .ficha-acciones {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: 1.5rem;
+  }
+
+  .btn-solido,
+  .btn-linea {
+    display: inline-flex;
+    align-items: center;
+    min-height: 48px;
+    padding: 0.8rem 1.35rem;
+    border-radius: 999px;
+    font-family: var(--fuente-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    transition: transform 0.2s var(--salida);
+  }
+
+  .btn-solido {
+    background: var(--azul-oscuro);
+    color: #fff;
+  }
+
+  .btn-solido:hover {
+    color: #fff;
+    transform: translateY(-1.5px);
+  }
+
+  .btn-linea {
+    border: 1.5px solid var(--azul-oscuro);
+    color: var(--azul-oscuro);
+  }
+
+  .btn-linea:hover {
+    transform: translateY(-1.5px);
+  }
+
+  h2 {
+    font-family: var(--fuente-titular);
+    font-stretch: 112%;
+    font-weight: 800;
+    font-size: clamp(1.3rem, 2.8vw, 1.8rem);
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    color: var(--azul-oscuro);
+    margin-top: 3.25rem;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(0, 51, 70, 0.2);
+    text-wrap: balance;
+  }
+
+  .ficha {
+    margin-top: 1.75rem;
+    padding: clamp(1.25rem, 3vw, 1.75rem);
+    border: 1px solid rgba(0, 51, 70, 0.2);
+    border-top: 3px solid var(--cian);
+    border-radius: 3px 3px 12px 12px;
+  }
+
+  .ficha-cejilla {
+    font-family: var(--fuente-mono);
+    font-size: 0.66rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--azul-oscuro);
+  }
+
+  h3 {
+    font-family: var(--fuente-titular);
+    font-stretch: 110%;
+    font-weight: 800;
+    font-size: 1.3rem;
+    line-height: 1.2;
+    color: var(--azul-oscuro);
+    margin-top: 0.5rem;
+  }
+
+  .ficha-desc {
+    margin-top: 0.75rem;
+    line-height: 1.7;
+  }
+
+  .ficha-datos {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem 2.5rem;
+    margin-top: 1.25rem;
+  }
+
+  dt {
+    font-family: var(--fuente-mono);
+    font-size: 0.64rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--azul-oscuro);
+  }
+
+  dd {
+    font-weight: 700;
+    color: var(--azul-oscuro);
+  }
+
+  dd span {
+    font-weight: 400;
+    color: var(--tinta-suave);
+  }
+
+  .ficha-cols {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+    gap: 1.25rem 2rem;
+    margin-top: 1.5rem;
+  }
+
+  h4 {
+    font-family: var(--fuente-mono);
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--azul-oscuro);
+  }
+
+  .ficha-cols ul {
+    margin-top: 0.6rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+  }
+
+  .ficha-cols li {
+    padding-left: 0.9rem;
+    border-left: 2px solid var(--cian);
+    line-height: 1.55;
+  }
+
+  .ficha-cols p {
+    margin-top: 0.6rem;
+    line-height: 1.65;
+  }
+
+  .ficha-pie {
+    margin-top: 1.25rem;
+    font-size: 0.92rem;
+    font-style: italic;
+  }
+
+  .bloque p {
+    margin-top: 1.1rem;
+    font-size: 1.02rem;
+    line-height: 1.8;
+    max-width: 68ch;
+    text-wrap: pretty;
+  }
+
+  .relacionados ul {
+    margin-top: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+
+  .relacionados a {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+</style>

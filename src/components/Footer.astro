@@ -1,5 +1,7 @@
 ---
 import { INSTAGRAM } from '../data/contacto';
+import { NOMBRE_COMPLETO, TARJETA_PROFESIONAL } from '../data/identidad';
+import { PAGINAS_SERVICIO } from '../data/paginas-servicio';
 
 const anio = new Date().getFullYear();
 ---
@@ -16,14 +18,22 @@ const anio = new Date().getFullYear();
       <p class="titulo-col">Psicólogo</p>
       <ul>
         <li>
-          Erwin David Flórez Rojas<br />
-          <span class="credencial">Psicólogo clínico · T.P. 205129</span>
+          {NOMBRE_COMPLETO}<br />
+          <span class="credencial">Psicólogo clínico · T.P. {TARJETA_PROFESIONAL}</span>
         </li>
       </ul>
     </div>
 
+    <nav class="bloque servicios-pie" aria-label="Servicios">
+      <p class="titulo-col">Servicios</p>
+      <ul>
+        {PAGINAS_SERVICIO.map((p) => <li><a href={`/${p.slug}/`} class="toque">{p.nombre}</a></li>)}
+      </ul>
+    </nav>
+
     <nav aria-label="Links del pie de página">
-      <a href="/privacidad" class="toque">Privacidad</a>
+      <a href="/blog/" class="toque">Blog</a>
+      <a href="/privacidad/" class="toque">Privacidad</a>
       <a href={INSTAGRAM} target="_blank" rel="noopener noreferrer" class="toque">Instagram</a>
     </nav>
 
@@ -128,6 +138,18 @@ const anio = new Date().getFullYear();
 
   nav a:hover {
     color: #fff;
+  }
+
+  .servicios-pie a {
+    font-family: var(--fuente-cuerpo);
+    font-size: 0.85rem;
+    letter-spacing: 0;
+    text-transform: none;
+    color: #fff;
+  }
+
+  .servicios-pie a:hover {
+    color: var(--cian);
   }
 
   .legal {

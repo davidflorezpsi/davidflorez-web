@@ -266,6 +266,11 @@ const CITA =
   const cita = document.getElementById('alp-cita');
   let palabras: HTMLSpanElement[] = [];
   let citaLista = false;
+  /*
+   * Las palabras aún no alcanzadas quedan atenuadas, no ocultas: a 0.55 el
+   * blanco sobre navy conserva 5.1:1. Con movimiento reducido no hay efecto.
+   */
+  const ATENUADA = window.matchMedia('(prefers-reduced-motion: reduce)').matches ? '1' : '0.55';
 
   if (cita) {
     const texto = (cita.textContent || '').trim();
@@ -273,7 +278,7 @@ const CITA =
     palabras = texto.split(/\s+/).map((w) => {
       const s = document.createElement('span');
       s.textContent = `${w} `;
-      s.style.opacity = '0.15';
+      s.style.opacity = ATENUADA;
       s.style.transition = 'opacity 0.4s ease, color 0.2s ease';
       s.addEventListener('mouseenter', () => {
         if (citaLista) s.style.color = '#ff9e89';
@@ -293,7 +298,7 @@ const CITA =
     const p = Math.max(0, Math.min(1, (vh * 0.8 - r.top) / (r.height + vh * 0.25)));
     const n = Math.round(p * palabras.length);
     for (let i = 0; i < palabras.length; i++) {
-      palabras[i].style.opacity = i < n ? '1' : '0.15';
+      palabras[i].style.opacity = i < n ? '1' : ATENUADA;
     }
     citaLista = n >= palabras.length;
     if (!citaLista) palabras.forEach((s) => (s.style.color = ''));
@@ -399,7 +404,17 @@ const CITA =
     }
   };
 
-  if (svg && cuerda) {
+  /*
+   * Muestrear la cuerda es caro: 900 llamadas a getPointAtLength eran una tarea
+   * larga de más de un segundo en móvil (Lighthouse), en plena carga de la
+   * página y sin que la sección estuviera a la vista. Ahora se muestrea cuando
+   * la sección se acerca a pantalla y en tandas que ceden el hilo principal.
+   * Mientras tanto los nodos se ven en su posición inicial, que ya viene en el HTML.
+   */
+  const ceder = () => new Promise<void>((r) => setTimeout(r, 0));
+
+  const iniciarCuerda = async () => {
+    if (!svg || !cuerda) return;
     let L = 0;
     try {
       L = cuerda.getTotalLength();
@@ -413,6 +428,7 @@ const CITA =
       for (let i = 0; i <= N; i++) {
         const p = cuerda.getPointAtLength((i / N) * L);
         pts.push([p.x, p.y]);
+        if (i % 30 === 29) await ceder();
       }
 
       // Índices de la cuerda que caen dentro de un cruce: allí los nodos suben de capa.
@@ -454,6 +470,7 @@ const CITA =
         fase: -1,
       };
       pintarMeta();
+      scrollMeta();
 
       const aSvg = (ev: PointerEvent): number[] | null => {
         const m = svg.getScreenCTM();
@@ -521,6 +538,22 @@ const CITA =
       };
       window.addEventListener('pointerup', soltar);
       window.addEventListener('pointercancel', soltar);
+    }
+  };
+
+  if (svg && cuerda) {
+    if ('IntersectionObserver' in window) {
+      const io = new IntersectionObserver(
+        (entradas) => {
+          if (!entradas.some((e) => e.isIntersecting)) return;
+          io.disconnect();
+          iniciarCuerda();
+        },
+        { rootMargin: '600px 0px' },
+      );
+      io.observe(svg);
+    } else {
+      iniciarCuerda();
     }
   }
 

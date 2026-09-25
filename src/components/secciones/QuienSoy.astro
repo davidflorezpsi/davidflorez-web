@@ -103,7 +103,7 @@ const MODELOS = [
                 Certificaciones internacionales en evaluación diagnóstica del espectro autista
                 (ADOS-2 / ADI-R) e intervención en habilidades sociales para adolescentes (PEERS).
                 Diplomados en Terapia de Aceptación y Compromiso (ACT) y en Terapias Conductuales y
-                Contextuales en Infato Juveniles y Adultos.
+                Contextuales en Infanto-Juveniles y Adultos.
               </p>
             </div>
 
@@ -125,7 +125,7 @@ const MODELOS = [
                         data-nom={m.nombre}
                         data-desc={m.desc}
                         style={`background:${m.bg}`}
-                        aria-label={`${m.sigla} · ${m.nombre}`}
+                        aria-label={`${m.sigla} ${m.familia}: ${m.nombre}`}
                         aria-pressed={m.id === 'act' ? 'true' : 'false'}
                       >
                         <span class="sigla">{m.sigla}</span>
@@ -470,7 +470,6 @@ const MODELOS = [
     letter-spacing: 0.1em;
     text-transform: uppercase;
     color: var(--azul-oscuro);
-    opacity: 0.6;
   }
 
   /* Ficha elegida: fondo navy, sigla cyan. */

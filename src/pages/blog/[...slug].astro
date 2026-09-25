@@ -8,6 +8,8 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { getCollection, type CollectionEntry } from 'astro:content';
 import { CAL_COM } from '../../data/contacto';
+import { ID_PERSONA, ID_PRACTICA, NOMBRE_COMPLETO, TARJETA_PROFESIONAL } from '../../data/identidad';
+import { paginaPorSlug } from '../../data/paginas-servicio';
 
 export async function getStaticPaths() {
   const posts = await getCollection('blog', ({ data }) => import.meta.env.DEV || data.draft !== true);
@@ -22,39 +24,50 @@ const { post } = Astro.props;
 const { Content } = await post.render();
 
 const categoria = post.data.tags?.[0] ?? 'Artículo';
-const fecha = post.data.pubDate.toLocaleDateString('es-CO', {
-  year: 'numeric',
-  month: 'long',
-  day: 'numeric',
-  // La fecha del frontmatter es medianoche UTC: sin esto, en Colombia
-  // (UTC-5) se muestra el dia anterior.
-  timeZone: 'UTC',
-});
+const formatoFecha = (d: Date) =>
+  d.toLocaleDateString('es-CO', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+    // La fecha del frontmatter es medianoche UTC: sin esto, en Colombia
+    // (UTC-5) se muestra el dia anterior.
+    timeZone: 'UTC',
+  });
+const fecha = formatoFecha(post.data.pubDate);
+const revisado = post.data.updatedDate;
 
 /** Lectura estimada a 200 palabras por minuto, redondeada hacia arriba. */
 const palabras = post.body.split(/\s+/).filter(Boolean).length;
 const minutos = Math.max(1, Math.ceil(palabras / 200));
 
 const siteUrl = Astro.site ?? 'https://davidflorez.co';
-const schemaArticulo = {
-  '@context': 'https://schema.org',
-  '@type': 'BlogPosting',
-  headline: post.data.title,
-  description: post.data.description,
-  datePublished: post.data.pubDate.toISOString(),
-  inLanguage: 'es-CO',
-  keywords: post.data.tags?.join(', '),
-  wordCount: palabras,
-  mainEntityOfPage: new URL(`/blog/${post.slug}/`, siteUrl).href,
-  author: {
-    '@type': 'Person',
-    name: 'Erwin David Flórez Rojas',
-    jobTitle: 'Psicólogo clínico',
-    identifier: 'T.P. 205129',
-    url: new URL('/#equipo', siteUrl).href,
+const urlArticulo = new URL(`/blog/${post.slug}/`, siteUrl).href;
+const schema = [
+  {
+    '@type': 'BlogPosting',
+    headline: post.data.title,
+    description: post.data.description,
+    datePublished: post.data.pubDate.toISOString(),
+    ...(revisado && { dateModified: revisado.toISOString() }),
+    inLanguage: 'es-CO',
+    keywords: post.data.tags?.join(', '),
+    wordCount: palabras,
+    mainEntityOfPage: urlArticulo,
+    image: new URL('/og-image.png', siteUrl).href,
+    author: { '@id': ID_PERSONA },
+    publisher: { '@id': ID_PRACTICA },
   },
-  publisher: { '@id': `${siteUrl}#practica` },
-};
+  {
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Inicio', item: new URL('/', siteUrl).href },
+      { '@type': 'ListItem', position: 2, name: 'Artículos', item: new URL('/blog/', siteUrl).href },
+      { '@type': 'ListItem', position: 3, name: post.data.title, item: urlArticulo },
+    ],
+  },
+];
+
+const servicio = post.data.servicio ? paginaPorSlug(post.data.servicio) : undefined;
 
 /** Enlaces de vuelta a la home, según a quién le habla el artículo. */
 const paraColegas = categoria.toLowerCase().includes('colega');
@@ -65,19 +78,18 @@ const relacionados = paraColegas
       ['/#servicios', 'Servicios y condiciones de ingreso'],
     ]
   : [
+      ...(servicio ? [[`/${servicio.slug}/`, `${servicio.nombre}: qué incluye, precio y cómo empezar`]] : []),
       ['/#pertinencia', '¿Es mi caso? Cuatro preguntas para saberlo'],
       ['/#servicios', 'Servicios, precios y qué incluye cada uno'],
       ['/#faq', 'Preguntas frecuentes'],
     ];
 ---
 
-<BaseLayout title={`${post.data.title} — David Flórez`} description={post.data.description}>
-  <script type="application/ld+json" set:html={JSON.stringify(schemaArticulo)} is:inline />
-
+<BaseLayout title={`${post.data.title} — David Flórez`} description={post.data.description} schema={schema}>
   <article class="articulo">
     <div class="cabeza">
       <div class="rotulo">
-        <a href="/blog" class="volver">← Artículos</a>
+        <a href="/blog/" class="volver">← Artículos</a>
         <span class="categoria">{categoria}</span>
       </div>
 
@@ -88,8 +100,18 @@ const relacionados = paraColegas
         <time datetime={post.data.pubDate.toISOString()}>{fecha}</time>
         <span aria-hidden="true">·</span>
         <span>{minutos} min de lectura</span>
+        {
+          revisado && (
+            <>
+              <span aria-hidden="true">·</span>
+              <span>
+                Revisado el <time datetime={revisado.toISOString()}>{formatoFecha(revisado)}</time>
+              </span>
+            </>
+          )
+        }
         <span aria-hidden="true">·</span>
-        <span>Erwin David Flórez Rojas · T.P. 205129</span>
+        <span><a href="/#equipo">{NOMBRE_COMPLETO}</a> · T.P. {TARJETA_PROFESIONAL}</span>
       </p>
     </div>
 

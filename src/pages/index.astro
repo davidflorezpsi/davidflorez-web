@@ -14,9 +14,39 @@ import Faq from '../components/secciones/Faq.astro';
 import Agenda from '../components/secciones/Agenda.astro';
 import Instagram from '../components/secciones/Instagram.astro';
 import BarraMovil from '../components/BarraMovil.astro';
+
+/**
+ * Catálogo de la práctica para el schema de la home. Refleja los precios
+ * visibles en la sección de servicios; si cambia uno allá, cambia aquí.
+ */
+const catalogo = {
+  hasOfferCatalog: {
+    '@type': 'OfferCatalog',
+    name: 'Servicios clínicos',
+    itemListElement: [
+      ['Evaluación Funcional Clínica', 'Proceso estructurado de 3 sesiones, con análisis funcional e informe', '390000', 'psicologo-infantil-bogota'],
+      ['Evaluación del espectro autista · ADOS-2 / ADI-R', '6 sesiones, incluye protocolos', '1050000', 'evaluacion-autismo-ados-2-bogota'],
+      ['Programa de Intervención Individual · niñez y adolescencia', '16 sesiones, 4 sesiones con cuidadores y una asesoría al colegio', '2750000', 'psicologo-infantil-bogota'],
+      ['Programa de Intervención Individual · jóvenes adultos', 'Ciclo de 16 sesiones con criterios de cierre', '2080000', 'psicologo-jovenes-adultos-bogota'],
+      ['Entrenamiento conductual a cuidadores', 'Ciclo de 8 sesiones con práctica en vivo y registro diario', '1040000', 'psicologo-infantil-bogota'],
+      ['PEERS · Habilidades sociales', 'Ciclo de 14 sesiones en grupo, por adolescente', '1400000', 'peers-adolescentes-bogota'],
+      ['Coaching parental', 'Sesiones con cuidadores, número acordado en la llamada', '130000', ''],
+    ].map(([nombre, desc, precio, slug]) => ({
+      '@type': 'Offer',
+      itemOffered: {
+        '@type': 'Service',
+        name: nombre,
+        description: desc,
+        ...(slug && { url: `https://davidflorez.co/${slug}/` }),
+      },
+      price: precio,
+      priceCurrency: 'COP',
+    })),
+  },
+};
 ---
 
-<BaseLayout datosEstructurados>
+<BaseLayout extraPractica={catalogo}>
   <Hero />
   <Resumen />
   <Pertinencia />

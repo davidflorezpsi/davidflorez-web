@@ -399,6 +399,7 @@ export const PESTANAS: Pestana[] = [
               'Revisión de resultados y ajuste de la estrategia',
               'Cuando aplica, se deriva al entrenamiento conductual a cuidadores o al programa individual',
             ] },
+            { titulo: 'Qué es y qué no', texto: 'Se paga por sesión, pero no son sesiones sueltas: el número se acuerda en la llamada, con objetivos y registro entre sesiones. Es trabajo con los adultos de la casa, no psicoterapia del niño o adolescente, y no reemplaza el programa de intervención cuando el caso lo pide.' },
           ],
         },
       },

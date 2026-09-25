@@ -48,7 +48,7 @@ se remite.
 | Programa de Intervención Individual · jóvenes adultos (16 sesiones) | $2.080.000 |
 | Entrenamiento conductual a cuidadores (8 sesiones) | $1.040.000 |
 | PEERS · Habilidades sociales (14 sesiones en grupo) | $1.400.000 por adolescente |
-| Coaching parental | $130.000 por sesión |
+| Coaching parental (trabajo con cuidadores; número de sesiones acordado, no sesiones sueltas) | $130.000 por sesión |
 | Asesoría institucional | $185.000 por hora |
 | Taller para colegios | $1.800.000 por grupo |
 | Charla abierta a familias | $90.000 por persona |
@@ -75,12 +75,20 @@ pasarela de pago, nunca por WhatsApp ni a cuentas personales.
 Condición de ingreso a los programas de intervención: haber completado la evaluación
 con esta práctica, o presentar un informe diagnóstico externo vigente (no mayor a 12 meses).
 
+## Páginas de servicio
+
+- [Psicólogo infantil en Bogotá](https://davidflorez.co/psicologo-infantil-bogota/): niñez de 2 a 11 años, evaluación, intervención y entrenamiento a cuidadores
+- [Psicólogo para adolescentes en Bogotá](https://davidflorez.co/psicologo-adolescentes-bogota/): 12 a 17 años, encuadre con cuidadores
+- [Evaluación del espectro autista con ADOS-2 y ADI-R](https://davidflorez.co/evaluacion-autismo-ados-2-bogota/): niñez y adolescencia, presencial en Bogotá
+- [PEERS · Habilidades sociales](https://davidflorez.co/peers-adolescentes-bogota/): programa grupal para adolescentes
+- [Psicólogo para jóvenes de 18 a 25 años](https://davidflorez.co/psicologo-jovenes-adultos-bogota/): ansiedad, depresión, duelo, autocrítica y regulación emocional
+
 ## Enlaces
 
 - [Página principal](https://davidflorez.co/): servicios, precios, método clínico, filtro de pertinencia y preguntas frecuentes
 - [Agendar llamada gratuita](https://cal.com/david-florez-rojas-pdno9v/llamada-de-orientacion-inicial): 20 minutos, sin costo, sin compromiso
-- [Artículos](https://davidflorez.co/blog): psicoeducación para familias y colegas
-- [Política de privacidad](https://davidflorez.co/privacidad): tratamiento de datos conforme a la Ley 1581 de 2012
+- [Artículos](https://davidflorez.co/blog/): psicoeducación para familias y colegas
+- [Política de privacidad](https://davidflorez.co/privacidad/): tratamiento de datos conforme a la Ley 1581 de 2012
 - [Instagram](https://instagram.com/ps.davidflorez): @ps.davidflorez
 - WhatsApp: +57 318 164 9161
 

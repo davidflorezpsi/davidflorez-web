@@ -2,6 +2,7 @@
 title: "En este programa el que entrena eres tú"
 description: "Cómo funciona el entrenamiento conductual a cuidadores: por qué te corrijo por un audífono mientras juegas, por qué la tarea es de cinco minutos, y por qué la conducta empeora antes de mejorar."
 pubDate: 2026-09-24
+servicio: psicologo-infantil-bogota
 tags: ["Para padres", "entrenamiento a cuidadores", "crianza"]
 draft: true
 ---
