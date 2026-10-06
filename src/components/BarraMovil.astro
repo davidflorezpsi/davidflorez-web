@@ -1,6 +1,7 @@
 ---
 /**
- * CTA fijo en móvil.
+ * CTA fijo en móvil: WhatsApp primero (es el canal para empezar) y la llamada
+ * gratuita, que es opcional, al lado.
  *
  * Aparece cuando se pasa el hero y se esconde al llegar a la sección Agenda,
  * donde los mismos botones ya están a la vista: tapar contenido con un botón
@@ -13,14 +14,12 @@ import { CAL_COM, wa } from '../data/contacto';
 ---
 
 <div class="barra" id="barra-movil" data-oculta aria-label="Acciones rápidas">
-  <a href={CAL_COM} target="_blank" rel="noopener noreferrer" data-ubicacion="barra_movil" class="btn principal">
-    Llamada gratuita
-  </a>
   <a
     href={wa('Hola, escribo desde la web. Quiero orientación sobre un caso.')}
     target="_blank"
-    rel="noopener noreferrer" data-ubicacion="barra_movil"
-    class="btn secundario"
+    rel="noopener noreferrer"
+    data-ubicacion="barra_movil"
+    class="btn principal"
     aria-label="Escribir por WhatsApp"
   >
     <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true">
@@ -29,6 +28,9 @@ import { CAL_COM, wa } from '../data/contacto';
       ></path>
     </svg>
     <span>WhatsApp</span>
+  </a>
+  <a href={CAL_COM} target="_blank" rel="noopener noreferrer" data-ubicacion="barra_movil" class="btn secundario">
+    Llamada gratuita
   </a>
 </div>
 

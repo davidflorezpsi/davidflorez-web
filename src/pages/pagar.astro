@@ -1,0 +1,314 @@
+---
+/**
+ * /pagar/ — la página que se comparte por WhatsApp cuando ya se sabe qué
+ * servicio aplica. Cada programa abre su link de pago de Wompi; mientras ese
+ * link no exista en pagos.ts, el botón pide el link por WhatsApp.
+ *
+ * No se indexa ni va al sitemap: no es una puerta de entrada desde buscadores,
+ * es el último paso de una conversación.
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { wa } from '../data/contacto';
+import {
+  CUOTAS,
+  HORAS_PARA_CANCELAR,
+  LINK_MONTO_ABIERTO,
+  MEDIOS_DE_PAGO,
+  PRODUCTOS,
+  precioDe,
+} from '../data/pagos';
+
+const productos = PRODUCTOS.map((p) => ({ ...p, ...precioDe(p) }));
+---
+
+<BaseLayout
+  title="Pagar un programa | David Flórez"
+  description="Pago anticipado de los programas de David Flórez, psicólogo clínico, con Wompi: tarjeta de crédito o débito, PSE, Nequi o botón Bancolombia."
+  noindex
+>
+  <article class="pagina">
+    <nav class="migas" aria-label="Ruta de navegación">
+      <a href="/">Inicio</a>
+      <span aria-hidden="true">/</span>
+      <span aria-current="page">Pagar</span>
+    </nav>
+
+    <header class="cabeza">
+      <p class="cejilla">Pago anticipado · Wompi</p>
+      <h1>Pagar un programa</h1>
+      <p class="entrada">
+        Elige el programa que acordamos por WhatsApp. El pago se hace en Wompi, la pasarela de
+        Bancolombia, con {MEDIOS_DE_PAGO}.
+      </p>
+    </header>
+
+    <section aria-labelledby="programas-h2">
+      <h2 id="programas-h2">Programas</h2>
+      <ul class="productos">
+        {
+          productos.map((p) => (
+            <li class="producto" id={p.id}>
+              <div>
+                <h3>{p.nombre}</h3>
+                <p class="precio">
+                  {p.precio} COP{p.nota && <span> · {p.nota}</span>}
+                </p>
+              </div>
+              {p.link ? (
+                <a href={p.link.url} target="_blank" rel="noopener noreferrer" class="btn-solido" data-ubicacion="pagar">
+                  Pagar en Wompi ↗
+                </a>
+              ) : (
+                <a
+                  href={wa(`Hola, quiero pagar ${p.nombre} (${p.precio}). ¿Me envías el link de pago?`)}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="btn-linea"
+                  data-ubicacion="pagar"
+                >
+                  Pedir el link por WhatsApp
+                </a>
+              )}
+            </li>
+          ))
+        }
+      </ul>
+      <p class="nota">
+        Talleres, charlas y asesoría institucional se cotizan por WhatsApp.
+        {
+          LINK_MONTO_ABIERTO && (
+            <>
+              Si ya tienes el valor acordado,{' '}
+              <a href={LINK_MONTO_ABIERTO} target="_blank" rel="noopener noreferrer" data-ubicacion="pagar">
+                págalo aquí
+              </a>
+              .
+            </>
+          )
+        }
+      </p>
+    </section>
+
+    <section aria-labelledby="cuotas-h2">
+      <h2 id="cuotas-h2">¿En cuotas?</h2>
+      <p>{CUOTAS}</p>
+    </section>
+
+    <section aria-labelledby="reembolsos-h2">
+      <h2 id="reembolsos-h2">Cancelaciones y reembolsos</h2>
+      <p>
+        Puedes mover una sesión sin costo hasta {HORAS_PARA_CANCELAR} horas antes. Si te retractas o
+        dejas el programa, te devuelvo lo que no se haya prestado. El detalle está en las
+        <a href="/condiciones/">condiciones del servicio</a>.
+      </p>
+    </section>
+
+    <section aria-labelledby="despues-h2">
+      <h2 id="despues-h2">Después del pago</h2>
+      <p>
+        Con el pago confirmado se abre tu expediente en la plataforma PsiPragma —consentimiento
+        informado incluido— y agendamos las sesiones por WhatsApp.
+      </p>
+    </section>
+
+    <section aria-labelledby="seguridad-h2">
+      <h2 id="seguridad-h2">Para pagar con tranquilidad</h2>
+      <p>
+        El pago se hace solo en <strong>checkout.wompi.co</strong>. Nunca te voy a pedir
+        transferencias a cuentas personales ni los datos de tu tarjeta por WhatsApp. ¿Dudas antes de
+        pagar?
+        <a
+          href={wa('Hola, tengo una duda antes de pagar.')}
+          target="_blank"
+          rel="noopener noreferrer"
+          data-ubicacion="pagar">Escríbeme</a
+        >.
+      </p>
+    </section>
+  </article>
+</BaseLayout>
+
+<style>
+  .pagina {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: clamp(2rem, 5vw, 3.5rem) 1.5rem clamp(3rem, 7vw, 5rem);
+  }
+
+  .migas {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    font-family: var(--fuente-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--azul-oscuro);
+  }
+
+  /* Área táctil de 24px como mínimo (WCAG 2.5.8): el texto mide 0.68rem. */
+  .migas a {
+    color: var(--azul-medio);
+    padding-block: 0.3rem;
+  }
+
+  .cabeza {
+    margin-top: 1.25rem;
+    border-top: 2px solid var(--azul-oscuro);
+    padding-top: 1rem;
+  }
+
+  .cejilla {
+    font-family: var(--fuente-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--azul-medio);
+  }
+
+  h1 {
+    font-family: var(--fuente-titular);
+    font-stretch: 115%;
+    font-weight: 800;
+    font-size: clamp(1.9rem, 4.6vw, 3.1rem);
+    line-height: 1.04;
+    letter-spacing: -0.03em;
+    color: var(--azul-oscuro);
+    text-transform: uppercase;
+    margin-top: 1.25rem;
+    text-wrap: balance;
+  }
+
+  .entrada {
+    font-size: 1.08rem;
+    line-height: 1.65;
+    color: var(--azul-oscuro);
+    font-weight: 600;
+    margin-top: 1.25rem;
+    max-width: 62ch;
+    text-wrap: pretty;
+  }
+
+  h2 {
+    font-family: var(--fuente-titular);
+    font-stretch: 112%;
+    font-weight: 800;
+    font-size: clamp(1.3rem, 2.8vw, 1.8rem);
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    color: var(--azul-oscuro);
+    margin-top: 3rem;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(0, 51, 70, 0.2);
+  }
+
+  section > p {
+    margin-top: 1rem;
+    line-height: 1.75;
+    max-width: 68ch;
+  }
+
+  section > p a {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .productos {
+    margin-top: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    border-top: 1px solid rgba(0, 51, 70, 0.2);
+  }
+
+  .producto {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem 1.5rem;
+    padding: 1.1rem 0;
+    border-bottom: 1px solid rgba(0, 51, 70, 0.2);
+    scroll-margin-top: 96px;
+  }
+
+  /* El nombre se parte en dos líneas antes que mandar el botón abajo. */
+  .producto > div {
+    flex: 1 1 18rem;
+  }
+
+  .producto > a {
+    flex: 0 0 auto;
+  }
+
+  /* Al llegar por un enlace a /pagar/#programa, el programa queda señalado. */
+  .producto:target {
+    box-shadow: inset 4px 0 0 var(--cian);
+    padding-left: 1rem;
+  }
+
+  h3 {
+    font-family: var(--fuente-titular);
+    font-stretch: 110%;
+    font-weight: 800;
+    font-size: 1.1rem;
+    line-height: 1.25;
+    color: var(--azul-oscuro);
+  }
+
+  .precio {
+    margin-top: 0.3rem;
+    font-weight: 700;
+    color: var(--azul-oscuro);
+  }
+
+  .precio span {
+    font-weight: 400;
+    color: var(--tinta-suave);
+  }
+
+  .btn-solido,
+  .btn-linea {
+    display: inline-flex;
+    align-items: center;
+    min-height: 48px;
+    padding: 0.8rem 1.35rem;
+    border-radius: 999px;
+    font-family: var(--fuente-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: transform 0.2s var(--salida);
+  }
+
+  .btn-solido {
+    background: var(--azul-oscuro);
+    color: #fff;
+  }
+
+  .btn-solido:hover {
+    color: #fff;
+    transform: translateY(-1.5px);
+  }
+
+  .btn-linea {
+    border: 1.5px solid var(--azul-oscuro);
+    color: var(--azul-oscuro);
+  }
+
+  .btn-linea:hover {
+    transform: translateY(-1.5px);
+  }
+
+  .nota {
+    font-size: 0.92rem;
+    color: var(--tinta-suave);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .btn-solido,
+    .btn-linea {
+      transition: none;
+    }
+  }
+</style>

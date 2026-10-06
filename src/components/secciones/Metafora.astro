@@ -14,6 +14,11 @@
  */
 import { CUERDA_D, PARCHES } from '../../data/geometria';
 
+/**
+ * La metáfora es de Fórmula 1, no de escaladores: al validarla con varias
+ * personas, la cuerda se leía como una carretera, no como una montaña. Por eso
+ * todo el texto de la sección habla de pista, meta y volante.
+ */
 const CITA =
   '"Imagina que tú y tu psicólogo son un equipo de Fórmula 1: tú eres el piloto en el monoplaza y él es tu ingeniero de pista en el muro de boxes. Tú estás tomando las curvas a 300 km/h, por lo que tu visión se limita a los metros de asfalto que tienes justo por delante. El psicólogo puede avisarte del tráfico, de cuándo es mejor cambiar la estrategia o qué trazada te conviene tomar, no porque sea mejor piloto que tú ni porque sepa conducir tu coche, sino porque está frente a los monitores y la telemetría. Esa posición diferente le da una perspectiva global de la carrera, lo que le permite ver cosas que tú, desde el interior del casco, no alcanzas a ver."';
 ---
@@ -34,7 +39,7 @@ const CITA =
         viewBox="0 2 660 205"
         width="100%"
         role="img"
-        aria-label="Una sola cuerda ondulada con dos gazas: la del consultante, más grande y más baja, y la del clínico, más pequeña y más alta. Arrastra cada punto para recorrer la cuerda."
+        aria-label="Una pista ondulada con dos lazos: el del consultante, más grande y más bajo, y el del clínico, más pequeño y más alto. Arrastra cada punto para recorrer la pista."
       >
         <defs>
           <filter id="cuerda-suave" x="-20%" y="-55%" width="140%" height="210%">
@@ -145,12 +150,13 @@ const CITA =
       </svg>
 
       <div class="lectura">
-        <p id="meta-pista">Sube con el scroll · arrastra los dos puntos por la cuerda</p>
+        <p id="meta-pista">Avanza con el scroll · arrastra los dos puntos por la pista</p>
         <div id="meta-porque">
           <span>Por qué</span>
           <p>
-            El último tramo no lo sube el scroll: lo subes tú. El clínico no te carga hasta la cima —
-            se sitúa donde alcanza a ver el camino y te lo señala. El impulso siempre es tuyo.
+            El último tramo no lo recorre el scroll: lo manejas tú. El clínico no conduce por ti —
+            está en el muro de boxes, donde ve la carrera completa, y desde ahí te avisa. El volante
+            siempre es tuyo.
           </p>
         </div>
       </div>
@@ -377,10 +383,10 @@ const CITA =
       if (pista) {
         pista.textContent =
           fase === 2
-            ? 'Cima · bandera izada'
+            ? 'Meta · bandera arriba'
             : fase === 1
-              ? 'Tu turno: arrastra TÚ hasta la cima'
-              : 'Sube con el scroll · arrastra los dos puntos por la cuerda';
+              ? 'Tu turno: lleva TÚ el último tramo hasta la meta'
+              : 'Avanza con el scroll · arrastra los dos puntos por la pista';
         pista.style.color = fase === 1 ? '#f8d17b' : '#ff9e89';
       }
       const pq = document.getElementById('meta-porque');

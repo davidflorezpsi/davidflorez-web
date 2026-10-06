@@ -1,7 +1,8 @@
 /**
  * Catálogo de servicios — copy y precios literales del prototipo de diseño.
- * Cambiar un precio aquí lo cambia en la tarjeta, en el cajón de detalle
- * y en el mensaje predefinido de WhatsApp.
+ * Cambiar un precio aquí lo cambia en la tarjeta, en el cajón de detalle,
+ * en el mensaje predefinido de WhatsApp y en /pagar/. Si ese servicio ya tiene
+ * link de Wompi en pagos.ts, el build pide crear uno con el monto nuevo.
  */
 
 export type Audiencia = 'ninos' | 'ados' | 'adultos' | 'fam';
@@ -103,7 +104,6 @@ export const PESTANAS: Pestana[] = [
         chips: ['Presencial · Bogotá'],
         acciones: [
           { label: 'Reservar y pagar', msg: 'Hola, escribo desde la web. Quiero reservar Espectro autista · ADOS-2 / ADI-R ($1.050.000) y recibir el link de pago.', primaria: true },
-          { label: 'Financiar a cuotas', msg: 'Hola, escribo desde la web. Quiero financiar a cuotas Espectro autista · ADOS-2 / ADI-R ($1.050.000). ¿Me cuentas las opciones?', primaria: false },
         ],
         detalle: {
           cejilla: '02 / Evaluación especializada',
@@ -126,14 +126,13 @@ export const PESTANAS: Pestana[] = [
         n: 3,
         cejilla: '03 / Intervención',
         titulo: 'Programa de Intervención Individual',
-        desc: 'Ciclo de 16 sesiones de psicoterapia basada en procesos, más cuatro sesiones mensuales con los cuidadores y una asesoría al colegio. Objetivos conductuales definidos desde la primera sesión y seguimiento cuantificable del progreso. No es acompañamiento abierto: es un programa con criterios clínicos claros de avance y cierre.',
+        desc: 'Ciclo de 16 sesiones de psicoterapia basada en procesos, más cuatro sesiones mensuales con los cuidadores y una asesoría al colegio. Objetivos conductuales definidos desde la primera sesión y seguimiento cuantificable del progreso.',
         precio: '$2.750.000',
         notaPrecio: '20 sesiones · $130.000 + asesoría al colegio',
         btnDetalle: 'Qué incluye y cómo se ingresa',
         chips: ['Presencial · Bogotá', 'Telepresencial'],
         acciones: [
           { label: 'Reservar y pagar', msg: 'Hola, escribo desde la web. Quiero reservar Programa de Intervención Individual ($2.750.000) y recibir el link de pago.', primaria: true },
-          { label: 'Financiar a cuotas', msg: 'Hola, escribo desde la web. Quiero financiar a cuotas Programa de Intervención Individual ($2.750.000). ¿Me cuentas las opciones?', primaria: false },
         ],
         detalle: {
           cejilla: '03 / Intervención',
@@ -165,7 +164,6 @@ export const PESTANAS: Pestana[] = [
         alterna: true,
         acciones: [
           { label: 'Reservar y pagar', msg: 'Hola, escribo desde la web. Quiero reservar Entrenamiento conductual a cuidadores ($1.040.000) y recibir el link de pago.', primaria: true },
-          { label: 'Financiar a cuotas', msg: 'Hola, escribo desde la web. Quiero financiar a cuotas Entrenamiento conductual a cuidadores ($1.040.000). ¿Me cuentas las opciones?', primaria: false },
         ],
         detalle: {
           cejilla: '04 / Padres',
@@ -228,7 +226,6 @@ export const PESTANAS: Pestana[] = [
         chips: ['Presencial · Bogotá'],
         acciones: [
           { label: 'Reservar y pagar', msg: 'Hola, escribo desde la web. Quiero reservar Espectro autista en adolescentes ($1.050.000) y recibir el link de pago.', primaria: true },
-          { label: 'Financiar a cuotas', msg: 'Hola, escribo desde la web. Quiero financiar a cuotas Espectro autista en adolescentes ($1.050.000). ¿Me cuentas las opciones?', primaria: false },
         ],
         detalle: {
           cejilla: '02 / Evaluación especializada',
@@ -257,7 +254,6 @@ export const PESTANAS: Pestana[] = [
         chips: ['Presencial · Bogotá', 'Telepresencial'],
         acciones: [
           { label: 'Reservar y pagar', msg: 'Hola, escribo desde la web. Quiero reservar Programa de Intervención Individual ($2.750.000) y recibir el link de pago.', primaria: true },
-          { label: 'Financiar a cuotas', msg: 'Hola, escribo desde la web. Quiero financiar a cuotas Programa de Intervención Individual ($2.750.000). ¿Me cuentas las opciones?', primaria: false },
         ],
         detalle: {
           cejilla: '03 / Intervención',
@@ -289,7 +285,6 @@ export const PESTANAS: Pestana[] = [
         alterna: true,
         acciones: [
           { label: 'Reservar y pagar', msg: 'Hola, escribo desde la web. Quiero reservar PEERS · Habilidades sociales ($1.400.000) y recibir el link de pago.', primaria: true },
-          { label: 'Financiar a cuotas', msg: 'Hola, escribo desde la web. Quiero financiar a cuotas PEERS · Habilidades sociales ($1.400.000). ¿Me cuentas las opciones?', primaria: false },
         ],
         detalle: {
           cejilla: '04 / Habilidades sociales',
@@ -352,7 +347,6 @@ export const PESTANAS: Pestana[] = [
         chips: ['Presencial · Bogotá', 'Telepresencial'],
         acciones: [
           { label: 'Reservar y pagar', msg: 'Hola, escribo desde la web. Quiero reservar Programa de Intervención Individual ($2.080.000) y recibir el link de pago.', primaria: true },
-          { label: 'Financiar a cuotas', msg: 'Hola, escribo desde la web. Quiero financiar a cuotas Programa de Intervención Individual ($2.080.000). ¿Me cuentas las opciones?', primaria: false },
         ],
         detalle: {
           cejilla: '02 / Intervención',
@@ -382,7 +376,7 @@ export const PESTANAS: Pestana[] = [
         titulo: 'Consulta con cuidadores',
         desc: 'Trabajo directo con cuidadores sobre las prácticas de crianza que sostienen o modifican la conducta del niño o adolescente. El foco no es el diagnóstico del hijo, es lo que ocurre en la interacción diaria.',
         precio: '$130.000',
-        notaPrecio: 'por sesión · el número se acuerda en la llamada',
+        notaPrecio: 'por sesión · el número se acuerda al iniciar',
         btnDetalle: 'Cómo funciona',
         chips: ['Presencial · Bogotá', 'Telepresencial'],
         destacada: true,
@@ -399,7 +393,7 @@ export const PESTANAS: Pestana[] = [
               'Revisión de resultados y ajuste de la estrategia',
               'Cuando aplica, se deriva al entrenamiento conductual a cuidadores o al programa individual',
             ] },
-            { titulo: 'Qué es y qué no', texto: 'Se paga por sesión, pero no son sesiones sueltas: el número se acuerda en la llamada, con objetivos y registro entre sesiones. Es consulta clínica con los adultos de la casa, basada en análisis funcional, no coaching ni psicoterapia del niño o adolescente, y no reemplaza el programa de intervención cuando el caso lo pide.' },
+            { titulo: 'Qué es y qué no', texto: 'Se paga por sesión, pero no son sesiones sueltas: el número se acuerda al iniciar, con objetivos y registro entre sesiones. Es consulta clínica con los adultos de la casa, basada en análisis funcional, no coaching ni psicoterapia del niño o adolescente, y no reemplaza el programa de intervención cuando el caso lo pide.' },
           ],
         },
       },

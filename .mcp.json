@@ -1,0 +1,13 @@
+{
+  "mcpServers": {
+    "wompi": {
+      "command": "npx",
+      "args": ["-y", "@codespar/mcp-wompi@0.2.2"],
+      "env": {
+        "WOMPI_PUBLIC_KEY": "${WOMPI_PUBLIC_KEY:-}",
+        "WOMPI_PRIVATE_KEY": "${WOMPI_PRIVATE_KEY:-proxy-injected}",
+        "WOMPI_SANDBOX": "${WOMPI_SANDBOX:-false}"
+      }
+    }
+  }
+}

@@ -1,43 +1,88 @@
-# Astro Starter Kit: Minimal
+# davidflorez.co
+
+Sitio de la práctica de psicología clínica de David Flórez. Astro 5, salida
+estática, publicado en Vercel desde la rama `main`.
 
 ```sh
-npm create astro@latest -- --template minimal
+npm install
+npm run dev      # localhost:4321
+npm run build    # genera dist/
 ```
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+## Dónde se cambia cada cosa
 
-## 🚀 Project Structure
+| Qué | Archivo |
+| --- | --- |
+| Servicios, precios y botones de WhatsApp | `src/data/servicios.ts` |
+| Links de pago de Wompi y horas para cancelar una sesión | `src/data/pagos.ts` |
+| Preguntas frecuentes | `src/data/faq.ts` |
+| Texto propio de cada página de servicio | `src/data/paginas-servicio.ts` |
+| WhatsApp, correo, agenda, Instagram y sedes | `src/data/contacto.ts` |
+| Credenciales verificables | `src/data/credenciales.ts` |
+| NIT y dirección de notificación judicial | `src/data/identidad.ts` |
+| Política de privacidad y condiciones del servicio | `src/pages/privacidad.astro`, `src/pages/condiciones.astro` |
 
-Inside of your Astro project, you'll see the following folders and files:
+`llms.txt` y el schema se generan desde esos mismos datos, así que no hay que
+editarlos aparte.
 
-```text
-/
-├── public/
-├── src/
-│   └── pages/
-│       └── index.astro
-└── package.json
-```
+## Pagos con Wompi
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+El sitio no cobra: `/pagar/` muestra cada programa con su link de pago de Wompi.
+Esa página no sale en buscadores; es la que se comparte por WhatsApp.
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+1. En el panel de comercios de Wompi, crea un **link de pago** por programa:
+   monto fijo, uso múltiple y sin vencimiento.
+2. En `src/data/pagos.ts`, agrega a cada programa su link y el monto con que lo
+   creaste:
 
-Any static assets, like images, can be placed in the `public/` directory.
+   ```ts
+   { id: 'evaluacion', nombre: '…', servicios: ['n1', 'a1'],
+     link: { url: 'https://checkout.wompi.co/l/XXXXXX', monto: 390000 } },
+   ```
 
-## 🧞 Commands
+Mientras un programa no tenga link, su botón pide el link por WhatsApp. Si
+cambias un precio en `servicios.ts` y el link quedó con el monto anterior, el
+build falla y dice cuál es: hay que crear el link nuevo en Wompi.
 
-All commands are run from the root of the project, from a terminal:
+### Wompi desde Claude Code (MCP)
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
+`.mcp.json` carga el servidor MCP `@codespar/mcp-wompi`, fijado en la versión
+0.2.2 (revisada: solo habla con `production.wompi.co` o `sandbox.wompi.co`).
+Con él, Claude crea y actualiza los links de pago.
 
-## 👀 Want to learn more?
+- **La llave privada no va en el repositorio ni en el chat.** En claude.ai/code,
+  menú del entorno → Edit → **API credentials** → Add credential: host
+  `production.wompi.co`, encabezado `Authorization`, prefijo `Bearer`, valor =
+  llave privada (`prv_prod_…`). El proxy la agrega a cada petición sin que la
+  sesión la vea. Para pruebas, otra credencial con `sandbox.wompi.co` y la llave
+  `prv_test_…`, más la variable `WOMPI_SANDBOX=true`.
+- Si tu plan no tiene **API credentials**, ponla como variable de entorno
+  `WOMPI_PRIVATE_KEY` y agrega `production.wompi.co` a los dominios permitidos
+  de la red del entorno.
+- `.claude/settings.json` deja usar sin preguntar solo las herramientas de
+  lectura de links. Crear o editar un link pide confirmación, y las de cobros,
+  reembolsos, anulaciones, tarjetas y datos de clientes están bloqueadas: los
+  pagos de la práctica son datos de salud y no deben pasar por el chat.
+- Cuando los links ya estén creados, puedes borrar la credencial: el sitio no la
+  necesita.
 
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+## Instagram
+
+La sección «Últimas publicaciones» lee las cuatro más recientes con la API
+oficial de Instagram durante el build. Sin token, muestra solo el enlace al
+perfil.
+
+1. La cuenta debe ser profesional (Creador o Empresa).
+2. En [Meta for Developers](https://developers.facebook.com/apps), crea una app,
+   agrega el producto **Instagram** («API con inicio de sesión de Instagram»),
+   conecta la cuenta y genera el token de acceso.
+3. En Vercel → proyecto → Settings → Environment Variables, crea
+   `INSTAGRAM_TOKEN` con ese token (Production y Preview) y vuelve a publicar.
+4. Para que las publicaciones se actualicen solas y el token no venza: en Vercel
+   → Settings → Git → Deploy Hooks, crea un hook sobre `main`; en GitHub →
+   Settings → Secrets and variables → Actions, guárdalo como
+   `VERCEL_DEPLOY_HOOK`. El flujo `.github/workflows/actualizar-instagram.yml`
+   publica el sitio cada día a las 6:17 a. m.
+
+Si un día la sección vuelve a mostrar solo el enlace, el token venció: genera
+uno nuevo y reemplázalo en Vercel.

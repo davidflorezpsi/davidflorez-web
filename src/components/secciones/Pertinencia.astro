@@ -3,6 +3,8 @@
  * 01 / Pertinencia — filtro honesto de cuatro preguntas que también dice
  * a quién acudir si el caso no encaja.
  */
+import { CAL_COM, wa } from '../../data/contacto';
+
 interface Opcion {
   v: string;
   label: string;
@@ -43,7 +45,7 @@ const PREGUNTAS: { clave: string; titulo: string; opciones: Opcion[] }[] = [
     clave: 'pago',
     titulo: '¿Cómo esperas pagar el proceso?',
     opciones: [
-      { v: 'particular', label: 'Particular, anticipado o en cuotas' },
+      { v: 'particular', label: 'Particular, con pago anticipado' },
       { v: 'eps', label: 'Por EPS o seguro médico' },
       { v: 'sueltas', label: 'Sesión por sesión, según vaya viendo' },
     ],
@@ -98,8 +100,19 @@ const PREGUNTAS: { clave: string; titulo: string; opciones: Opcion[] }[] = [
         <p class="res-texto" id="res-texto"></p>
 
         <div class="res-acciones" id="res-acciones" hidden>
-          <a href="#agenda" class="res-cta">Agendar la llamada gratuita ↗</a>
+          <a
+            href={wa('Hola, escribo desde la web. Respondí las cuatro preguntas y mi caso encaja. Quiero saber cómo empezar.')}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="res-cta"
+            data-ubicacion="pertinencia">Escríbeme por WhatsApp ↗</a
+          >
           <a href="#servicios" class="res-linea">Ver el servicio que aplica</a>
+          <p class="res-llamada">
+            ¿Prefieres conversarlo antes? <a href={CAL_COM} target="_blank" rel="noopener noreferrer"
+              >Agenda la llamada gratuita</a
+            >.
+          </p>
         </div>
 
         <div class="res-deriva" id="res-deriva" hidden>
@@ -326,6 +339,20 @@ const PREGUNTAS: { clave: string; titulo: string; opciones: Opcion[] }[] = [
     color: var(--azul-oscuro);
   }
 
+  .res-llamada {
+    flex: 1 1 100%;
+    margin-top: 1rem;
+    font-size: 0.92rem;
+    line-height: 1.6;
+    color: var(--hielo);
+  }
+
+  .res-llamada a {
+    color: var(--cian);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
   .res-deriva {
     margin-top: 1.75rem;
     border-left: 3px solid var(--cian);
@@ -440,14 +467,14 @@ const PREGUNTAS: { clave: string; titulo: string; opciones: Opcion[] }[] = [
       if (a.quien === 'adulto') {
         foco =
           a.necesidad === 'intervenir'
-            ? 'Como quieres iniciar intervención, en la llamada se valida si conviene empezar por la Evaluación Clínica Inicial o entrar directo al ciclo de 16 sesiones.'
+            ? 'Como quieres iniciar intervención, primero revisamos si conviene empezar por la Evaluación Clínica Inicial o entrar directo al ciclo de 16 sesiones.'
             : a.necesidad === 'segunda'
               ? 'Como buscas una segunda opinión, la ruta es la Evaluación Clínica Inicial, con formulación funcional del caso e hipótesis explícita.'
               : 'La ruta natural es empezar por la Evaluación Clínica Inicial: primero la formulación, después el programa.';
       } else {
         foco =
           a.necesidad === 'intervenir'
-            ? 'Como quieres iniciar intervención, en la llamada se valida si ya tienes un informe diagnóstico vigente o si conviene empezar por la Evaluación Funcional.'
+            ? 'Como quieres iniciar intervención, primero revisamos si ya tienes un informe diagnóstico vigente o si conviene empezar por la Evaluación Funcional.'
             : a.necesidad === 'segunda'
               ? 'Como buscas una segunda opinión, la ruta natural es la Evaluación Funcional Clínica, o la evaluación especializada ADOS-2 / ADI-R si la pregunta es por espectro autista.'
               : 'La ruta natural es empezar por la Evaluación Funcional Clínica: primero el mapa, después la ruta.';

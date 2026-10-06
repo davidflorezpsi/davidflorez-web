@@ -28,12 +28,14 @@
   gtag('config', 'G-6X804BXQQ9');
 
   /*
-   * Embudo de captación: dos eventos genéricos.
+   * Embudo de captación: tres eventos genéricos.
    *   contact_click  → clic a WhatsApp (interés inicial; no es una consulta)
    *   booking_click  → clic a la agenda de la llamada gratuita
+   *   payment_click  → clic a un link de pago de Wompi (intención de pago;
+   *                    el pago confirmado solo lo sabe Wompi)
    * Parámetros: canal, ubicación del botón y página. Nunca el texto
-   * prellenado, el nombre ni las respuestas del filtro de pertinencia.
-   * Marcar contact_click y booking_click como eventos clave en GA4.
+   * prellenado, el nombre, el monto ni las respuestas del filtro de pertinencia.
+   * Marcar los tres como eventos clave en GA4.
    */
   document.addEventListener('click', function (e) {
     var a = e.target instanceof Element ? e.target.closest('a[href]') : null;
@@ -46,6 +48,8 @@
       evento = 'contact_click'; canal = 'whatsapp';
     } else if (url.hostname === 'cal.com') {
       evento = 'booking_click'; canal = 'cal_com';
+    } else if (url.hostname === 'checkout.wompi.co') {
+      evento = 'payment_click'; canal = 'wompi';
     } else {
       return;
     }

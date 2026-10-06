@@ -9,7 +9,7 @@ import { Image } from 'astro:assets';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import retrato from '../assets/david-florez-retrato.png';
 import { CREDENCIALES, FORMACION_SIN_SOPORTE } from '../data/credenciales';
-import { CAL_COM } from '../data/contacto';
+import { CAL_COM, wa } from '../data/contacto';
 import { ID_PERSONA, NOMBRE_COMPLETO, TARJETA_PROFESIONAL } from '../data/identidad';
 
 const siteUrl = Astro.site ?? 'https://davidflorez.co';
@@ -33,8 +33,8 @@ const schema = [
 ---
 
 <BaseLayout
-  title={`${NOMBRE_COMPLETO}, psicólogo clínico · Formación y credenciales | David Flórez`}
-  description="Erwin David Flórez Rojas, psicólogo clínico (T.P. 205129), especialista en Psicología Clínica (UPB). Formación, acreditaciones ADOS-2 y ADI-R y cómo verificarlas."
+  title={`${NOMBRE_COMPLETO}, psicólogo clínico: credenciales`}
+  description="Erwin David Flórez Rojas, psicólogo clínico (T.P. 205129), especialista en Psicología Clínica (UPB): formación y acreditaciones ADOS-2 y ADI-R verificables."
   schema={schema}
 >
   <article class="pagina">
@@ -58,8 +58,8 @@ const schema = [
         </p>
         <p>
           Estoy en clínica desde 2022, en evaluación e intervención de dificultades afectivas,
-          conductuales y del neurodesarrollo. Si tu caso pide otra especialidad, te lo digo en la
-          primera llamada y te remito.
+          conductuales y del neurodesarrollo. Si tu caso pide otra especialidad, te lo digo desde el
+          primer contacto y te remito.
         </p>
       </div>
       <div class="foto">
@@ -127,14 +127,22 @@ const schema = [
     <section aria-labelledby="empezar-h2">
       <h2 id="empezar-h2">Cómo empezar</h2>
       <p>
-        La llamada de orientación inicial es de 20 minutos y no tiene costo. Ahí vemos si tu caso es
-        pertinente y qué servicio aplica.
+        Escríbeme por WhatsApp y te digo qué servicio aplica. Si prefieres conversarlo antes, la
+        llamada de orientación es de 20 minutos, gratuita y opcional.
       </p>
       <p class="acciones">
-        <a href={CAL_COM} target="_blank" rel="noopener noreferrer" class="btn-solido" data-ubicacion="sobre_mi">
-          Agendar llamada gratuita · 20 min
+        <a
+          href={wa('Hola, escribo desde la web. Quiero orientación sobre un caso.')}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="btn-solido"
+          data-ubicacion="sobre_mi"
+        >
+          Escribir por WhatsApp
         </a>
-        <a href="/contacto/" class="btn-linea">Contacto y sedes</a>
+        <a href={CAL_COM} target="_blank" rel="noopener noreferrer" class="btn-linea" data-ubicacion="sobre_mi">
+          Llamada gratuita · 20 min
+        </a>
       </p>
     </section>
   </article>
@@ -158,8 +166,10 @@ const schema = [
     color: var(--azul-oscuro);
   }
 
+  /* Área táctil de 24px como mínimo (WCAG 2.5.8): el texto mide 0.68rem. */
   .migas a {
     color: var(--azul-medio);
+    padding-block: 0.3rem;
   }
 
   .cabeza {

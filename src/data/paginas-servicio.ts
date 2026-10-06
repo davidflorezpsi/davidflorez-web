@@ -10,6 +10,7 @@
  * cuando estén confirmados, no antes.
  */
 import { PESTANAS, type Audiencia, type Servicio } from './servicios';
+import { CUOTAS, MEDIOS_DE_PAGO } from './pagos';
 
 export interface Bloque {
   titulo: string;
@@ -40,21 +41,25 @@ export interface PaginaServicio {
   preguntas: string[];
 }
 
+/**
+ * Igual en todas las páginas. Lo que ya responden las preguntas frecuentes de
+ * cada página (EPS, a quién se remite) no se repite aquí.
+ */
 const COMO_EMPEZAR: Bloque = {
   titulo: 'Cómo se empieza',
   parrafos: [
-    'Primero, una llamada de orientación inicial: 20 minutos, gratuita y virtual. Ahí se valida si el caso es pertinente para esta práctica y qué servicio aplica. Si el caso pide otra especialidad, se dice en esa llamada y se remite a un colega.',
-    'Después, la reserva y el link de pago llegan por WhatsApp, y el acuerdo se firma antes de iniciar. El pago siempre se hace por el link seguro de la pasarela, nunca a cuentas personales.',
-    'Es una práctica privada particular: no hay atención por EPS ni por seguro médico, y no es un servicio de urgencias. Si hay riesgo inmediato, la línea es el 123.',
+    'Escríbeme por WhatsApp: me cuentas el caso, te digo qué servicio aplica y te envío el link de pago. Si prefieres conversarlo antes de decidir, puedes agendar una llamada de orientación gratuita de 20 minutos; es opcional.',
+    `El pago es anticipado y se hace solo en Wompi, con ${MEDIOS_DE_PAGO}. ${CUOTAS} Con el pago confirmado se abre tu expediente y se agendan las sesiones.`,
+    'No es un servicio de urgencias: si hay riesgo inmediato, marca la línea 123.',
   ],
 };
 
 export const PAGINAS_SERVICIO: PaginaServicio[] = [
   {
     slug: 'psicologo-infantil-bogota',
-    titulo: 'Psicólogo infantil en Bogotá · niños de 2 a 11 años | David Flórez',
+    titulo: 'Psicólogo infantil en Bogotá · 2 a 11 años | David Flórez',
     descripcion:
-      'Evaluación e intervención psicológica para niños de 2 a 11 años en Bogotá: evaluación funcional, espectro autista con ADOS-2 / ADI-R, programa individual y entrenamiento a cuidadores. Precios y qué incluye cada uno.',
+      'Psicólogo infantil en Bogotá para niños de 2 a 11 años: evaluación funcional, espectro autista con ADOS-2 / ADI-R, programa individual y trabajo con cuidadores.',
     nombre: 'Psicología infantil',
     cejilla: 'Niñez · 2 a 11 años',
     h1: 'Psicólogo infantil en Bogotá',
@@ -72,7 +77,6 @@ export const PAGINAS_SERVICIO: PaginaServicio[] = [
         titulo: 'El papel de los cuidadores',
         parrafos: [
           'Con niños pequeños buena parte del trabajo ocurre con los adultos de la casa: el niño pasa una hora a la semana en consulta y el resto del tiempo en su vida. Por eso el programa individual incluye sesiones mensuales con los cuidadores y una asesoría al colegio, y existe un programa específico de entrenamiento conductual a cuidadores.',
-          'Buena parte de ese trabajo con cuidadores se sostiene bien en modalidad virtual. La evaluación con ADOS-2 sí requiere observación presencial en Bogotá.',
         ],
       },
       COMO_EMPEZAR,
@@ -85,14 +89,14 @@ export const PAGINAS_SERVICIO: PaginaServicio[] = [
   },
   {
     slug: 'psicologo-adolescentes-bogota',
-    titulo: 'Psicólogo para adolescentes en Bogotá · 12 a 17 años | David Flórez',
+    titulo: 'Psicólogo para adolescentes en Bogotá | David Flórez',
     descripcion:
-      'Evaluación e intervención psicológica para adolescentes de 12 a 17 años en Bogotá y online: evaluación funcional, espectro autista, programa individual y PEERS. Cómo participan el adolescente y los cuidadores.',
+      'Psicólogo para adolescentes de 12 a 17 años en Bogotá y online: evaluación funcional, espectro autista y programa individual, con los cuidadores cerca.',
     nombre: 'Psicología para adolescentes',
     cejilla: 'Adolescencia · 12 a 17 años',
     h1: 'Psicólogo para adolescentes en Bogotá',
     entrada:
-      'Atención psicológica para adolescentes de 12 a 17 años. La evaluación se hace con el adolescente, no sobre él: entrevista directa, análisis de la dificultad en su contexto real y triangulación con cuidadores y colegio. Presencial en Bogotá y telepresencial.',
+      'Atención psicológica para adolescentes de 12 a 17 años: el adolescente es protagonista de su proceso, con los cuidadores y el colegio cerca. Presencial en Bogotá y telepresencial.',
     servicios: ['a1', 'a2', 'a3'],
     bloques: [
       {
@@ -103,10 +107,9 @@ export const PAGINAS_SERVICIO: PaginaServicio[] = [
         ],
       },
       {
-        titulo: 'Diagnósticos que llegan tarde',
+        titulo: 'Si la dificultad está con los pares',
         parrafos: [
-          'Muchos diagnósticos del espectro autista llegan en la adolescencia: jóvenes que compensaron durante años y hoy presentan ansiedad, aislamiento o agotamiento social. Para ellos existe una evaluación específica con el módulo ADOS-2 para adolescentes con lenguaje fluido y la entrevista ADI-R.',
-          'Si la dificultad principal está en la interacción con pares, el programa PEERS trabaja habilidades sociales en grupo.',
+          'Cuando lo que más pesa es la interacción con otros adolescentes, el programa PEERS trabaja habilidades sociales en grupo, con reglas concretas y práctica entre sesiones.',
         ],
       },
       COMO_EMPEZAR,
@@ -121,7 +124,7 @@ export const PAGINAS_SERVICIO: PaginaServicio[] = [
     slug: 'evaluacion-autismo-ados-2-bogota',
     titulo: 'Evaluación de autismo con ADOS-2 y ADI-R en Bogotá | David Flórez',
     descripcion:
-      'Evaluación del espectro autista para niños y adolescentes en Bogotá con ADOS-2 y ADI-R: qué incluye, cuántas sesiones, qué informe recibe la familia, precio y límites de la evaluación.',
+      'Evaluación del espectro autista con ADOS-2 y ADI-R para niños y adolescentes en Bogotá: qué incluye, sesiones, informe, precio y límites.',
     nombre: 'Evaluación del espectro autista',
     cejilla: 'Evaluación especializada · niñez y adolescencia',
     h1: 'Evaluación del espectro autista con ADOS-2 y ADI-R en Bogotá',
@@ -140,7 +143,6 @@ export const PAGINAS_SERVICIO: PaginaServicio[] = [
         titulo: 'Qué no cubre',
         parrafos: [
           'Esta evaluación responde a la pregunta por el espectro autista. Si el cuadro pide otras valoraciones —neurología pediátrica, neuropsicología u otras evaluaciones específicas—, el informe lo dice y deja la ruta. No reemplaza la valoración médica.',
-          'Es para niñez y adolescencia. Requiere observación presencial en Bogotá; no se hace en modalidad virtual.',
         ],
       },
       COMO_EMPEZAR,
@@ -153,14 +155,14 @@ export const PAGINAS_SERVICIO: PaginaServicio[] = [
   },
   {
     slug: 'peers-adolescentes-bogota',
-    titulo: 'PEERS: habilidades sociales para adolescentes en Bogotá | David Flórez',
+    titulo: 'PEERS para adolescentes en Bogotá | David Flórez',
     descripcion:
-      'Programa PEERS (UCLA) de habilidades sociales para adolescentes en Bogotá y online: 14 sesiones en grupo con acompañamiento a cuidadores. Para quién es, cómo funciona y precio.',
+      'Programa PEERS (UCLA) de habilidades sociales para adolescentes en Bogotá y online: 14 sesiones en grupo, con sesiones para cuidadores. Precio y para quién es.',
     nombre: 'PEERS · Habilidades sociales',
     cejilla: 'Habilidades sociales · adolescencia',
     h1: 'PEERS: habilidades sociales para adolescentes en Bogotá',
     entrada:
-      'PEERS es un programa manualizado de UCLA para habilidades sociales en adolescentes, con evidencia en población autista y en dificultades de interacción con pares. Se enseñan reglas sociales concretas y se practican en tareas reales entre sesiones. Catorce sesiones en grupo, presencial en Bogotá o telepresencial.',
+      'Un programa en grupo para adolescentes a quienes les cuesta relacionarse con sus pares. Catorce sesiones, presencial en Bogotá o telepresencial.',
     servicios: ['a4'],
     bloques: [
       {
@@ -172,7 +174,7 @@ export const PAGINAS_SERVICIO: PaginaServicio[] = [
       {
         titulo: 'Fechas y cupos',
         parrafos: [
-          'Los grupos se abren por ciclos. Las fechas del próximo grupo y los cupos disponibles se confirman por WhatsApp o en la llamada de orientación inicial, donde también se revisa si el programa encaja con el caso.',
+          'Los grupos se abren por ciclos. Las fechas del próximo grupo y los cupos disponibles se confirman por WhatsApp; ahí también revisamos si el programa encaja con el caso.',
         ],
       },
       COMO_EMPEZAR,
@@ -187,18 +189,18 @@ export const PAGINAS_SERVICIO: PaginaServicio[] = [
     slug: 'psicologo-jovenes-adultos-bogota',
     titulo: 'Psicólogo para jóvenes de 18 a 25 años en Bogotá | David Flórez',
     descripcion:
-      'Atención psicológica para jóvenes adultos de 18 a 25 años en Bogotá y online: ansiedad, depresión, duelo, autocrítica y regulación emocional. Evaluación inicial y programa de 16 sesiones con ACT, DBT y FAP.',
+      'Psicólogo para jóvenes de 18 a 25 años en Bogotá y online: ansiedad, depresión, duelo y regulación emocional. Evaluación inicial y programa de 16 sesiones.',
     nombre: 'Psicología para jóvenes adultos',
     cejilla: 'Adultez joven · 18 a 25 años',
     h1: 'Psicólogo para jóvenes de 18 a 25 años en Bogotá',
     entrada:
-      'Atención psicológica para jóvenes de 18 a 25 años que consultan por ansiedad, depresión, duelo, autocrítica o dificultades de regulación emocional. Una evaluación inicial corta y delimitada, y después un programa de 16 sesiones desde las terapias conductuales y contextuales. Presencial en Bogotá y telepresencial.',
+      'Atención psicológica para jóvenes de 18 a 25 años que consultan por ansiedad, depresión, duelo, autocrítica o dificultades de regulación emocional. Presencial en Bogotá y telepresencial.',
     servicios: ['d1', 'd2'],
     bloques: [
       {
         titulo: 'Hasta los 25 años',
         parrafos: [
-          'La práctica atiende hasta los 25 años. No atiende adultos mayores de 25 ni terapia de pareja; si es tu caso, en la llamada inicial se orienta y se remite a un colega.',
+          'La práctica atiende hasta los 25 años. No atiende adultos mayores de 25 ni terapia de pareja; si es tu caso, escríbeme y te oriento hacia un colega.',
         ],
       },
       COMO_EMPEZAR,
@@ -207,7 +209,7 @@ export const PAGINAS_SERVICIO: PaginaServicio[] = [
     edadMax: 25,
     relacionadas: ['psicologo-adolescentes-bogota'],
     articulos: [],
-    preguntas: ['adultos', 'sesion-suelta', 'duracion', 'diagnostico-previo', 'donde', 'eps'],
+    preguntas: ['sesion-suelta', 'duracion', 'diagnostico-previo', 'donde', 'eps'],
   },
 ];
 

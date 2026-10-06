@@ -1,39 +1,55 @@
 ---
 /**
- * 11 / Últimas publicaciones.
+ * 11 / Últimas publicaciones — las cuatro más recientes de @ps.davidflorez.
  *
- * PENDIENTE: las cuatro casillas son marcadores de posición — no hay conexión
- * con la API de Instagram. Cuando se conecte, o cuando David suba las imágenes
- * a /public, reemplazar el contenido de cada casilla por su <img> y su enlace.
+ * Se leen en el build con la API oficial (src/lib/instagram.ts) y las imágenes
+ * se sirven desde este dominio: ni scripts ni cookies de Meta en la página.
+ * Si no hay token o la API falla, la sección queda en un enlace al perfil, sin
+ * casillas vacías.
  */
+import { Image } from 'astro:assets';
 import { INSTAGRAM } from '../../data/contacto';
+import { publicacionesInstagram } from '../../lib/instagram';
 
-const CASILLAS = [
-  { n: '01', destacada: false },
-  { n: '02', destacada: true },
-  { n: '03', destacada: false },
-  { n: '04', destacada: false },
-];
+const publicaciones = await publicacionesInstagram(4);
 ---
 
-<section class="instagram">
+<section class="instagram" aria-labelledby="instagram-h2">
   <div class="container">
-    <h2 class="solo-lectores">Últimas publicaciones en Instagram</h2>
+    <h2 id="instagram-h2" class="solo-lectores">Últimas publicaciones en Instagram</h2>
 
     <div class="cab">
       <span class="cejilla-cyan">11 / Últimas publicaciones</span>
       <a href={INSTAGRAM} target="_blank" rel="noopener noreferrer" class="toque">@ps.davidflorez ↗</a>
     </div>
 
-    <div class="rejilla">
-      {
-        CASILLAS.map((c) => (
-          <div class={c.destacada ? 'casilla destacada' : 'casilla'}>
-            <span>Publicación {c.n}</span>
-          </div>
-        ))
-      }
-    </div>
+    {
+      publicaciones.length > 0 ? (
+        <ul class="rejilla">
+          {publicaciones.map((p) => (
+            <li class="casilla">
+              <a href={p.enlace} target="_blank" rel="noopener noreferrer">
+                <Image
+                  src={p.imagen}
+                  alt={p.alt}
+                  inferSize
+                  widths={[320, 640]}
+                  sizes="(min-width: 900px) 25vw, 50vw"
+                  loading="lazy"
+                  decoding="async"
+                />
+                <span class="solo-lectores"> (se abre en Instagram)</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <a href={INSTAGRAM} target="_blank" rel="noopener noreferrer" class="perfil">
+          <span>Ver las publicaciones en Instagram</span>
+          <span aria-hidden="true">↗</span>
+        </a>
+      )
+    }
   </div>
 </section>
 
@@ -85,24 +101,62 @@ const CASILLAS = [
     aspect-ratio: 4 / 5;
     border-right: 1px solid rgba(255, 255, 255, 0.3);
     border-bottom: 1px solid rgba(255, 255, 255, 0.3);
-    display: flex;
-    align-items: flex-end;
-    padding: 1rem;
+    overflow: hidden;
   }
 
-  .casilla span {
+  .casilla a {
+    display: block;
+    height: 100%;
+  }
+
+  .casilla img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition:
+      transform 0.4s var(--salida),
+      opacity 0.3s ease;
+  }
+
+  .casilla a:hover img,
+  .casilla a:focus-visible img {
+    transform: scale(1.03);
+    opacity: 0.9;
+  }
+
+  .casilla a:focus-visible {
+    outline: 2px solid var(--cian);
+    outline-offset: -2px;
+  }
+
+  .perfil {
+    margin-top: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    min-height: 56px;
+    padding: 1rem 1.25rem;
+    border: 1px solid rgba(255, 255, 255, 0.3);
     font-family: var(--fuente-mono);
-    font-size: 0.62rem;
+    font-size: 0.74rem;
     letter-spacing: 0.14em;
     text-transform: uppercase;
-    color: var(--cian);
+    color: #fff;
+    transition:
+      background 0.2s ease,
+      color 0.2s ease;
   }
 
-  .destacada {
+  .perfil:hover {
     background: var(--cian);
+    color: var(--azul-oscuro);
   }
 
-  .destacada span {
-    color: var(--azul-oscuro);
+  @media (prefers-reduced-motion: reduce) {
+    .casilla img,
+    .perfil {
+      transition: none;
+    }
   }
 </style>

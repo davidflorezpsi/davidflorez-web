@@ -83,9 +83,12 @@ const relacionados = paraColegas
       ['/#servicios', 'Servicios, precios y qué incluye cada uno'],
       ['/#faq', 'Preguntas frecuentes'],
     ];
+/** Con firma solo si cabe: los títulos de más de ~65 caracteres se cortan en los resultados. */
+const conFirma = `${post.data.title} — David Flórez`;
+const titulo = conFirma.length <= 65 ? conFirma : post.data.title;
 ---
 
-<BaseLayout title={`${post.data.title} — David Flórez`} description={post.data.description} schema={schema}>
+<BaseLayout title={titulo} description={post.data.description} schema={schema}>
   <article class="articulo">
     <div class="cabeza">
       <div class="rotulo">
@@ -294,10 +297,12 @@ const relacionados = paraColegas
     font-style: italic;
   }
 
+  /* Las URL largas (un DOI, por ejemplo) se parten en vez de desbordar a 320px. */
   .cuerpo :global(a) {
     color: var(--azul-medio);
     text-decoration: underline;
     text-underline-offset: 3px;
+    overflow-wrap: anywhere;
   }
 
   .cuerpo :global(a:hover) {

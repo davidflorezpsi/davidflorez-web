@@ -1,0 +1,246 @@
+---
+/**
+ * /condiciones/ — condiciones del servicio: quién lo presta, cómo se paga,
+ * cancelaciones, retracto, reembolsos y reversión del pago (Ley 1480 de 2011,
+ * arts. 47, 50 y 51). Wompi exige que la política de reembolsos esté publicada.
+ *
+ * No se indexa ni va al sitemap: publica el NIT y la dirección de notificación
+ * judicial, que es la del domicilio de David. Se llega desde el pie y /pagar/.
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { CORREO, TELEFONO_VISIBLE, wa } from '../data/contacto';
+import {
+  DIRECCION_NOTIFICACION,
+  NIT,
+  NOMBRE_COMPLETO,
+  TARJETA_PROFESIONAL,
+} from '../data/identidad';
+import { CUOTAS, HORAS_PARA_CANCELAR, MEDIOS_DE_PAGO } from '../data/pagos';
+---
+
+<BaseLayout
+  title="Condiciones del servicio | David Flórez"
+  description="Condiciones de los servicios de David Flórez, psicólogo clínico: pago anticipado, cancelaciones, derecho de retracto, reembolsos y reversión del pago."
+  noindex
+>
+  <article class="pagina">
+    <nav class="migas" aria-label="Ruta de navegación">
+      <a href="/">Inicio</a>
+      <span aria-hidden="true">/</span>
+      <span aria-current="page">Condiciones</span>
+    </nav>
+
+    <header class="cabeza">
+      <p class="cejilla">Pagos, cancelaciones y reembolsos</p>
+      <h1>Condiciones del servicio</h1>
+      <p class="entrada">
+        Lo que acordamos cuando pagas un servicio: cómo mover una sesión, cuándo se devuelve el
+        dinero y cómo reclamar.
+      </p>
+    </header>
+
+    <section aria-labelledby="prestador-h2">
+      <h2 id="prestador-h2">Quién presta el servicio</h2>
+      <ul class="lista">
+        <li>{NOMBRE_COMPLETO}, psicólogo clínico, T.P. {TARJETA_PROFESIONAL}</li>
+        <li>NIT {NIT}</li>
+        <li>Dirección de notificación judicial: {DIRECCION_NOTIFICACION}</li>
+        <li>Correo: <a href={`mailto:${CORREO}`}>{CORREO}</a></li>
+        <li>WhatsApp: {TELEFONO_VISIBLE}</li>
+      </ul>
+      <p>Es una práctica privada particular: no trabaja con EPS.</p>
+    </section>
+
+    <section aria-labelledby="pago-h2">
+      <h2 id="pago-h2">Precio y pago</h2>
+      <p>
+        Lo que incluye cada servicio y su precio, en pesos colombianos, está en
+        <a href="/#servicios">Servicios</a>. Se paga por anticipado, con el link de pago de Wompi:
+        {MEDIOS_DE_PAGO}. {CUOTAS} Los links están en <a href="/pagar/">Pagar un programa</a>.
+      </p>
+    </section>
+
+    <section aria-labelledby="cancelar-h2">
+      <h2 id="cancelar-h2">Cancelar o mover una sesión</h2>
+      <ul class="lista">
+        <li>
+          Puedes cancelar o mover una sesión sin costo hasta {HORAS_PARA_CANCELAR} horas antes.
+          <a href={wa('Hola, necesito mover una sesión.')} target="_blank" rel="noopener noreferrer"
+            >Avísame por WhatsApp</a
+          >.
+        </li>
+        <li>
+          Si no llegas o avisas con menos de {HORAS_PARA_CANCELAR} horas, la primera vez en cada
+          programa la sesión se reprograma sin costo. Desde la segunda, cuenta como realizada.
+        </li>
+        <li>Si soy yo quien cancela o mueve una sesión, la reprogramamos sin costo.</li>
+      </ul>
+    </section>
+
+    <section aria-labelledby="retracto-h2">
+      <h2 id="retracto-h2">Derecho de retracto</h2>
+      <p>
+        Como el pago se hace en línea, puedes retractarte dentro de los 5 días hábiles siguientes al
+        pago, siempre que el servicio no haya empezado con tu acuerdo. Te devuelvo todo lo que
+        pagaste, sin descuentos, en máximo 30 días calendario.
+      </p>
+    </section>
+
+    <section aria-labelledby="dejar-h2">
+      <h2 id="dejar-h2">Si dejas un programa</h2>
+      <p>
+        Si dejas un programa que ya empezó, o lo cancelas antes de empezar pero después del plazo de
+        retracto, te devuelvo lo que no se haya prestado: las sesiones que faltan, al precio por
+        sesión publicado en cada servicio, y cualquier otra parte pendiente, como la asesoría al
+        colegio. Las sesiones que contaron como realizadas por inasistencia no se devuelven.
+      </p>
+      <p>
+        La devolución se hace en máximo 30 días calendario desde tu solicitud, a la cuenta que
+        indique quien pagó.
+      </p>
+    </section>
+
+    <section aria-labelledby="reversion-h2">
+      <h2 id="reversion-h2">Reversión del pago</h2>
+      <p>
+        Si pagaste con tarjeta, PSE u otro medio electrónico, puedes pedir que se reverse el pago si
+        fuiste víctima de fraude, si no hiciste tú la operación, o si el servicio que pagaste no se
+        prestó o no corresponde a lo que pagaste. Avísame dentro de los 5 días hábiles siguientes a
+        enterarte, y avisa también a la entidad que emitió tu medio de pago.
+      </p>
+    </section>
+
+    <section aria-labelledby="reclamos-h2">
+      <h2 id="reclamos-h2">Quejas y reclamos</h2>
+      <p>
+        Escríbeme a <a href={`mailto:${CORREO}`}>{CORREO}</a> o por WhatsApp. Respondo en máximo 15
+        días hábiles. Si no quedas conforme, puedes acudir a la Superintendencia de Industria y
+        Comercio.
+      </p>
+    </section>
+
+    <section aria-labelledby="contenido-h2">
+      <h2 id="contenido-h2">Sobre el contenido del sitio</h2>
+      <p>
+        Los textos del sitio y del blog son psicoeducativos: no reemplazan una evaluación ni
+        constituyen un diagnóstico.
+      </p>
+    </section>
+
+    <p class="nota">
+      Estas condiciones se rigen por la ley colombiana y están vigentes desde octubre de 2026. El
+      tratamiento de tus datos se explica en la <a href="/privacidad/">política de privacidad</a>.
+    </p>
+  </article>
+</BaseLayout>
+
+<style>
+  .pagina {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: clamp(2rem, 5vw, 3.5rem) 1.5rem clamp(3rem, 7vw, 5rem);
+  }
+
+  .migas {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    font-family: var(--fuente-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--azul-oscuro);
+  }
+
+  /* Área táctil de 24px como mínimo (WCAG 2.5.8): el texto mide 0.68rem. */
+  .migas a {
+    color: var(--azul-medio);
+    padding-block: 0.3rem;
+  }
+
+  .cabeza {
+    margin-top: 1.25rem;
+    border-top: 2px solid var(--azul-oscuro);
+    padding-top: 1rem;
+  }
+
+  .cejilla {
+    font-family: var(--fuente-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--azul-medio);
+  }
+
+  h1 {
+    font-family: var(--fuente-titular);
+    font-stretch: 115%;
+    font-weight: 800;
+    font-size: clamp(1.9rem, 4.6vw, 3.1rem);
+    line-height: 1.04;
+    letter-spacing: -0.03em;
+    color: var(--azul-oscuro);
+    text-transform: uppercase;
+    margin-top: 1.25rem;
+    text-wrap: balance;
+  }
+
+  .entrada {
+    font-size: 1.08rem;
+    line-height: 1.65;
+    color: var(--azul-oscuro);
+    font-weight: 600;
+    margin-top: 1.25rem;
+    max-width: 62ch;
+    text-wrap: pretty;
+  }
+
+  h2 {
+    font-family: var(--fuente-titular);
+    font-stretch: 112%;
+    font-weight: 800;
+    font-size: clamp(1.3rem, 2.8vw, 1.8rem);
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    color: var(--azul-oscuro);
+    margin-top: 3rem;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(0, 51, 70, 0.2);
+  }
+
+  section > p,
+  .nota {
+    margin-top: 1rem;
+    line-height: 1.75;
+    max-width: 68ch;
+  }
+
+  .lista {
+    margin-top: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    max-width: 68ch;
+    line-height: 1.6;
+  }
+
+  .lista li {
+    padding-left: 0.9rem;
+    border-left: 2px solid var(--cian);
+  }
+
+  .nota {
+    margin-top: 3rem;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(0, 51, 70, 0.2);
+    font-size: 0.92rem;
+    color: var(--tinta-suave);
+  }
+
+  section a,
+  .nota a {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    overflow-wrap: anywhere;
+  }
+</style>
