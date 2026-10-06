@@ -1,112 +1,325 @@
 ---
+/**
+ * /privacidad/ — política de tratamiento de datos personales (Ley 1581 de 2012).
+ * El artículo 13 del Decreto 1377 de 2013 fija lo mínimo que debe decir:
+ * responsable y sus datos de contacto, tratamiento y finalidad, derechos,
+ * canal y procedimiento para ejercerlos, y vigencia.
+ *
+ * El ancla #medicion la enlaza el aviso de cookies (Consentimiento.astro).
+ */
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { CORREO, SEDES, TELEFONO_VISIBLE, direccionCompleta } from '../data/contacto';
+import { NOMBRE_COMPLETO, TARJETA_PROFESIONAL } from '../data/identidad';
 ---
+
 <BaseLayout
-  title="Política de Privacidad — David Flórez"
-  description="Política de privacidad de la consulta de Erwin David Flórez Rojas, psicólogo clínico T.P. 205129."
+  title="Privacidad y tratamiento de datos | David Flórez"
+  description="Cómo trata David Flórez, psicólogo clínico, los datos personales y de salud: finalidades, proveedores, conservación y derechos según la Ley 1581 de 2012."
 >
-  <div class="privacidad-wrap">
-    <div class="container">
-      <h1>Política de Privacidad</h1>
+  <article class="pagina">
+    <nav class="migas" aria-label="Ruta de navegación">
+      <a href="/">Inicio</a>
+      <span aria-hidden="true">/</span>
+      <span aria-current="page">Privacidad</span>
+    </nav>
 
-      <section class="privacidad-section">
-        <h2>Responsable del tratamiento</h2>
-        <p>Erwin David Flórez Rojas, psicólogo clínico — T.P. 205129.</p>
-      </section>
+    <header class="cabeza">
+      <p class="cejilla">Ley 1581 de 2012</p>
+      <h1>Privacidad y tratamiento de datos</h1>
+      <p class="entrada">
+        Qué datos trato, para qué, quién más los procesa, cuánto tiempo los guardo y cómo ejercer
+        tus derechos sobre ellos.
+      </p>
+    </header>
 
-      <section class="privacidad-section">
-        <h2>Datos recolectados</h2>
-        <p>Nombre, correo electrónico, número telefónico y motivo de consulta.</p>
-      </section>
+    <section aria-labelledby="responsable-h2">
+      <h2 id="responsable-h2">Responsable</h2>
+      <p>
+        {NOMBRE_COMPLETO}, psicólogo clínico, T.P. {TARJETA_PROFESIONAL}, con domicilio en Bogotá
+        D.C., Colombia.
+      </p>
+      <ul class="lista">
+        <li>Correo: <a href={`mailto:${CORREO}`}>{CORREO}</a></li>
+        <li>WhatsApp: {TELEFONO_VISIBLE}</li>
+        {SEDES.map((s) => <li>{s.nombre}: {direccionCompleta(s)}</li>)}
+      </ul>
+    </section>
 
-      <section class="privacidad-section">
-        <h2>Finalidad</h2>
-        <p>Gestión de citas y comunicación con consultantes y familias.</p>
-      </section>
+    <section aria-labelledby="datos-h2">
+      <h2 id="datos-h2">Qué datos trato y para qué</h2>
+      <dl class="usos">
+        <dt>Cuando escribes o agendas la llamada</dt>
+        <dd>
+          Por WhatsApp, correo o Cal.com: tu nombre, teléfono y correo, la edad de quien consulta y
+          el motivo general. Los uso para responderte, orientarte y agendar.
+        </dd>
+        <dt>Si empiezas un proceso</dt>
+        <dd>
+          En el expediente clínico, que llevo en la plataforma PsiPragma: datos de identificación y
+          contacto de la persona que consulta y de sus cuidadores, y datos de salud. Los uso para la
+          evaluación, la intervención, la historia clínica y las obligaciones legales del ejercicio
+          profesional.
+        </dd>
+        <dt>Cuando pagas</dt>
+        <dd>
+          El pago se hace en Wompi, la pasarela de Bancolombia, que trata los datos de tu tarjeta o
+          de tu cuenta con su propia política: yo no los recibo ni los guardo. Recibo la confirmación
+          del pago (nombre, correo, valor, fecha y referencia) para verificarlo y cumplir las
+          obligaciones contables y tributarias.
+        </dd>
+      </dl>
+      <p>
+        Lo que mide el sitio sobre las visitas se explica en
+        <a href="#medicion">Medición del sitio y cookies</a>.
+      </p>
+    </section>
 
-      <section class="privacidad-section">
-        <h2>Base legal</h2>
-        <p>Consentimiento del titular, conforme a la Ley 1581 de 2012 (Colombia) y sus decretos reglamentarios.</p>
-      </section>
+    <section aria-labelledby="sensibles-h2">
+      <h2 id="sensibles-h2">Datos de salud y de menores de edad</h2>
+      <p>
+        Los datos de salud son datos sensibles. Solo los trato con tu autorización explícita, que se
+        da por escrito al abrir el expediente, junto con el consentimiento informado. No estás
+        obligado a autorizar su tratamiento ni a responder preguntas sobre ellos, aunque sin esa
+        información no es posible hacer una evaluación ni una intervención. En el primer contacto no
+        hace falta contar detalles clínicos: basta con el motivo general.
+      </p>
+      <p>
+        Cuando quien consulta es menor de edad, la autorización la da su representante legal,
+        después de escuchar la opinión de la niña, el niño o el adolescente según su madurez. Sus
+        datos se tratan solo en función de su interés superior y con respeto de sus derechos
+        fundamentales.
+      </p>
+    </section>
 
-      <section class="privacidad-section">
-        <h2>Transferencia a terceros</h2>
-        <p>Los datos personales no se comparten con terceros con fines comerciales.</p>
-      </section>
+    <section aria-labelledby="confidencialidad-h2">
+      <h2 id="confidencialidad-h2">Confidencialidad</h2>
+      <p>
+        Lo que compartes en el proceso está protegido por el secreto profesional (Ley 1090 de 2006).
+        Solo se revela con tu autorización o la de tu representante legal, por orden de una autoridad
+        competente, o cuando callar causaría un daño evidente a ti o a otras personas.
+      </p>
+    </section>
 
-      <section class="privacidad-section">
-        <h2>Derechos del titular</h2>
-        <p>
-          Tienes derecho a acceder, rectificar y suprimir tus datos personales.
-          Para ejercer estos derechos escribe a:
-          <a href="mailto:ps.davidflorezr@gmail.com">ps.davidflorezr@gmail.com</a>
-        </p>
-      </section>
+    <section aria-labelledby="proveedores-h2">
+      <h2 id="proveedores-h2">Quién más trata tus datos</h2>
+      <p>
+        No vendo tus datos ni los comparto con fines comerciales. Para prestar el servicio uso estos
+        proveedores:
+      </p>
+      <ul class="lista">
+        <li><strong>PsiPragma:</strong> expediente clínico y consentimiento informado.</li>
+        <li><strong>WhatsApp (Meta):</strong> mensajes.</li>
+        <li><strong>Cal.com:</strong> agenda de la llamada de orientación.</li>
+        <li><strong>Google:</strong> correo electrónico y medición del sitio.</li>
+        <li><strong>Wompi (Bancolombia):</strong> pagos, con su propia política de datos.</li>
+        <li><strong>Vercel:</strong> alojamiento del sitio web.</li>
+      </ul>
+      <p>Algunos de ellos guardan la información fuera de Colombia.</p>
+    </section>
 
-      <section class="privacidad-section" id="medicion">
-        <h2>Medición del sitio y cookies</h2>
-        <p>
-          Este sitio usa Google Analytics para medir visitas y clics de forma agregada, por ejemplo
-          cuántas personas pulsan el botón de WhatsApp o el de agendar. En esa medición no se envía
-          tu nombre, tu teléfono ni el motivo de consulta, y no se usa publicidad.
-        </p>
-        <p>
-          Google Analytics solo guarda cookies en tu navegador si aceptas en el aviso de medición.
-          Si no aceptas, Google recibe señales sin cookies que no te identifican. Puedes cambiar tu
-          decisión cuando quieras desde el enlace «Cookies de medición» al pie de cada página; si
-          la retiras, se borran las cookies de Google Analytics de este sitio.
-        </p>
-      </section>
+    <section aria-labelledby="conservacion-h2">
+      <h2 id="conservacion-h2">Cuánto tiempo se guardan</h2>
+      <ul class="lista">
+        <li>
+          La historia clínica, mínimo 15 años desde la última atención, como exige la Resolución 839
+          de 2017.
+        </li>
+        <li>Los registros de pago, el tiempo que exigen las normas contables y tributarias.</li>
+        <li>
+          Los datos de contacto de quien no empieza un proceso, solo mientras hagan falta para
+          responderle.
+        </li>
+      </ul>
+    </section>
 
-      <p class="privacidad-fecha">Última actualización: septiembre de 2026</p>
-    </div>
-  </div>
+    <section aria-labelledby="derechos-h2">
+      <h2 id="derechos-h2">Tus derechos</h2>
+      <ul class="lista">
+        <li>Conocer, actualizar y corregir tus datos.</li>
+        <li>Pedir prueba de la autorización que diste.</li>
+        <li>Saber para qué se han usado.</li>
+        <li>
+          Revocar la autorización o pedir que se borren, salvo cuando la ley obliga a conservarlos,
+          como pasa con la historia clínica.
+        </li>
+        <li>Consultarlos gratis.</li>
+        <li>
+          Presentar quejas ante la Superintendencia de Industria y Comercio, después de hacer la
+          consulta o el reclamo aquí.
+        </li>
+      </ul>
+      <p>Si la persona es menor de edad, estos derechos los ejerce su representante legal.</p>
+    </section>
+
+    <section aria-labelledby="ejercer-h2">
+      <h2 id="ejercer-h2">Cómo ejercerlos</h2>
+      <p>
+        Escríbeme a <a href={`mailto:${CORREO}`}>{CORREO}</a> con tu nombre, tu número de documento,
+        lo que pides y cómo prefieres que te responda. Si escribes en nombre de otra persona, por
+        ejemplo de tu hijo o tu hija, indícalo.
+      </p>
+      <ul class="lista">
+        <li>
+          <strong>Consultas</strong> (qué datos tengo y cómo los uso): respondo en máximo 10 días
+          hábiles. Si no alcanzo, te aviso el motivo y respondo en máximo 5 días hábiles más.
+        </li>
+        <li>
+          <strong>Reclamos</strong> (corregir, actualizar o borrar datos, o revocar la autorización):
+          respondo en máximo 15 días hábiles. Si no alcanzo, te aviso el motivo y respondo en máximo 8
+          días hábiles más. Si al reclamo le falta información, te la pido en los 5 días siguientes.
+        </li>
+      </ul>
+    </section>
+
+    <section aria-labelledby="medicion-h2" id="medicion">
+      <h2 id="medicion-h2">Medición del sitio y cookies</h2>
+      <p>
+        Este sitio usa Google Analytics para medir visitas y clics de forma agregada, por ejemplo
+        cuántas personas pulsan el botón de WhatsApp o el de agendar. En esa medición no se envía tu
+        nombre, tu teléfono ni el motivo de consulta, y no se usa publicidad.
+      </p>
+      <p>
+        Google Analytics solo guarda cookies en tu navegador si aceptas en el aviso de medición. Si no
+        aceptas, Google recibe señales sin cookies que no te identifican. Puedes cambiar tu decisión
+        cuando quieras desde el enlace «Cookies de medición» al pie de cada página; si la retiras, se
+        borran las cookies de Google Analytics de este sitio.
+      </p>
+    </section>
+
+    <section aria-labelledby="vigencia-h2">
+      <h2 id="vigencia-h2">Vigencia</h2>
+      <p>
+        Esta política rige desde octubre de 2026 y reemplaza la anterior. Si cambia, publico aquí la
+        nueva versión con su fecha. Las bases de datos se mantienen mientras la práctica esté activa,
+        con los plazos de conservación descritos arriba.
+      </p>
+    </section>
+  </article>
 </BaseLayout>
 
 <style>
-  .privacidad-wrap {
-    padding: 5rem 0 7rem;
+  .pagina {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: clamp(2rem, 5vw, 3.5rem) 1.5rem clamp(3rem, 7vw, 5rem);
   }
 
-  .privacidad-wrap h1 {
-    font-size: clamp(2rem, 4vw, 3rem);
-    font-weight: 700;
-    color: #003346;
-    margin-bottom: 3rem;
-    border-left: 4px solid #05a3d4;
-    padding-left: 1rem;
-    line-height: 1.2;
-  }
-
-  .privacidad-section {
-    margin-bottom: 2rem;
-  }
-
-  .privacidad-section h2 {
-    font-size: 1.05rem;
-    font-weight: 700;
-    color: #003346;
-    margin-bottom: 0.4rem;
+  .migas {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    font-family: var(--fuente-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.14em;
     text-transform: uppercase;
-    letter-spacing: 0.05em;
+    color: var(--azul-oscuro);
   }
 
-  .privacidad-section p {
-    color: #444;
-    line-height: 1.8;
-    font-size: 0.95rem;
-  }
-
-  .privacidad-section a {
+  /* Área táctil de 24px como mínimo (WCAG 2.5.8): el texto mide 0.68rem. */
+  .migas a {
     color: var(--azul-medio);
-    text-decoration: underline;
+    padding-block: 0.3rem;
   }
 
-  .privacidad-fecha {
-    color: #5f6f76;
-    font-size: 0.82rem;
+  .cabeza {
+    margin-top: 1.25rem;
+    border-top: 2px solid var(--azul-oscuro);
+    padding-top: 1rem;
+  }
+
+  .cejilla {
+    font-family: var(--fuente-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--azul-medio);
+  }
+
+  h1 {
+    font-family: var(--fuente-titular);
+    font-stretch: 115%;
+    font-weight: 800;
+    font-size: clamp(1.9rem, 4.6vw, 3.1rem);
+    line-height: 1.04;
+    letter-spacing: -0.03em;
+    color: var(--azul-oscuro);
+    text-transform: uppercase;
+    margin-top: 1.25rem;
+    text-wrap: balance;
+  }
+
+  .entrada {
+    font-size: 1.08rem;
+    line-height: 1.65;
+    color: var(--azul-oscuro);
+    font-weight: 600;
+    margin-top: 1.25rem;
+    max-width: 62ch;
+    text-wrap: pretty;
+  }
+
+  h2 {
+    font-family: var(--fuente-titular);
+    font-stretch: 112%;
+    font-weight: 800;
+    font-size: clamp(1.3rem, 2.8vw, 1.8rem);
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    color: var(--azul-oscuro);
     margin-top: 3rem;
-    border-top: 1px solid #ececec;
-    padding-top: 1.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(0, 51, 70, 0.2);
+    scroll-margin-top: 96px;
+  }
+
+  section > p {
+    margin-top: 1rem;
+    line-height: 1.75;
+    max-width: 68ch;
+  }
+
+  .lista {
+    margin-top: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    max-width: 68ch;
+    line-height: 1.6;
+  }
+
+  .lista li {
+    padding-left: 0.9rem;
+    border-left: 2px solid var(--cian);
+  }
+
+  .usos {
+    margin-top: 1.25rem;
+    max-width: 68ch;
+  }
+
+  .usos dt {
+    font-weight: 700;
+    color: var(--azul-oscuro);
+    margin-top: 1.1rem;
+  }
+
+  .usos dt:first-child {
+    margin-top: 0;
+  }
+
+  .usos dd {
+    margin-top: 0.3rem;
+    line-height: 1.75;
+  }
+
+  section a {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    overflow-wrap: anywhere;
+  }
+
+  /* El aviso de cookies enlaza aquí: que el título no quede bajo el header fijo. */
+  #medicion {
+    scroll-margin-top: 96px;
   }
 </style>

@@ -6,8 +6,9 @@ export default defineConfig({
   site: 'https://davidflorez.co',
   integrations: [
     sitemap({
-      // /pagar/ se comparte por WhatsApp; no es una página para buscadores.
-      filter: (pagina) => !pagina.includes('/pagar/'),
+      // /pagar/ se comparte por WhatsApp y /condiciones/ publica la dirección
+      // de notificación judicial (el domicilio de David): no son para buscadores.
+      filter: (pagina) => !['/pagar/', '/condiciones/'].some((ruta) => pagina.includes(ruta)),
     }),
   ],
   image: {

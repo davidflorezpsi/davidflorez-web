@@ -14,11 +14,13 @@ npm run build    # genera dist/
 | Qué | Archivo |
 | --- | --- |
 | Servicios, precios y botones de WhatsApp | `src/data/servicios.ts` |
-| Links de pago de Wompi | `src/data/pagos.ts` |
+| Links de pago de Wompi y horas para cancelar una sesión | `src/data/pagos.ts` |
 | Preguntas frecuentes | `src/data/faq.ts` |
 | Texto propio de cada página de servicio | `src/data/paginas-servicio.ts` |
-| WhatsApp, agenda, Instagram y sedes | `src/data/contacto.ts` |
+| WhatsApp, correo, agenda, Instagram y sedes | `src/data/contacto.ts` |
 | Credenciales verificables | `src/data/credenciales.ts` |
+| NIT y dirección de notificación judicial | `src/data/identidad.ts` |
+| Política de privacidad y condiciones del servicio | `src/pages/privacidad.astro`, `src/pages/condiciones.astro` |
 
 `llms.txt` y el schema se generan desde esos mismos datos, así que no hay que
 editarlos aparte.

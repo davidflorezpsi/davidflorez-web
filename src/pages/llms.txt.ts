@@ -17,7 +17,7 @@ import {
 } from '../data/contacto';
 import { NOMBRE_COMPLETO, SITIO, TARJETA_PROFESIONAL } from '../data/identidad';
 import { CREDENCIALES } from '../data/credenciales';
-import { MEDIOS_DE_PAGO } from '../data/pagos';
+import { HORAS_PARA_CANCELAR, MEDIOS_DE_PAGO } from '../data/pagos';
 
 function tablaPrecios(): string {
   // Un mismo servicio con el mismo precio en varias pestañas va en una fila,
@@ -109,6 +109,11 @@ Pago: anticipado, por link de pago de Wompi (pasarela de Bancolombia), con ${MED
 No hay financiación propia: quien quiera pagar en cuotas usa su tarjeta de crédito, y las
 condiciones las define su banco. El pago se hace solo en Wompi, nunca por transferencia a
 cuentas personales.
+
+Cancelaciones y reembolsos: una sesión se cancela o se mueve sin costo hasta
+${HORAS_PARA_CANCELAR} horas antes. Quien paga en línea puede retractarse dentro de los 5 días
+hábiles siguientes al pago si el servicio no ha empezado; quien deja un programa ya iniciado
+recibe el valor de lo que no se haya prestado.
 
 ## Cómo se empieza
 

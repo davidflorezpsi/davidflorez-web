@@ -9,7 +9,14 @@
  */
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { wa } from '../data/contacto';
-import { CUOTAS, LINK_MONTO_ABIERTO, MEDIOS_DE_PAGO, PRODUCTOS, precioDe } from '../data/pagos';
+import {
+  CUOTAS,
+  HORAS_PARA_CANCELAR,
+  LINK_MONTO_ABIERTO,
+  MEDIOS_DE_PAGO,
+  PRODUCTOS,
+  precioDe,
+} from '../data/pagos';
 
 const productos = PRODUCTOS.map((p) => ({ ...p, ...precioDe(p) }));
 ---
@@ -85,6 +92,15 @@ const productos = PRODUCTOS.map((p) => ({ ...p, ...precioDe(p) }));
     <section aria-labelledby="cuotas-h2">
       <h2 id="cuotas-h2">¿En cuotas?</h2>
       <p>{CUOTAS}</p>
+    </section>
+
+    <section aria-labelledby="reembolsos-h2">
+      <h2 id="reembolsos-h2">Cancelaciones y reembolsos</h2>
+      <p>
+        Puedes mover una sesión sin costo hasta {HORAS_PARA_CANCELAR} horas antes. Si te retractas o
+        dejas el programa, te devuelvo lo que no se haya prestado. El detalle está en las
+        <a href="/condiciones/">condiciones del servicio</a>.
+      </p>
     </section>
 
     <section aria-labelledby="despues-h2">

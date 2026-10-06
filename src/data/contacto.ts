@@ -3,6 +3,9 @@
 /** Solo dígitos, formato internacional sin "+". */
 export const WHATSAPP = '573181649161';
 
+/** Canal escrito para habeas data, quejas y reclamos. */
+export const CORREO = 'ps.davidflorezr@gmail.com';
+
 export const CAL_COM =
   'https://cal.com/david-florez-rojas-pdno9v/llamada-de-orientacion-inicial';
 

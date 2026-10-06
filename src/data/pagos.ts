@@ -19,6 +19,9 @@ export const MEDIOS_DE_PAGO = 'tarjeta de crédito o débito (también internaci
 export const CUOTAS =
   'Si quieres pagarlo en cuotas, usa tu tarjeta de crédito: Wompi te pregunta en cuántas, y los intereses los define tu banco.';
 
+/** Anticipación mínima para cancelar o mover una sesión sin perderla (/condiciones/). */
+export const HORAS_PARA_CANCELAR = 24;
+
 interface LinkDePago {
   url: string;
   /** El monto exacto, en pesos, con que se creó el link en Wompi. */
