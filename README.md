@@ -1,43 +1,64 @@
-# Astro Starter Kit: Minimal
+# davidflorez.co
+
+Sitio de la práctica de psicología clínica de David Flórez. Astro 5, salida
+estática, publicado en Vercel desde la rama `main`.
 
 ```sh
-npm create astro@latest -- --template minimal
+npm install
+npm run dev      # localhost:4321
+npm run build    # genera dist/
 ```
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+## Dónde se cambia cada cosa
 
-## 🚀 Project Structure
+| Qué | Archivo |
+| --- | --- |
+| Servicios, precios y botones de WhatsApp | `src/data/servicios.ts` |
+| Links de pago de Wompi | `src/data/pagos.ts` |
+| Preguntas frecuentes | `src/data/faq.ts` |
+| Texto propio de cada página de servicio | `src/data/paginas-servicio.ts` |
+| WhatsApp, agenda, Instagram y sedes | `src/data/contacto.ts` |
+| Credenciales verificables | `src/data/credenciales.ts` |
 
-Inside of your Astro project, you'll see the following folders and files:
+`llms.txt` y el schema se generan desde esos mismos datos, así que no hay que
+editarlos aparte.
 
-```text
-/
-├── public/
-├── src/
-│   └── pages/
-│       └── index.astro
-└── package.json
-```
+## Pagos con Wompi
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+El sitio no cobra: `/pagar/` muestra cada programa con su link de pago de Wompi.
+Esa página no sale en buscadores; es la que se comparte por WhatsApp.
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+1. En el panel de comercios de Wompi, crea un **link de pago** por programa:
+   monto fijo, uso múltiple y sin vencimiento.
+2. En `src/data/pagos.ts`, agrega a cada programa su link y el monto con que lo
+   creaste:
 
-Any static assets, like images, can be placed in the `public/` directory.
+   ```ts
+   { id: 'evaluacion', nombre: '…', servicios: ['n1', 'a1'],
+     link: { url: 'https://checkout.wompi.co/l/XXXXXX', monto: 390000 } },
+   ```
 
-## 🧞 Commands
+Mientras un programa no tenga link, su botón pide el link por WhatsApp. Si
+cambias un precio en `servicios.ts` y el link quedó con el monto anterior, el
+build falla y dice cuál es: hay que crear el link nuevo en Wompi.
 
-All commands are run from the root of the project, from a terminal:
+## Instagram
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
+La sección «Últimas publicaciones» lee las cuatro más recientes con la API
+oficial de Instagram durante el build. Sin token, muestra solo el enlace al
+perfil.
 
-## 👀 Want to learn more?
+1. La cuenta debe ser profesional (Creador o Empresa).
+2. En [Meta for Developers](https://developers.facebook.com/apps), crea una app,
+   agrega el producto **Instagram** («API con inicio de sesión de Instagram»),
+   conecta la cuenta y genera el token de acceso.
+3. En Vercel → proyecto → Settings → Environment Variables, crea
+   `INSTAGRAM_TOKEN` con ese token (Production y Preview) y vuelve a publicar.
+4. Para que las publicaciones se actualicen solas y el token no venza: en Vercel
+   → Settings → Git → Deploy Hooks, crea un hook sobre `main`; en GitHub →
+   Settings → Secrets and variables → Actions, guárdalo como
+   `VERCEL_DEPLOY_HOOK`. El flujo `.github/workflows/actualizar-instagram.yml`
+   publica el sitio cada día a las 6:17 a. m.
 
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+Si un día la sección vuelve a mostrar solo el enlace, el token venció: genera
+uno nuevo y reemplázalo en Vercel.

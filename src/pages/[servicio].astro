@@ -95,11 +95,11 @@ const msgGeneral = `Hola, escribo desde la web (${pagina.nombre}). Quiero orient
         Atiende: <a href="/sobre-mi/">{NOMBRE_COMPLETO}</a>, psicólogo clínico · T.P. {TARJETA_PROFESIONAL}
       </p>
       <div class="acciones">
-        <a href={CAL_COM} target="_blank" rel="noopener noreferrer" class="btn-solido" data-ubicacion="servicio_cabecera">
-          Agendar llamada gratuita · 20 min
-        </a>
-        <a href={wa(msgGeneral)} target="_blank" rel="noopener noreferrer" class="btn-linea" data-ubicacion="servicio_cabecera">
+        <a href={wa(msgGeneral)} target="_blank" rel="noopener noreferrer" class="btn-solido" data-ubicacion="servicio_cabecera">
           Escribir por WhatsApp
+        </a>
+        <a href={CAL_COM} target="_blank" rel="noopener noreferrer" class="btn-linea" data-ubicacion="servicio_cabecera">
+          Llamada gratuita · 20 min
         </a>
       </div>
     </header>
@@ -251,8 +251,10 @@ const msgGeneral = `Hola, escribo desde la web (${pagina.nombre}). Quiero orient
     color: var(--azul-oscuro);
   }
 
+  /* Área táctil de 24px como mínimo (WCAG 2.5.8): el texto mide 0.68rem. */
   .migas a {
     color: var(--azul-medio);
+    padding-block: 0.3rem;
   }
 
   .cabeza {

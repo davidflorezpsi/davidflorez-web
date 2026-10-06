@@ -59,6 +59,8 @@ const anio = new Date().getFullYear();
       <a href={INSTAGRAM} target="_blank" rel="noopener noreferrer" class="toque">Instagram</a>
     </nav>
 
+    <p class="tagline">La verdadera locura es no crecer con evidencia.</p>
+
     <p class="legal">
       © {anio} · Práctica privada particular · No es un servicio de urgencias: si hay riesgo
       inmediato, marca la línea 123
@@ -195,6 +197,22 @@ const anio = new Date().getFullYear();
 
   .servicios-pie a:hover {
     color: var(--cian);
+  }
+
+  /*
+   * Tagline según el manual: Nunito Light cursiva, cian, sin comillas ni firma.
+   * La cursiva la sintetiza el navegador sobre la Nunito que ya está cargada:
+   * descargar la cursiva real (41 KB) en cada página por una línea del pie
+   * retrasaba la carga.
+   */
+  .tagline {
+    flex: 1 1 100%;
+    font-family: var(--fuente-cuerpo);
+    font-style: italic;
+    font-weight: 300;
+    font-size: 0.95rem;
+    color: var(--cian);
+    text-align: right;
   }
 
   .legal {

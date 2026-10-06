@@ -52,7 +52,7 @@ const schema = [
 
 <BaseLayout
   title="Contacto y sedes en Bogotá: Usaquén y Chapinero | David Flórez"
-  description="Dónde atiende David Flórez, psicólogo clínico: sedes en Usaquén y Chapinero (Bogotá), atención telepresencial, WhatsApp y llamada de orientación gratuita de 20 minutos."
+  description="Dónde atiende David Flórez, psicólogo clínico: sedes en Usaquén y Chapinero (Bogotá), atención telepresencial, WhatsApp y llamada gratuita de 20 minutos."
   schema={schema}
 >
   <article class="pagina">
@@ -67,21 +67,21 @@ const schema = [
       <h1>Contacto y sedes</h1>
       <p class="entrada">
         Atiendo presencial en dos sedes de Bogotá, en Usaquén y en Chapinero, y en modalidad
-        telepresencial. Todo empieza con una llamada de orientación gratuita de 20 minutos, donde
-        vemos si tu caso es pertinente para esta práctica y qué servicio aplica.
+        telepresencial. Escríbeme por WhatsApp y te digo qué servicio aplica; si prefieres
+        conversarlo antes, agenda una llamada de orientación gratuita de 20 minutos. Es opcional.
       </p>
       <div class="acciones">
-        <a href={CAL_COM} target="_blank" rel="noopener noreferrer" class="btn-solido" data-ubicacion="contacto">
-          Agendar llamada gratuita · 20 min
-        </a>
         <a
           href={wa('Hola, escribo desde la web. Quiero orientación sobre un caso.')}
           target="_blank"
           rel="noopener noreferrer"
-          class="btn-linea"
+          class="btn-solido"
           data-ubicacion="contacto"
         >
           WhatsApp {TELEFONO_VISIBLE}
+        </a>
+        <a href={CAL_COM} target="_blank" rel="noopener noreferrer" class="btn-linea" data-ubicacion="contacto">
+          Llamada gratuita · 20 min
         </a>
       </div>
     </header>
@@ -162,8 +162,10 @@ const schema = [
     color: var(--azul-oscuro);
   }
 
+  /* Área táctil de 24px como mínimo (WCAG 2.5.8): el texto mide 0.68rem. */
   .migas a {
     color: var(--azul-medio);
+    padding-block: 0.3rem;
   }
 
   .cabeza {

@@ -21,14 +21,17 @@ interface Props {
   extraPractica?: Record<string, unknown>;
   /** Nodos de schema propios de la página (BreadcrumbList, Service, BlogPosting…). */
   schema?: Record<string, unknown>[];
+  /** Páginas que se comparten por enlace y no deben salir en buscadores (/pagar/). */
+  noindex?: boolean;
 }
 
 const {
-  title = 'David Flórez | Psicólogo Clínico Infantojuvenil y Adultez Joven | Bogotá',
+  title = 'Psicólogo clínico infantojuvenil en Bogotá | David Flórez',
   description = DESCRIPCION_PRACTICA,
   ogImage = '/og-image.png',
   extraPractica = {},
   schema = [],
+  noindex = false,
 } = Astro.props;
 
 const siteUrl = Astro.site ?? 'https://davidflorez.co';
@@ -66,6 +69,7 @@ const grafo = {
     <title>{title}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonicalURL} />
+    {noindex && <meta name="robots" content="noindex, follow" />}
 
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />

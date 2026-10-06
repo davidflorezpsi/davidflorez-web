@@ -17,6 +17,7 @@ import {
 } from '../data/contacto';
 import { NOMBRE_COMPLETO, SITIO, TARJETA_PROFESIONAL } from '../data/identidad';
 import { CREDENCIALES } from '../data/credenciales';
+import { MEDIOS_DE_PAGO } from '../data/pagos';
 
 function tablaPrecios(): string {
   // Un mismo servicio con el mismo precio en varias pestañas va en una fila,
@@ -88,7 +89,7 @@ Modelos de trabajo: ACT, DBT, FAP, análisis funcional del comportamiento, entre
 - Intervención en crisis y atención de urgencias
 - Urgencias psiquiátricas (en riesgo inmediato: línea 123 en Colombia)
 
-Si un caso pide otra especialidad, se dice en la llamada de orientación inicial y se remite a un colega.
+Si un caso pide otra especialidad, se dice desde el primer contacto y se remite a un colega.
 
 Nota: el entrenamiento a cuidadores que se ofrece se basa en principios conductuales
 y análisis funcional. No es PCIT ni ningún otro protocolo de marca registrada.
@@ -104,16 +105,18 @@ Otros valores:
 
 ${preciosDelDetalle()}
 
-Formas de pago: anticipado, cuotas con financiamiento interno (programas por ciclo),
-o tarjeta de crédito por pasarela. El pago siempre se hace por link seguro de la
-pasarela de pago, nunca por WhatsApp ni a cuentas personales.
+Pago: anticipado, por link de pago de Wompi (pasarela de Bancolombia), con ${MEDIOS_DE_PAGO}.
+No hay financiación propia: quien quiera pagar en cuotas usa su tarjeta de crédito, y las
+condiciones las define su banco. El pago se hace solo en Wompi, nunca por transferencia a
+cuentas personales.
 
 ## Cómo se empieza
 
-1. Llamada de orientación inicial: 20 minutos, gratuita, virtual. Se valida si el caso
-   es pertinente y qué servicio aplica.
-2. Reserva y link de pago por WhatsApp. Acuerdo firmado antes de iniciar.
-3. Se abre el expediente en la plataforma clínica y quedan agendadas las sesiones del ciclo.
+1. Escribir por WhatsApp: se define qué servicio aplica. La llamada de orientación de
+   20 minutos es gratuita y opcional; no es requisito para empezar.
+2. Reserva y link de pago de Wompi por WhatsApp.
+3. Con el pago confirmado se abre el expediente en la plataforma clínica (consentimiento
+   informado incluido) y quedan agendadas las sesiones del ciclo.
 
 Condición de ingreso a los programas de intervención: haber completado la evaluación
 con esta práctica, o presentar un informe diagnóstico externo vigente (no mayor a 12 meses).
@@ -131,7 +134,7 @@ ${PAGINAS_SERVICIO.map((p) => `- [${p.h1}](${SITIO}/${p.slug}/): ${p.descripcion
 ## Enlaces
 
 - [Página principal](${SITIO}/): servicios, precios, método clínico, filtro de pertinencia y preguntas frecuentes
-- [Agendar llamada gratuita](${CAL_COM}): 20 minutos, sin costo, sin compromiso
+- [Agendar llamada gratuita](${CAL_COM}): 20 minutos, sin costo, opcional
 - [Artículos](${SITIO}/blog/): psicoeducación para familias y colegas
 - [Política de privacidad](${SITIO}/privacidad/): tratamiento de datos conforme a la Ley 1581 de 2012
 - [Instagram](${INSTAGRAM}): @ps.davidflorez
