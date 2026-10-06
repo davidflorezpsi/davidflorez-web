@@ -42,6 +42,28 @@ Mientras un programa no tenga link, su botón pide el link por WhatsApp. Si
 cambias un precio en `servicios.ts` y el link quedó con el monto anterior, el
 build falla y dice cuál es: hay que crear el link nuevo en Wompi.
 
+### Wompi desde Claude Code (MCP)
+
+`.mcp.json` carga el servidor MCP `@codespar/mcp-wompi`, fijado en la versión
+0.2.2 (revisada: solo habla con `production.wompi.co` o `sandbox.wompi.co`).
+Con él, Claude crea y actualiza los links de pago.
+
+- **La llave privada no va en el repositorio ni en el chat.** En claude.ai/code,
+  menú del entorno → Edit → **API credentials** → Add credential: host
+  `production.wompi.co`, encabezado `Authorization`, prefijo `Bearer`, valor =
+  llave privada (`prv_prod_…`). El proxy la agrega a cada petición sin que la
+  sesión la vea. Para pruebas, otra credencial con `sandbox.wompi.co` y la llave
+  `prv_test_…`, más la variable `WOMPI_SANDBOX=true`.
+- Si tu plan no tiene **API credentials**, ponla como variable de entorno
+  `WOMPI_PRIVATE_KEY` y agrega `production.wompi.co` a los dominios permitidos
+  de la red del entorno.
+- `.claude/settings.json` deja usar sin preguntar solo las herramientas de
+  lectura de links. Crear o editar un link pide confirmación, y las de cobros,
+  reembolsos, anulaciones, tarjetas y datos de clientes están bloqueadas: los
+  pagos de la práctica son datos de salud y no deben pasar por el chat.
+- Cuando los links ya estén creados, puedes borrar la credencial: el sitio no la
+  necesita.
+
 ## Instagram
 
 La sección «Últimas publicaciones» lee las cuatro más recientes con la API
