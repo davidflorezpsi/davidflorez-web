@@ -1,6 +1,8 @@
 ---
 title: "Formular por procesos o por etiquetas: qué cambia en la decisión clínica"
 description: "Dos casos compuestos con el mismo diagnóstico y tratamientos opuestos. Sobre los límites de la clasificación sindrómica y lo que cuesta, en la práctica colombiana, trabajar por procesos."
+tituloSeo: "Formular por procesos o por etiquetas: qué cambia"
+descripcionSeo: "Dos casos compuestos con el mismo diagnóstico y tratamientos opuestos: los límites de la clasificación sindrómica y lo que cuesta trabajar por procesos."
 pubDate: 2026-09-24
 updatedDate: 2026-09-25
 tags: ["Para colegas", "PBT", "formulación de caso", "análisis funcional"]

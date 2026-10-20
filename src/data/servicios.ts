@@ -73,7 +73,7 @@ export const PESTANAS: Pestana[] = [
         chips: ['Presencial · Bogotá', 'Telepresencial'],
         destacada: true,
         acciones: [
-          { label: 'Reservar y pagar', msg: 'Hola, escribo desde la web. Quiero reservar Evaluación Funcional Clínica ($390.000) y recibir el link de pago.', primaria: true },
+          { label: 'Reservar por WhatsApp', msg: 'Hola, escribo desde la web. Quiero reservar Evaluación Funcional Clínica ($390.000) y recibir el link de pago.', primaria: true },
         ],
         detalle: {
           cejilla: '01 / Evaluación',
@@ -103,7 +103,7 @@ export const PESTANAS: Pestana[] = [
         btnDetalle: 'Qué incluye y para quién',
         chips: ['Presencial · Bogotá'],
         acciones: [
-          { label: 'Reservar y pagar', msg: 'Hola, escribo desde la web. Quiero reservar Espectro autista · ADOS-2 / ADI-R ($1.050.000) y recibir el link de pago.', primaria: true },
+          { label: 'Reservar por WhatsApp', msg: 'Hola, escribo desde la web. Quiero reservar Espectro autista · ADOS-2 / ADI-R ($1.050.000) y recibir el link de pago.', primaria: true },
         ],
         detalle: {
           cejilla: '02 / Evaluación especializada',
@@ -132,7 +132,7 @@ export const PESTANAS: Pestana[] = [
         btnDetalle: 'Qué incluye y cómo se ingresa',
         chips: ['Presencial · Bogotá', 'Telepresencial'],
         acciones: [
-          { label: 'Reservar y pagar', msg: 'Hola, escribo desde la web. Quiero reservar Programa de Intervención Individual ($2.750.000) y recibir el link de pago.', primaria: true },
+          { label: 'Reservar por WhatsApp', msg: 'Hola, escribo desde la web. Quiero reservar Programa de Intervención Individual ($2.750.000) y recibir el link de pago.', primaria: true },
         ],
         detalle: {
           cejilla: '03 / Intervención',
@@ -163,7 +163,7 @@ export const PESTANAS: Pestana[] = [
         chips: ['Presencial · Bogotá'],
         alterna: true,
         acciones: [
-          { label: 'Reservar y pagar', msg: 'Hola, escribo desde la web. Quiero reservar Entrenamiento conductual a cuidadores ($1.040.000) y recibir el link de pago.', primaria: true },
+          { label: 'Reservar por WhatsApp', msg: 'Hola, escribo desde la web. Quiero reservar Entrenamiento conductual a cuidadores ($1.040.000) y recibir el link de pago.', primaria: true },
         ],
         detalle: {
           cejilla: '04 / Padres',
@@ -196,7 +196,7 @@ export const PESTANAS: Pestana[] = [
         chips: ['Presencial · Bogotá', 'Telepresencial'],
         destacada: true,
         acciones: [
-          { label: 'Reservar y pagar', msg: 'Hola, escribo desde la web. Quiero reservar Evaluación Funcional Clínica ($390.000) y recibir el link de pago.', primaria: true },
+          { label: 'Reservar por WhatsApp', msg: 'Hola, escribo desde la web. Quiero reservar Evaluación Funcional Clínica ($390.000) y recibir el link de pago.', primaria: true },
         ],
         detalle: {
           cejilla: '01 / Evaluación',
@@ -225,7 +225,7 @@ export const PESTANAS: Pestana[] = [
         btnDetalle: 'Qué incluye y para quién',
         chips: ['Presencial · Bogotá'],
         acciones: [
-          { label: 'Reservar y pagar', msg: 'Hola, escribo desde la web. Quiero reservar Espectro autista en adolescentes ($1.050.000) y recibir el link de pago.', primaria: true },
+          { label: 'Reservar por WhatsApp', msg: 'Hola, escribo desde la web. Quiero reservar Espectro autista en adolescentes ($1.050.000) y recibir el link de pago.', primaria: true },
         ],
         detalle: {
           cejilla: '02 / Evaluación especializada',
@@ -253,7 +253,7 @@ export const PESTANAS: Pestana[] = [
         btnDetalle: 'Qué incluye y cómo se ingresa',
         chips: ['Presencial · Bogotá', 'Telepresencial'],
         acciones: [
-          { label: 'Reservar y pagar', msg: 'Hola, escribo desde la web. Quiero reservar Programa de Intervención Individual ($2.750.000) y recibir el link de pago.', primaria: true },
+          { label: 'Reservar por WhatsApp', msg: 'Hola, escribo desde la web. Quiero reservar Programa de Intervención Individual ($2.750.000) y recibir el link de pago.', primaria: true },
         ],
         detalle: {
           cejilla: '03 / Intervención',
@@ -284,7 +284,7 @@ export const PESTANAS: Pestana[] = [
         chips: ['Presencial · Bogotá', 'Telepresencial'],
         alterna: true,
         acciones: [
-          { label: 'Reservar y pagar', msg: 'Hola, escribo desde la web. Quiero reservar PEERS · Habilidades sociales ($1.400.000) y recibir el link de pago.', primaria: true },
+          { label: 'Reservar por WhatsApp', msg: 'Hola, escribo desde la web. Quiero reservar PEERS · Habilidades sociales ($1.400.000) y recibir el link de pago.', primaria: true },
         ],
         detalle: {
           cejilla: '04 / Habilidades sociales',
@@ -318,7 +318,7 @@ export const PESTANAS: Pestana[] = [
         chips: ['Presencial · Bogotá', 'Telepresencial'],
         destacada: true,
         acciones: [
-          { label: 'Reservar y pagar', msg: 'Hola, escribo desde la web. Quiero reservar Evaluación Clínica Inicial ($390.000) y recibir el link de pago.', primaria: true },
+          { label: 'Reservar por WhatsApp', msg: 'Hola, escribo desde la web. Quiero reservar Evaluación Clínica Inicial ($390.000) y recibir el link de pago.', primaria: true },
         ],
         detalle: {
           cejilla: '01 / Evaluación',
@@ -346,7 +346,7 @@ export const PESTANAS: Pestana[] = [
         btnDetalle: 'Qué incluye y cómo se ingresa',
         chips: ['Presencial · Bogotá', 'Telepresencial'],
         acciones: [
-          { label: 'Reservar y pagar', msg: 'Hola, escribo desde la web. Quiero reservar Programa de Intervención Individual ($2.080.000) y recibir el link de pago.', primaria: true },
+          { label: 'Reservar por WhatsApp', msg: 'Hola, escribo desde la web. Quiero reservar Programa de Intervención Individual ($2.080.000) y recibir el link de pago.', primaria: true },
         ],
         detalle: {
           cejilla: '02 / Intervención',
@@ -381,7 +381,7 @@ export const PESTANAS: Pestana[] = [
         chips: ['Presencial · Bogotá', 'Telepresencial'],
         destacada: true,
         acciones: [
-          { label: 'Reservar y pagar', msg: 'Hola, escribo desde la web. Quiero reservar Consulta con cuidadores ($130.000 por sesión) y recibir el link de pago.', primaria: true },
+          { label: 'Reservar por WhatsApp', msg: 'Hola, escribo desde la web. Quiero reservar Consulta con cuidadores ($130.000 por sesión) y recibir el link de pago.', primaria: true },
         ],
         detalle: {
           cejilla: '01 / Familias',

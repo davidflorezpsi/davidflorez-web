@@ -48,7 +48,7 @@ export const PERFILES = [INSTAGRAM];
  * el schema no debe decir más de lo que dice la página de contacto.
  */
 export const DESCRIPCION_PRACTICA =
-  'Psicología clínica basada en procesos para niñez, adolescencia y adultez joven. Evaluación e intervención con objetivos y progreso medible. Bogotá y online.';
+  'Psicología clínica basada en procesos para niñez, adolescencia y adultez joven: evaluación e intervención con objetivos y avance medible. Bogotá y online.';
 
 export function grafoBase(
   /** Propiedades extra de la práctica (p. ej. el catálogo de la home). */

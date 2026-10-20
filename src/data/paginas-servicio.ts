@@ -59,7 +59,7 @@ export const PAGINAS_SERVICIO: PaginaServicio[] = [
     slug: 'psicologo-infantil-bogota',
     titulo: 'Psicólogo infantil en Bogotá · 2 a 11 años | David Flórez',
     descripcion:
-      'Psicólogo infantil en Bogotá para niños de 2 a 11 años: evaluación funcional, espectro autista con ADOS-2 / ADI-R, programa individual y trabajo con cuidadores.',
+      'Psicólogo infantil en Bogotá para niños de 2 a 11 años: evaluación funcional, espectro autista (ADOS-2 / ADI-R), intervención individual y con cuidadores.',
     nombre: 'Psicología infantil',
     cejilla: 'Niñez · 2 a 11 años',
     h1: 'Psicólogo infantil en Bogotá',
@@ -122,7 +122,7 @@ export const PAGINAS_SERVICIO: PaginaServicio[] = [
   },
   {
     slug: 'evaluacion-autismo-ados-2-bogota',
-    titulo: 'Evaluación de autismo con ADOS-2 y ADI-R en Bogotá | David Flórez',
+    titulo: 'Evaluación de autismo con ADOS-2 y ADI-R en Bogotá',
     descripcion:
       'Evaluación del espectro autista con ADOS-2 y ADI-R para niños y adolescentes en Bogotá: qué incluye, sesiones, informe, precio y límites.',
     nombre: 'Evaluación del espectro autista',
@@ -157,7 +157,7 @@ export const PAGINAS_SERVICIO: PaginaServicio[] = [
     slug: 'peers-adolescentes-bogota',
     titulo: 'PEERS para adolescentes en Bogotá | David Flórez',
     descripcion:
-      'Programa PEERS (UCLA) de habilidades sociales para adolescentes en Bogotá y online: 14 sesiones en grupo, con sesiones para cuidadores. Precio y para quién es.',
+      'Programa PEERS (UCLA): habilidades sociales para adolescentes en Bogotá y online. 14 sesiones en grupo y sesiones para cuidadores. Precio y para quién es.',
     nombre: 'PEERS · Habilidades sociales',
     cejilla: 'Habilidades sociales · adolescencia',
     h1: 'PEERS: habilidades sociales para adolescentes en Bogotá',
@@ -187,7 +187,7 @@ export const PAGINAS_SERVICIO: PaginaServicio[] = [
   },
   {
     slug: 'psicologo-jovenes-adultos-bogota',
-    titulo: 'Psicólogo para jóvenes de 18 a 25 años en Bogotá | David Flórez',
+    titulo: 'Psicólogo para jóvenes de 18 a 25 años en Bogotá',
     descripcion:
       'Psicólogo para jóvenes de 18 a 25 años en Bogotá y online: ansiedad, depresión, duelo y regulación emocional. Evaluación inicial y programa de 16 sesiones.',
     nombre: 'Psicología para jóvenes adultos',
