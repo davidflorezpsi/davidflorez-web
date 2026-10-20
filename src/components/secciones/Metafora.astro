@@ -278,7 +278,14 @@ const CITA =
    */
   const ATENUADA = window.matchMedia('(prefers-reduced-motion: reduce)').matches ? '1' : '0.55';
 
-  if (cita) {
+  /*
+   * La cita se parte en palabras cuando la sección se acerca a pantalla (ver
+   * el final del script). Hacerlo en la carga obligaba al navegador a recalcular
+   * estilos y diseño de toda la página dentro del script: una tarea larga de
+   * más de 100 ms en móvil (Lighthouse), con la sección todavía lejos.
+   */
+  const prepararCita = () => {
+    if (!cita || palabras.length) return;
     const texto = (cita.textContent || '').trim();
     cita.textContent = '';
     palabras = texto.split(/\s+/).map((w) => {
@@ -295,17 +302,23 @@ const CITA =
       cita.appendChild(s);
       return s;
     });
-  }
+  };
 
+  let iluminadas = -1;
   const pintarCita = () => {
     if (!cita || !palabras.length) return;
     const vh = window.innerHeight || 800;
     const r = cita.getBoundingClientRect();
     const p = Math.max(0, Math.min(1, (vh * 0.8 - r.top) / (r.height + vh * 0.25)));
     const n = Math.round(p * palabras.length);
-    for (let i = 0; i < palabras.length; i++) {
+    if (n === iluminadas) return;
+    // Solo cambian las palabras entre la posición anterior y la nueva.
+    const desde = iluminadas < 0 ? 0 : Math.min(n, iluminadas);
+    const hasta = iluminadas < 0 ? palabras.length : Math.max(n, iluminadas);
+    for (let i = desde; i < hasta; i++) {
       palabras[i].style.opacity = i < n ? '1' : ATENUADA;
     }
+    iluminadas = n;
     citaLista = n >= palabras.length;
     if (!citaLista) palabras.forEach((s) => (s.style.color = ''));
   };
@@ -563,11 +576,38 @@ const CITA =
     }
   }
 
+  // Un repintado por cuadro, aunque el navegador dispare varios scroll seguidos.
+  let pendiente = false;
   const alScroll = () => {
-    pintarCita();
-    scrollMeta();
+    if (pendiente) return;
+    pendiente = true;
+    requestAnimationFrame(() => {
+      pendiente = false;
+      pintarCita();
+      scrollMeta();
+    });
   };
+
+  if (cita) {
+    const iniciarCita = () => {
+      prepararCita();
+      alScroll();
+    };
+    if ('IntersectionObserver' in window) {
+      const io = new IntersectionObserver(
+        (entradas) => {
+          if (!entradas.some((e) => e.isIntersecting)) return;
+          io.disconnect();
+          iniciarCita();
+        },
+        { rootMargin: '600px 0px' },
+      );
+      io.observe(cita);
+    } else {
+      iniciarCita();
+    }
+  }
+
   window.addEventListener('scroll', alScroll, { passive: true });
   window.addEventListener('resize', alScroll, { passive: true });
-  alScroll();
 </script>

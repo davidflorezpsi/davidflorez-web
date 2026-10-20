@@ -21,6 +21,7 @@ npm run build    # genera dist/
 | Credenciales verificables | `src/data/credenciales.ts` |
 | NIT y dirección de notificación judicial | `src/data/identidad.ts` |
 | Política de privacidad y condiciones del servicio | `src/pages/privacidad.astro`, `src/pages/condiciones.astro` |
+| Redirecciones, cabeceras de seguridad y caché | `vercel.json` |
 
 `llms.txt` y el schema se generan desde esos mismos datos, así que no hay que
 editarlos aparte.
@@ -65,6 +66,29 @@ Con él, Claude crea y actualiza los links de pago.
   pagos de la práctica son datos de salud y no deben pasar por el chat.
 - Cuando los links ya estén creados, puedes borrar la credencial: el sitio no la
   necesita.
+
+## Medición (Google Analytics 4)
+
+Google tag se carga después de la página. Los eventos del embudo nunca llevan
+nombres, montos ni las respuestas del filtro de pertinencia:
+
+| Evento | Cuándo |
+| --- | --- |
+| `contact_click` | Clic a WhatsApp |
+| `booking_click` | Clic a la agenda de Cal.com |
+| `booking_confirmed` | Llamada agendada: Cal.com redirige a `/gracias/` |
+| `payment_click` | Clic a un link de pago de Wompi |
+| `quiz_complete` | Filtro de pertinencia terminado (solo «encaja» o «no encaja») |
+
+1. En GA4 → Administrar → Eventos, marca los cinco como eventos clave.
+2. Para que `booking_confirmed` funcione: en Cal.com → tu evento → Avanzado →
+   «Redirigir al reservar», pon `https://davidflorez.co/gracias/`.
+
+La política de seguridad de contenido (`Content-Security-Policy` en
+`vercel.json`) solo deja cargar archivos del propio sitio y de Google
+Analytics. Si algún día incrustas un servicio externo (por ejemplo, la agenda
+de Cal.com dentro de la página), hay que agregar su dominio ahí o el navegador
+lo bloquea.
 
 ## Instagram
 

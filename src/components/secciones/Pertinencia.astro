@@ -534,6 +534,11 @@ const PREGUNTAS: { clave: string; titulo: string; opciones: Opcion[] }[] = [
         respuestas[b.dataset.q as string] = b.dataset.v as string;
         paso += 1;
         pintar();
+        // Al terminar, GA4 recibe solo si encaja o no: las respuestas pueden ser datos de salud.
+        if (paso === 5) {
+          const w = window as unknown as { gtag?: (...a: unknown[]) => void };
+          w.gtag?.('event', 'quiz_complete', { resultado: resultado().encaja ? 'encaja' : 'no_encaja' });
+        }
       });
     });
 

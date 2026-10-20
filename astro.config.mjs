@@ -6,9 +6,11 @@ export default defineConfig({
   site: 'https://davidflorez.co',
   integrations: [
     sitemap({
-      // /pagar/ se comparte por WhatsApp y /condiciones/ publica la dirección
-      // de notificación judicial (el domicilio de David): no son para buscadores.
-      filter: (pagina) => !['/pagar/', '/condiciones/'].some((ruta) => pagina.includes(ruta)),
+      // /pagar/ se comparte por WhatsApp, /condiciones/ publica la dirección de
+      // notificación judicial (el domicilio de David) y a /gracias/ solo se llega
+      // desde Cal.com: ninguna es para buscadores.
+      filter: (pagina) =>
+        !['/pagar/', '/condiciones/', '/gracias/'].some((ruta) => pagina.includes(ruta)),
     }),
   ],
   image: {

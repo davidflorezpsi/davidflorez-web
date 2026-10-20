@@ -28,14 +28,16 @@
   gtag('config', 'G-6X804BXQQ9');
 
   /*
-   * Embudo de captación: tres eventos genéricos.
-   *   contact_click  → clic a WhatsApp (interés inicial; no es una consulta)
-   *   booking_click  → clic a la agenda de la llamada gratuita
-   *   payment_click  → clic a un link de pago de Wompi (intención de pago;
-   *                    el pago confirmado solo lo sabe Wompi)
-   * Parámetros: canal, ubicación del botón y página. Nunca el texto
-   * prellenado, el nombre, el monto ni las respuestas del filtro de pertinencia.
-   * Marcar los tres como eventos clave en GA4.
+   * Embudo de captación:
+   *   contact_click     → clic a WhatsApp (interés inicial; no es una consulta)
+   *   booking_click     → clic a la agenda de la llamada gratuita
+   *   booking_confirmed → llamada agendada: Cal.com redirige a /gracias/
+   *   payment_click     → clic a un link de pago de Wompi (intención de pago;
+   *                       el pago confirmado solo lo sabe Wompi)
+   *   quiz_complete     → filtro de pertinencia terminado (Pertinencia.astro)
+   * Parámetros: canal, ubicación del botón y página; en el filtro, solo si
+   * encaja o no. Nunca el texto prellenado, el nombre, el monto ni las
+   * respuestas del filtro. Marcar como eventos clave en GA4.
    */
   document.addEventListener('click', function (e) {
     var a = e.target instanceof Element ? e.target.closest('a[href]') : null;
@@ -67,4 +69,27 @@
     });
   });
 </script>
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-6X804BXQQ9"></script>
+<script is:inline>
+  /*
+   * Google tag llega después de la carga: es el archivo más pesado del sitio
+   * (176 KB) y competía con el primer pintado (PageSpeed, 20 de octubre de 2026).
+   * Los comandos de arriba esperan en dataLayer y gtag.js los procesa al llegar.
+   * /gracias/ lo pide de inmediato con window.cargarGoogleTag().
+   */
+  (function () {
+    var cargado = false;
+    function cargar() {
+      if (cargado) return;
+      cargado = true;
+      var s = document.createElement('script');
+      s.async = true;
+      s.src = 'https://www.googletagmanager.com/gtag/js?id=G-6X804BXQQ9';
+      document.head.appendChild(s);
+    }
+    window.cargarGoogleTag = cargar;
+    addEventListener('load', function () {
+      if (window.requestIdleCallback) requestIdleCallback(cargar, { timeout: 2000 });
+      else setTimeout(cargar, 0);
+    });
+  })();
+</script>
