@@ -1,0 +1,149 @@
+---
+/**
+ * /gracias/ — Cal.com redirige aquí al confirmar una llamada (tipo de evento →
+ * Avanzado → «Redirigir al reservar»). Registra booking_confirmed en GA4 una
+ * vez por sesión: es la única forma de saber cuántas llamadas agendadas vienen
+ * de la web. No se indexa ni va al sitemap.
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { wa } from '../data/contacto';
+---
+
+<BaseLayout
+  title="Llamada agendada | David Flórez"
+  description="Tu llamada de orientación quedó agendada."
+  noindex
+>
+  <article class="pagina">
+    <header class="cabeza">
+      <p class="cejilla">Llamada de orientación · 20 min</p>
+      <h1>Tu llamada quedó agendada</h1>
+      <p class="entrada">
+        Cal.com te envía la confirmación al correo, con la fecha y la hora. Son 20 minutos sin costo
+        para resolver tus dudas antes de decidir.
+      </p>
+    </header>
+
+    <section aria-labelledby="mover-h2">
+      <h2 id="mover-h2">Si necesitas moverla</h2>
+      <p>
+        Usa el enlace para reprogramar del correo de confirmación, o
+        <a
+          href={wa('Hola, agendé la llamada de orientación y necesito moverla.')}
+          target="_blank"
+          rel="noopener noreferrer"
+          data-ubicacion="gracias">escríbeme por WhatsApp</a
+        >.
+      </p>
+    </section>
+
+    <section aria-labelledby="mientras-h2">
+      <h2 id="mientras-h2">Mientras tanto</h2>
+      <ul class="lista">
+        <li><a href="/#pertinencia">¿Es mi caso? Cuatro preguntas</a></li>
+        <li><a href="/#servicios">Servicios y precios</a></li>
+        <li><a href="/sobre-mi/">Sobre mí y credenciales</a></li>
+      </ul>
+    </section>
+  </article>
+</BaseLayout>
+
+<script is:inline>
+  // Con «Reenviar parámetros» activado (viene así), Cal.com agrega a esta
+  // dirección el nombre y el correo de quien reservó. Se borran antes de que
+  // Google tag lea la página, para que no lleguen a GA4.
+  if (location.search) history.replaceState(null, '', location.pathname);
+
+  try {
+    if (!sessionStorage.getItem('llamada-contada')) {
+      sessionStorage.setItem('llamada-contada', '1');
+      gtag('event', 'booking_confirmed', { canal: 'cal_com', ubicacion: 'gracias', pagina: location.pathname });
+    }
+  } catch (_) {
+    gtag('event', 'booking_confirmed', { canal: 'cal_com', ubicacion: 'gracias', pagina: location.pathname });
+  }
+  // Sin esperar a la carga: quien agenda suele cerrar esta pestaña enseguida.
+  if (window.cargarGoogleTag) window.cargarGoogleTag();
+</script>
+
+<style>
+  .pagina {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: clamp(2rem, 5vw, 3.5rem) 1.5rem clamp(3rem, 7vw, 5rem);
+  }
+
+  .cabeza {
+    border-top: 2px solid var(--azul-oscuro);
+    padding-top: 1rem;
+  }
+
+  .cejilla {
+    font-family: var(--fuente-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--azul-medio);
+  }
+
+  h1 {
+    font-family: var(--fuente-titular);
+    font-stretch: 115%;
+    font-weight: 800;
+    font-size: clamp(1.9rem, 4.6vw, 3.1rem);
+    line-height: 1.04;
+    letter-spacing: -0.03em;
+    color: var(--azul-oscuro);
+    text-transform: uppercase;
+    margin-top: 1.25rem;
+    text-wrap: balance;
+  }
+
+  .entrada {
+    font-size: 1.08rem;
+    line-height: 1.65;
+    color: var(--azul-oscuro);
+    font-weight: 600;
+    margin-top: 1.25rem;
+    max-width: 62ch;
+    text-wrap: pretty;
+  }
+
+  h2 {
+    font-family: var(--fuente-titular);
+    font-stretch: 112%;
+    font-weight: 800;
+    font-size: clamp(1.3rem, 2.8vw, 1.8rem);
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    color: var(--azul-oscuro);
+    margin-top: 2.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(0, 51, 70, 0.2);
+  }
+
+  section > p {
+    margin-top: 1rem;
+    line-height: 1.75;
+    max-width: 68ch;
+  }
+
+  .lista {
+    margin-top: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .lista li {
+    padding-left: 0.9rem;
+    border-left: 2px solid var(--cian);
+  }
+
+  section a {
+    display: inline-block;
+    padding-block: 0.2rem;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+</style>

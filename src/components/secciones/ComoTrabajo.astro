@@ -15,12 +15,12 @@ const PRINCIPIOS = [
     claim:
       'Cada intervención parte de evaluación diagnóstica rigurosa y marcos validados: ACT, DBT, PEERS, análisis funcional del comportamiento y entrenamiento conductual a cuidadores. No improviso y no prometo curas.',
     si: {
-      rotulo: 'Nota de sesión · con método',
+      rotulo: 'Nota de sesión · así trabajo',
       texto:
         'Hipótesis: la evitación mantiene la conducta. Instrumentos: ADOS-2 y registro diario del cuidador. Criterio de cierre: cuatro semanas sin episodios.',
     },
     no: {
-      rotulo: 'Nota de sesión · sin método',
+      rotulo: 'Nota de sesión · lo que evito',
       texto:
         'Impresión: el niño está mejor. Sigo con lo que venía haciendo. Cierro cuando dejen de venir.',
     },
@@ -31,12 +31,12 @@ const PRINCIPIOS = [
     claim:
       'El cambio sostenible en niñez y adolescencia ocurre cuando los adultos significativos también aprenden. El proceso incluye a cuidadores.',
     si: {
-      rotulo: 'Sesión 8 · con método',
+      rotulo: 'Sesión 8 · así trabajo',
       texto:
         'El cuidador practica en vivo, con guía en el momento. Tarea: cinco minutos diarios de juego dirigido, registrados en casa.',
     },
     no: {
-      rotulo: 'Sesión 8 · sin método',
+      rotulo: 'Sesión 8 · lo que evito',
       texto:
         'El niño entra solo. Los cuidadores esperan afuera y reciben un resumen de tres minutos al salir.',
     },
@@ -47,12 +47,12 @@ const PRINCIPIOS = [
     claim:
       'La uso para investigación, síntesis de literatura clínica y material educativo. Jamás para diagnóstico ni para sustituir el vínculo.',
     si: {
-      rotulo: 'Uso de IA · con método',
+      rotulo: 'Uso de IA · así trabajo',
       texto:
         'Síntesis de literatura y material educativo. La hipótesis, la decisión clínica y el vínculo son del terapeuta, con tarjeta profesional.',
     },
     no: {
-      rotulo: 'Uso de IA · sin método',
+      rotulo: 'Uso de IA · lo que evito',
       texto:
         'Un chat responde "tu diagnóstico es…". Sin evaluación, sin historia clínica y sin nadie que responda por el resultado.',
     },
@@ -71,14 +71,14 @@ const PRINCIPIOS = [
       <div class="veredicto">
         <p class="et">La contraprueba</p>
         <p id="met-veredicto">
-          Hipótesis, datos y criterios de cierre: el proceso se puede auditar — y se puede cerrar.
+          Así, cada decisión clínica se puede explicar, revisar y cerrar.
         </p>
       </div>
 
-      <div class="interruptor" role="radiogroup" aria-label="Comparar con método o sin método">
+      <div class="interruptor" role="radiogroup" aria-label="Ver cómo trabajo o lo que evito">
         <span id="met-pastilla"></span>
-        <button type="button" role="radio" data-met="si" aria-checked="true">Con método</button>
-        <button type="button" role="radio" data-met="no" aria-checked="false">Sin método</button>
+        <button type="button" role="radio" data-met="si" aria-checked="true">Así trabajo</button>
+        <button type="button" role="radio" data-met="no" aria-checked="false">Lo que evito</button>
       </div>
     </div>
 
@@ -386,8 +386,8 @@ const PRINCIPIOS = [
     const v = document.getElementById('met-veredicto');
     if (v) {
       v.textContent = conMetodo
-        ? 'Hipótesis, datos y criterios de cierre: el proceso se puede auditar — y se puede cerrar.'
-        : 'Sin método: procesos abiertos, objetivos difusos y progreso que nadie puede medir. Es lo más común, y es lo que evito.';
+        ? 'Así, cada decisión clínica se puede explicar, revisar y cerrar.'
+        : 'Sin objetivos ni criterios de cierre, el progreso no se puede medir ni se sabe cuándo terminar. Por eso lo evito.';
     }
   };
 

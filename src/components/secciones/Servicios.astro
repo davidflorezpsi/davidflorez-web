@@ -12,6 +12,7 @@
 import ServiceCard from '../ServiceCard.astro';
 import { PESTANAS } from '../../data/servicios';
 import { PAGINAS_SERVICIO, paginaDeServicio } from '../../data/paginas-servicio';
+import { CUOTAS, MEDIOS_DE_PAGO } from '../../data/pagos';
 
 const RUTA_D = 'M18 186 C70 186 78 130 120 122 C160 114 168 148 206 132 C246 115 240 52 286 34';
 const PUNTOS_X = [20, 70, 120, 170, 220, 270];
@@ -24,13 +25,12 @@ const PAGOS = [
     texto: 'Un solo pago del programa contratado, antes de la primera sesión.',
   },
   {
-    titulo: 'Cuotas estructuradas',
-    texto:
-      'Financiamiento interno para los programas por ciclo: se acuerda en el encuadre y queda firmado antes de iniciar. Las evaluaciones van como paquete.',
+    titulo: 'Link de pago de Wompi',
+    texto: `Te lo envío por WhatsApp. Pagas con ${MEDIOS_DE_PAGO}.`,
   },
   {
-    titulo: 'Tarjeta de crédito',
-    texto: 'Pago con tarjeta y cuotas a través de la pasarela, sin trámite adicional.',
+    titulo: '¿En cuotas?',
+    texto: CUOTAS,
   },
 ];
 ---
@@ -53,8 +53,8 @@ const PAGOS = [
           id="ruta-svg"
           viewBox="0 0 320 220"
           width="100%"
-          role="img"
-          aria-label="Ruta curva sobre una retícula: cada parada es un servicio del programa"
+          role="group"
+          aria-label="Ruta de los servicios: cada parada es un servicio de la pestaña elegida"
         >
           <g fill="#003346" opacity="0.28">
             {PUNTOS_Y.map((y) => PUNTOS_X.map((x) => <circle cx={x} cy={y} r="1.6" />))}
@@ -82,6 +82,7 @@ const PAGOS = [
                 data-hito={i}
                 role="button"
                 tabindex="0"
+                aria-pressed="false"
                 aria-label={`Parada 0${i} de la ruta`}
               >
                 <circle r="16" fill="transparent" />
@@ -200,12 +201,11 @@ const PAGOS = [
           ))
         }
       </div>
+      <p class="pagos-aviso">
+        El pago se hace solo en Wompi, nunca por transferencia a cuentas personales ·
+        <a href="/pagar/">Página de pago →</a>
+      </p>
     </div>
-
-    <p class="cola">
-      No se ofrece — sesiones sueltas / psicoterapia ecléctica / servicios por EPS / atención de
-      urgencias
-    </p>
   </div>
 </section>
 
@@ -383,8 +383,9 @@ const PAGOS = [
     color: var(--azul-medio);
   }
 
-  /* La descripción del servicio: en escritorio repite lo de la tarjeta, en
-     móvil es el único lugar donde aparece. */
+  /* La descripción del servicio vive en la tarjeta; en móvil la tarjeta la
+     esconde (ServiceCard, ≤720px) y este es el único lugar donde aparece. En
+     escritorio se oculta aquí para no leerla dos veces seguidas. */
   .cajon-desc {
     font-size: 0.95rem;
     line-height: 1.75;
@@ -392,6 +393,12 @@ const PAGOS = [
     margin-top: 1.25rem;
     max-width: 70ch;
     text-wrap: pretty;
+  }
+
+  @media (min-width: 721px) {
+    .cajon-desc {
+      display: none;
+    }
   }
 
   .cajon-cols {
@@ -537,15 +544,21 @@ const PAGOS = [
     text-underline-offset: 3px;
   }
 
-  .cola {
+  .pagos-aviso {
     font-family: var(--fuente-mono);
-    font-size: 0.7rem;
-    letter-spacing: 0.1em;
+    font-size: 0.62rem;
+    letter-spacing: 0.12em;
     text-transform: uppercase;
     color: var(--azul-oscuro);
-    margin-top: 2rem;
-    border-top: 1px solid rgba(0, 51, 70, 0.25);
-    padding-top: 1rem;
+    margin-top: 1.25rem;
+    border-top: 1px solid rgba(0, 51, 70, 0.2);
+    padding-top: 0.9rem;
+  }
+
+  .pagos-aviso a {
+    color: var(--azul-medio);
+    text-decoration: underline;
+    text-underline-offset: 3px;
   }
 </style>
 
@@ -608,6 +621,8 @@ const PAGOS = [
         g.setAttribute('transform', `translate(${p.x.toFixed(1)},${p.y.toFixed(1)})`);
 
         const sel = parada === i;
+        g.setAttribute('aria-label', `Parada 0${i}: ${(NOMBRES[tab] || [])[i - 1] ?? ''}`);
+        g.setAttribute('aria-pressed', String(sel));
         const anillo = g.querySelector('[data-anillo]');
         if (anillo) {
           anillo.setAttribute('r', sel ? '7.5' : '6');

@@ -1,0 +1,29 @@
+# Publica el sitio una vez al día para traer las publicaciones nuevas de
+# Instagram y renovar el token (ver src/lib/instagram.ts).
+#
+# Necesita el secreto VERCEL_DEPLOY_HOOK: la URL de un Deploy Hook de Vercel
+# sobre la rama main (Vercel → Settings → Git → Deploy Hooks). Sin el secreto,
+# el trabajo termina sin hacer nada.
+name: Actualizar publicaciones de Instagram
+
+on:
+  schedule:
+    - cron: '17 11 * * *' # 6:17 a. m. en Bogotá
+  workflow_dispatch:
+
+permissions: {}
+
+jobs:
+  publicar:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Disparar un despliegue en Vercel
+        env:
+          HOOK: ${{ secrets.VERCEL_DEPLOY_HOOK }}
+        run: |
+          if [ -z "$HOOK" ]; then
+            echo "Falta el secreto VERCEL_DEPLOY_HOOK; no se dispara nada."
+            exit 0
+          fi
+          curl --fail --silent --show-error --max-time 30 -X POST "$HOOK" > /dev/null
+          echo "Despliegue solicitado."

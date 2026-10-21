@@ -7,7 +7,7 @@
  * durazno. Cuando no queda ninguno, se activa el descuento.
  */
 import { NUDO_D } from '../../data/geometria';
-import { wa } from '../../data/contacto';
+import { CAL_COM, wa } from '../../data/contacto';
 
 /** La retícula de fondo viene apagada (es el valor por defecto del prototipo). */
 const reticula = false;
@@ -61,7 +61,8 @@ const AROS = [
         </div>
 
         <p class="nota">
-          Respuesta directa, sin formularios · <a href="#agenda">o agenda 20 min sin costo</a>
+          Respuesta directa, sin formularios ·
+          <a href={CAL_COM} target="_blank" rel="noopener noreferrer">o agenda 20 min sin costo ↗</a>
         </p>
       </div>
 

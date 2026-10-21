@@ -14,6 +14,15 @@ export const NOMBRE_COMPLETO = 'Erwin David Flórez Rojas';
 export const NOMBRE_CORTO = 'David Flórez';
 export const TARJETA_PROFESIONAL = '205129';
 
+/**
+ * El Estatuto del Consumidor (Ley 1480 de 2011, art. 50) pide a quien vende en
+ * línea publicar su NIT y su dirección de notificación judicial. Solo salen en
+ * /condiciones/, que no se indexa: la dirección es la del domicilio de David.
+ * No van al schema, al pie ni a llms.txt.
+ */
+export const NIT = '1095828754-6';
+export const DIRECCION_NOTIFICACION = 'Calle 152A #46-60, Torre 7, apartamento 203, Bogotá D.C.';
+
 /** Identificadores estables: los demás bloques de schema apuntan aquí. */
 export const ID_PERSONA = `${SITIO}/#david`;
 export const ID_PRACTICA = `${SITIO}/#practica`;
@@ -39,7 +48,7 @@ export const PERFILES = [INSTAGRAM];
  * el schema no debe decir más de lo que dice la página de contacto.
  */
 export const DESCRIPCION_PRACTICA =
-  'Psicología clínica basada en procesos para niñez, adolescencia y adultez joven. Evaluación e intervención con objetivos y progreso medible. Bogotá y online.';
+  'Psicología clínica basada en procesos para niñez, adolescencia y adultez joven: evaluación e intervención con objetivos y avance medible. Bogotá y online.';
 
 export function grafoBase(
   /** Propiedades extra de la práctica (p. ej. el catálogo de la home). */

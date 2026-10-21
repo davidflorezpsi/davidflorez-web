@@ -1,0 +1,27 @@
+{
+  "enabledMcpjsonServers": ["wompi"],
+  "permissions": {
+    "allow": [
+      "mcp__wompi__get_merchant",
+      "mcp__wompi__list_payment_methods",
+      "mcp__wompi__list_payment_links",
+      "mcp__wompi__get_payment_link"
+    ],
+    "deny": [
+      "mcp__wompi__create_transaction",
+      "mcp__wompi__void_transaction",
+      "mcp__wompi__create_refund",
+      "mcp__wompi__get_refund",
+      "mcp__wompi__get_transaction",
+      "mcp__wompi__list_transactions",
+      "mcp__wompi__search_transaction_by_reference",
+      "mcp__wompi__create_tokenized_card",
+      "mcp__wompi__create_tokenized_nequi",
+      "mcp__wompi__get_tokenization_status",
+      "mcp__wompi__create_payment_source",
+      "mcp__wompi__create_customer",
+      "mcp__wompi__get_customer",
+      "mcp__wompi__get_acceptance_token"
+    ]
+  }
+}

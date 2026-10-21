@@ -17,17 +17,20 @@
  *
  * Desde la home el navegador resuelve "/#marco" al mismo documento, así que
  * sigue siendo un desplazamiento suave, sin recargar.
+ *
+ * "Sobre mí" y "Blog" van a sus páginas: desde una página interna, el ancla
+ * de la portada devolvía a quien navegaba al inicio.
  */
+import { CAL_COM } from '../data/contacto';
+
 const enlaces = [
   { href: '/#pertinencia', texto: '¿Es mi caso?', movil: '¿Es mi caso?' },
-  { href: '/#equipo', texto: 'Quién soy', movil: 'Quién soy' },
+  { href: '/sobre-mi/', texto: 'Sobre mí', movil: 'Sobre mí y credenciales' },
   { href: '/#marco', texto: 'Marco', movil: 'Marco clínico' },
   { href: '/#servicios', texto: 'Servicios', movil: 'Servicios' },
   { href: '/#proceso', texto: 'Proceso', movil: 'Cómo empezamos' },
-  { href: '/#recursos', texto: 'Blog', movil: 'Blog' },
+  { href: '/blog/', texto: 'Blog', movil: 'Blog' },
   { href: '/contacto/', texto: 'Sedes', movil: 'Contacto y sedes' },
-  // En escritorio no cabe un enlace más; "Quién soy" ya enlaza al perfil.
-  { href: '/sobre-mi/', texto: '', movil: 'Sobre mí y credenciales', soloMovil: true },
 ];
 ---
 
@@ -44,8 +47,15 @@ const enlaces = [
 
       <nav class="nav" id="nav-esc" aria-label="Navegación principal">
         <span class="pastilla" id="nav-pastilla" aria-hidden="true"></span>
-        {enlaces.filter((e) => !e.soloMovil).map((e) => <a href={e.href} data-nav>{e.texto}</a>)}
-        <a href="/#agenda" class="cta">Llamada gratuita</a>
+        {enlaces.map((e) => <a href={e.href} data-nav>{e.texto}</a>)}
+        <a
+          href={CAL_COM}
+          class="cta"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Llamada gratuita, se abre en Cal.com"
+          data-ubicacion="menu">Llamada gratuita</a
+        >
       </nav>
 
       <button type="button" class="hamburguesa" id="menu-boton" aria-label="Abrir menú" aria-expanded="false" aria-controls="menu-movil">
@@ -58,7 +68,15 @@ const enlaces = [
     <nav class="panel" id="menu-movil" aria-label="Menú móvil" hidden>
       <span class="rim" aria-hidden="true"></span>
       {enlaces.map((e) => <a href={e.href} data-cierra>{e.movil}</a>)}
-      <a href="/#agenda" class="cta-movil" data-cierra>Llamada gratuita</a>
+      <a
+        href={CAL_COM}
+        class="cta-movil"
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="Llamada gratuita, se abre en Cal.com"
+        data-ubicacion="menu_movil"
+        data-cierra>Llamada gratuita</a
+      >
     </nav>
   </div>
 </header>

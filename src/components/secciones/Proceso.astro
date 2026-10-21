@@ -1,44 +1,44 @@
 ---
 /**
- * 07 / El proceso — cinco tramos y una brújula que apunta al paso en pantalla.
+ * 07 / El proceso — los tramos que van del primer mensaje a la primera sesión,
+ * y una brújula que apunta al paso en pantalla.
+ *
+ * Es el único lugar de la home que explica cómo se empieza y cómo se paga; el
+ * resumen, la agenda y las preguntas frecuentes remiten aquí en vez de repetirlo.
  *
  * La aguja gira calculando el ángulo entre el centro del SVG y el centro del
  * paso activo; el paso activo se decide por cercanía al 48% del viewport.
  */
-const PASOS = [
+interface Paso {
+  titulo: string;
+  nota: string;
+  texto: string;
+  enlace?: { href: string; texto: string };
+}
+
+const PASOS: Paso[] = [
   {
-    n: '01',
-    titulo: 'Llamada de orientación inicial',
-    nota: 'Gratuita · 20 minutos · Virtual',
+    titulo: 'Escríbeme',
+    nota: 'WhatsApp · llamada gratuita opcional',
     texto:
-      'Conversamos sobre las dificultades de tu hijo o hija, evalúo si el caso es pertinente para esta práctica y definimos qué servicio aplica. Sin compromiso por ninguna parte.',
+      'Me cuentas qué está pasando y te digo qué servicio aplica, o a quién acudir si tu caso no es para esta práctica. Si prefieres conversarlo antes de decidir, agenda una llamada de orientación de 20 minutos: es gratuita y no es requisito para empezar.',
   },
   {
-    n: '02',
-    titulo: 'Decisión de proceder',
-    nota: 'Se confirma la idoneidad clínica',
-    texto:
-      'Si el caso es pertinente y decides iniciar, confirmo la idoneidad clínica y definimos el servicio a contratar.',
+    titulo: 'Reserva y pago',
+    nota: 'Anticipado · link de pago de Wompi',
+    texto: 'Te envío por WhatsApp el link de pago del programa que definimos.',
+    enlace: { href: '/pagar/', texto: 'Medios de pago y página de pago →' },
   },
   {
-    n: '03',
-    titulo: 'Pago del servicio',
-    nota: 'Anticipado · Stripe o Mi Llave',
-    texto:
-      'Pago anticipado requerido para habilitar el calendario de sesiones. Medios disponibles: tarjeta de crédito o débito internacional vía Stripe · pagos nacionales vía Mi Llave.',
-  },
-  {
-    n: '04',
-    titulo: 'Calendario y consentimiento informado',
+    titulo: 'Expediente y consentimiento',
     nota: 'Acceso digital tras el pago',
     texto:
-      'Tras la confirmación del pago recibes acceso al calendario de sesiones y al formulario de consentimiento informado digital.',
+      'Con el pago confirmado se abre tu expediente en la plataforma PsiPragma: consentimiento informado, fichas, tareas, documentos y las sesiones del ciclo agendadas.',
   },
   {
-    n: '05',
-    titulo: 'Inicio del proceso clínico',
-    nota: 'Objetivos definidos, progreso medible',
-    texto: 'Primera sesión agendada. Proceso estructurado, objetivos definidos, progreso medible.',
+    titulo: 'Primera sesión',
+    nota: 'Objetivos escritos desde el inicio',
+    texto: 'Empezamos con los objetivos acordados por escrito y con el registro con el que se va a medir el avance.',
   },
 ];
 
@@ -57,8 +57,8 @@ const MARCAS = [
     <div class="intro">
       <h2>¿Cómo<br />empezamos?</h2>
       <p>
-        Una brújula no avanza por ti: en cada paso confirma la dirección. Cinco tramos, y el primero
-        no cuesta nada.
+        Una brújula no avanza por ti: en cada paso confirma la dirección. Cuatro tramos, de tu primer
+        mensaje a la primera sesión.
       </p>
     </div>
 
@@ -104,8 +104,8 @@ const MARCAS = [
         </svg>
 
         <div class="brujula-pie">
-          <p class="paso-n" id="paso-indicador">Paso 1 de 5</p>
-          <p class="paso-t" id="paso-titulo">Llamada de orientación inicial</p>
+          <p class="paso-n" id="paso-indicador">Paso 1 de {PASOS.length}</p>
+          <p class="paso-t" id="paso-titulo">{PASOS[0].titulo}</p>
         </div>
       </div>
 
@@ -114,7 +114,7 @@ const MARCAS = [
           PASOS.map((p, i) => (
             <li id={`paso-${i + 1}`} class="tramo">
               <button type="button" class="tramo-cab" data-paso={i + 1} aria-expanded="false" aria-controls={`paso-p${i + 1}`}>
-                <span class="tramo-n">{p.n}</span>
+                <span class="tramo-n">{String(i + 1).padStart(2, '0')}</span>
                 <span class="tramo-texto">
                   <span class="tramo-titulo">{p.titulo}</span>
                   <span class="tramo-nota">{p.nota}</span>
@@ -123,6 +123,11 @@ const MARCAS = [
               </button>
               <div class="tramo-panel" id={`paso-p${i + 1}`} hidden>
                 <p>{p.texto}</p>
+                {p.enlace && (
+                  <p class="tramo-enlace">
+                    <a href={p.enlace.href}>{p.enlace.texto}</a>
+                  </p>
+                )}
               </div>
             </li>
           ))
@@ -325,6 +330,15 @@ const MARCAS = [
     line-height: 1.75;
   }
 
+  .tramo-enlace {
+    margin-top: 0.6rem;
+  }
+
+  .tramo-enlace a {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
   @media (prefers-reduced-motion: reduce) {
     .tramo {
       opacity: 1;
@@ -339,13 +353,11 @@ const MARCAS = [
 </style>
 
 <script>
-  const TITULOS = [
-    'Llamada de orientación inicial',
-    'Decisión de proceder',
-    'Pago del servicio',
-    'Calendario y consentimiento',
-    'Inicio del proceso clínico',
-  ];
+  // Los títulos y el número de pasos se leen del HTML: el copy vive en un solo lugar.
+  const TITULOS = [...document.querySelectorAll<HTMLElement>('#proceso .tramo-titulo')].map(
+    (t) => t.textContent?.trim() ?? '',
+  );
+  const TOTAL = TITULOS.length;
 
   let activo = 1;
 
@@ -355,7 +367,7 @@ const MARCAS = [
     let nuevo = 0;
     let mejor = Infinity;
 
-    for (let i = 1; i <= 5; i++) {
+    for (let i = 1; i <= TOTAL; i++) {
       const li = document.getElementById(`paso-${i}`);
       if (!li) continue;
       const r = li.getBoundingClientRect();
@@ -367,7 +379,7 @@ const MARCAS = [
     }
 
     if (nuevo) {
-      for (let i = 1; i <= 5; i++) {
+      for (let i = 1; i <= TOTAL; i++) {
         const li = document.getElementById(`paso-${i}`);
         if (!li) continue;
         if (i === nuevo) li.setAttribute('data-activo', '');
@@ -377,7 +389,7 @@ const MARCAS = [
         activo = nuevo;
         const ind = document.getElementById('paso-indicador');
         const tit = document.getElementById('paso-titulo');
-        if (ind) ind.textContent = `Paso ${activo} de 5`;
+        if (ind) ind.textContent = `Paso ${activo} de ${TOTAL}`;
         if (tit) tit.textContent = TITULOS[activo - 1];
       }
     }

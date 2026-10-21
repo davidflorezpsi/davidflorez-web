@@ -23,7 +23,7 @@ const DEFINICIONES = [
     cejilla: 'Con qué se levanta',
     titulo: 'Terapia Basada en Procesos (PBT)',
     texto:
-      'Desarrollada por Hayes y Hofmann (2018). Integra coherentemente herramientas de ACT, DBT y análisis funcional del comportamiento para identificar y modificar los procesos psicológicos que mantienen el sufrimiento. Este no es solo un espacio para "hablar de tus problemas": cada proceso comienza con una hipótesis, avanza con datos y termina con criterios de cierre definidos.',
+      'Desarrollada por Hayes y Hofmann (2018). Integra coherentemente herramientas de ACT, DBT y análisis funcional del comportamiento para identificar y modificar los procesos psicológicos que mantienen el sufrimiento.',
   },
   {
     num: '02',
@@ -941,16 +941,28 @@ const DEFINICIONES = [
   }
 
   const seccion = document.getElementById('marco');
+  const progreso = document.getElementById('marco-prog');
 
+  /*
+   * Un cálculo por cuadro y solo con la sección cerca de la pantalla. Primero
+   * se leen las medidas y después se escribe: leer justo después de escribir
+   * obliga al navegador a recalcular el diseño de toda la página en ese instante.
+   */
+  let cerca = false;
+  let pendiente = false;
   const alScroll = () => {
-    casaBanda();
-    const pr = document.getElementById('marco-prog');
-    if (pr && seccion) {
-      const vh = window.innerHeight || 800;
-      const r = seccion.getBoundingClientRect();
-      const t = (vh - r.top) / (r.height + vh * 0.55);
-      pr.style.width = `${Math.max(0, Math.min(1, t)) * 100}%`;
-    }
+    if (!cerca || pendiente) return;
+    pendiente = true;
+    requestAnimationFrame(() => {
+      pendiente = false;
+      const r = seccion?.getBoundingClientRect();
+      casaBanda();
+      if (progreso && r) {
+        const vh = window.innerHeight || 800;
+        const t = (vh - r.top) / (r.height + vh * 0.55);
+        progreso.style.width = `${Math.max(0, Math.min(1, t)) * 100}%`;
+      }
+    });
   };
 
   window.addEventListener('scroll', alScroll, { passive: true });
@@ -970,7 +982,32 @@ const DEFINICIONES = [
     alScroll();
   });
 
-  pintarAndamio();
-  pintarDefs();
-  alScroll();
+  /*
+   * El estado inicial del andamio y de las definiciones se pinta cuando la
+   * sección se acerca a pantalla. Hacerlo en la carga forzaba el primer cálculo
+   * de diseño de toda la página dentro de este script: una tarea larga de más
+   * de 100 ms en móvil (Lighthouse), con la sección todavía lejos.
+   */
+  let listo = false;
+  const preparar = () => {
+    if (!listo) {
+      listo = true;
+      pintarAndamio();
+      pintarDefs();
+    }
+    alScroll();
+  };
+
+  if (seccion && 'IntersectionObserver' in window) {
+    new IntersectionObserver(
+      (entradas) => {
+        cerca = entradas.some((e) => e.isIntersecting);
+        if (cerca) preparar();
+      },
+      { rootMargin: '600px 0px' },
+    ).observe(seccion);
+  } else {
+    cerca = true;
+    preparar();
+  }
 </script>

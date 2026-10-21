@@ -1,0 +1,173 @@
+---
+/**
+ * 404 — Vercel la sirve para cualquier ruta que no exista, en lugar de su texto
+ * plano en inglés. No se indexa: lleva a lo que la persona probablemente buscaba.
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { CAL_COM, wa } from '../data/contacto';
+import { PAGINAS_SERVICIO } from '../data/paginas-servicio';
+---
+
+<BaseLayout
+  title="Página no encontrada | David Flórez"
+  description="Esta página no existe o cambió de dirección."
+  noindex
+>
+  <article class="pagina">
+    <header class="cabeza">
+      <p class="cejilla">Error 404</p>
+      <h1>Esta página no existe</h1>
+      <p class="entrada">
+        Puede que el enlace esté mal escrito o que la página haya cambiado de dirección. Esto es lo
+        que la mayoría de las personas viene a buscar:
+      </p>
+    </header>
+
+    <section aria-labelledby="servicios-h2">
+      <h2 id="servicios-h2">Servicios</h2>
+      <ul class="lista">
+        {
+          PAGINAS_SERVICIO.map((p) => (
+            <li>
+              <a href={`/${p.slug}/`}>{p.nombre}</a>
+            </li>
+          ))
+        }
+      </ul>
+    </section>
+
+    <section aria-labelledby="mas-h2">
+      <h2 id="mas-h2">También</h2>
+      <ul class="lista">
+        <li><a href="/">Inicio</a></li>
+        <li><a href="/sobre-mi/">Sobre mí y credenciales</a></li>
+        <li><a href="/contacto/">Contacto y sedes</a></li>
+        <li><a href="/blog/">Artículos</a></li>
+      </ul>
+    </section>
+
+    <div class="acciones">
+      <a
+        href={wa('Hola, escribo desde la web.')}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="btn-solido"
+        data-ubicacion="404">Escribir por WhatsApp</a
+      >
+      <a href={CAL_COM} target="_blank" rel="noopener noreferrer" class="btn-linea" data-ubicacion="404"
+        >Llamada gratuita · 20 min</a
+      >
+    </div>
+  </article>
+</BaseLayout>
+
+<style>
+  .pagina {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: clamp(2rem, 5vw, 3.5rem) 1.5rem clamp(3rem, 7vw, 5rem);
+  }
+
+  .cabeza {
+    border-top: 2px solid var(--azul-oscuro);
+    padding-top: 1rem;
+  }
+
+  .cejilla {
+    font-family: var(--fuente-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--azul-medio);
+  }
+
+  h1 {
+    font-family: var(--fuente-titular);
+    font-stretch: 115%;
+    font-weight: 800;
+    font-size: clamp(1.9rem, 4.6vw, 3.1rem);
+    line-height: 1.04;
+    letter-spacing: -0.03em;
+    color: var(--azul-oscuro);
+    text-transform: uppercase;
+    margin-top: 1.25rem;
+    text-wrap: balance;
+  }
+
+  .entrada {
+    font-size: 1.08rem;
+    line-height: 1.65;
+    color: var(--azul-oscuro);
+    font-weight: 600;
+    margin-top: 1.25rem;
+    max-width: 62ch;
+    text-wrap: pretty;
+  }
+
+  h2 {
+    font-family: var(--fuente-titular);
+    font-stretch: 112%;
+    font-weight: 800;
+    font-size: clamp(1.3rem, 2.8vw, 1.8rem);
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    color: var(--azul-oscuro);
+    margin-top: 2.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(0, 51, 70, 0.2);
+  }
+
+  .lista {
+    margin-top: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .lista li {
+    padding-left: 0.9rem;
+    border-left: 2px solid var(--cian);
+  }
+
+  .lista a {
+    display: inline-block;
+    padding-block: 0.2rem;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .acciones {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: 2.5rem;
+  }
+
+  .btn-solido,
+  .btn-linea {
+    display: inline-flex;
+    align-items: center;
+    min-height: 48px;
+    padding: 0.8rem 1.35rem;
+    border-radius: 999px;
+    font-family: var(--fuente-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    text-decoration: none;
+  }
+
+  .btn-solido {
+    background: var(--azul-oscuro);
+    color: #fff;
+  }
+
+  .btn-solido:hover {
+    color: #fff;
+  }
+
+  .btn-linea {
+    border: 1.5px solid var(--azul-oscuro);
+    color: var(--azul-oscuro);
+  }
+</style>

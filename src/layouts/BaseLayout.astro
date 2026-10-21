@@ -21,14 +21,20 @@ interface Props {
   extraPractica?: Record<string, unknown>;
   /** Nodos de schema propios de la página (BreadcrumbList, Service, BlogPosting…). */
   schema?: Record<string, unknown>[];
+  /** Páginas que se comparten por enlace y no deben salir en buscadores (/pagar/). */
+  noindex?: boolean;
+  /** "article" en los artículos del blog. */
+  ogType?: 'website' | 'article';
 }
 
 const {
-  title = 'David Flórez | Psicólogo Clínico Infantojuvenil y Adultez Joven | Bogotá',
+  title = 'Psicólogo clínico infantojuvenil en Bogotá | David Flórez',
   description = DESCRIPCION_PRACTICA,
   ogImage = '/og-image.png',
   extraPractica = {},
   schema = [],
+  noindex = false,
+  ogType = 'website',
 } = Astro.props;
 
 const siteUrl = Astro.site ?? 'https://davidflorez.co';
@@ -66,6 +72,7 @@ const grafo = {
     <title>{title}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonicalURL} />
+    {noindex && <meta name="robots" content="noindex, follow" />}
 
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
@@ -74,7 +81,7 @@ const grafo = {
     <meta property="og:image:height" content="630" />
     <meta property="og:image:alt" content="Psicología clínica basada en procesos — David Flórez, psicólogo clínico, Bogotá" />
     <meta property="og:url" content={canonicalURL} />
-    <meta property="og:type" content="website" />
+    <meta property="og:type" content={ogType} />
     <meta property="og:locale" content="es_CO" />
     <meta property="og:site_name" content="David Flórez · Psicólogo Clínico" />
 
