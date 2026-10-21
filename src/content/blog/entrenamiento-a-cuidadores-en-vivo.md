@@ -1,17 +1,19 @@
 ---
 title: "En este programa el que entrena eres tú"
-description: "Cómo funciona el entrenamiento conductual a cuidadores: por qué te corrijo por un audífono mientras juegas, por qué la tarea es de cinco minutos, y por qué la conducta empeora antes de mejorar."
-pubDate: 2026-09-24
+description: "Cómo funciona el entrenamiento conductual a cuidadores: por qué te corrijo por un audífono mientras juegas, por qué la tarea es de cinco minutos, y por qué a veces la conducta empeora antes de mejorar."
+tituloSeo: "Entrenamiento conductual a cuidadores: cómo funciona"
+descripcionSeo: "Cómo es el entrenamiento conductual a cuidadores: práctica en sesión con guía en vivo, cinco minutos diarios de juego y por qué al inicio puede empeorar."
+pubDate: 2026-10-21T13:00:00Z
 servicio: psicologo-infantil-bogota
 tags: ["Para padres", "entrenamiento a cuidadores", "crianza"]
-draft: true
+draft: false
 ---
 
 En este programa el que está en tratamiento no es tu hijo. Eres tú.
 
 Eso suele caer raro en la primera llamada, porque la mayoría de familias llega pidiendo que alguien "trabaje con el niño". Y es entendible: llevan meses aguantando y quieren pasar el problema a manos expertas.
 
-Pero el entrenamiento a cuidadores está construido sobre otra idea: el cambio que dura no ocurre en la hora semanal de consulta. Ocurre en las ciento sesenta y siete horas restantes, y esas las sostienes tú. Así que el entrenamiento es tuyo.
+Pero el entrenamiento a cuidadores está construido sobre otra idea: el cambio que dura no ocurre en la hora semanal de consulta. Ocurre en el resto de la semana, en la casa, y ese resto lo sostienes tú. Así que el entrenamiento es tuyo.
 
 ## Cómo se ve una sesión
 
@@ -69,7 +71,7 @@ Los padres suelen creer que están haciendo poco y proponen media hora. Casi sie
 
 Si una semana no se pudo, se dice en sesión y se ajusta. No pasa nada. Lo que sí entorpece el proceso es decir que se hizo cuando no se hizo, porque entonces estoy tomando decisiones con datos falsos.
 
-## Va a empeorar antes de mejorar
+## Puede empeorar antes de mejorar
 
 Esto hay que decirlo antes y no después.
 
@@ -77,7 +79,7 @@ Cuando una conducta ha estado funcionando durante meses —cuando gritar ha serv
 
 Es exactamente lo que haces tú con un ascensor que no llega: no dejas de oprimir el botón, lo oprimes más veces y más duro.
 
-Ese repunte tiene nombre técnico, es esperable, y suele durar poco si los adultos de la casa sostienen la misma respuesta. El problema es que casi siempre coincide con el momento en que la familia concluye que "esto no está funcionando" y suelta. Y soltar justo ahí le enseña al niño algo peor que antes: que insistir más fuerte sí funciona, solo que ahora hay que insistir mucho más.
+Ese repunte se llama brote de extinción. No les pasa a todas las familias, y cuando aparece suele durar poco si los adultos de la casa sostienen la misma respuesta. El problema es que casi siempre coincide con el momento en que la familia concluye que "esto no está funcionando" y suelta. Y soltar justo ahí le enseña al niño algo peor que antes: que insistir más fuerte sí funciona, solo que ahora hay que insistir mucho más.
 
 Por eso avisarlo antes es parte del tratamiento.
 
@@ -87,7 +89,7 @@ Vale la pena ser exacto, porque en internet vas a encontrar varios nombres y con
 
 Esta familia de intervenciones se conoce como entrenamiento conductual a cuidadores. Comparte un mismo núcleo: análisis funcional de la conducta, juego dirigido por el niño para reconstruir la relación, atención diferencial, instrucciones efectivas, práctica diaria con registro, y avance por criterios de dominio en vez de por número de sesiones.
 
-Dentro de esa familia hay programas con marca registrada y certificación propia —PCIT y Triple P, entre otros—. **Lo que ofrezco no es ninguno de esos programas**, y no lo llamo así. Está construido sobre los mismos principios conductuales, con los mismos componentes, pero sin la certificación específica de un protocolo de marca.
+Dentro de esa familia hay programas con marca registrada y certificación propia, como PCIT (Parent-Child Interaction Therapy o Terapia de Interacción Padres-Hijos) y Triple P. **Lo que ofrezco no es ninguno de esos programas**, y no lo llamo así. Está construido sobre los mismos principios conductuales, con los mismos componentes, pero sin la certificación específica de un protocolo de marca.
 
 Te lo digo por dos razones. La primera es que tienes derecho a saberlo antes de pagar. La segunda es que si lo que tu caso necesita es específicamente uno de esos protocolos certificados —a veces pasa, por ejemplo cuando un colegio o una EPS lo exige por nombre—, te lo digo en la llamada inicial y te remito a un colega que sí lo tenga.
 
@@ -99,12 +101,8 @@ El entrenamiento a cuidadores tiene evidencia para conductas disruptivas en niñ
 
 ## Lo que no se te va a pedir
 
-No se te va a pedir que seas un papá perfecto, ni que no te enojes, ni que dejes de poner límites. Al contrario: la segunda fase es entrenamiento de límites firmes.
+No se te va a pedir perfección, ni que no te enojes, ni que dejes de poner límites. Al contrario: la segunda fase es entrenamiento de límites firmes.
 
 Tampoco se te va a decir que el problema es tuyo. La mayoría de padres que llegan aquí están haciendo cosas razonables que, en el contexto específico de su familia, están sosteniendo justo lo que quieren cambiar. Eso no es culpa. Es información, y es la que permite hacer algo distinto.
 
----
-
-Si en tu casa llevan meses en el ciclo de instrucción, negociación, grito y culpa, y quieres saber si este es el camino, la llamada de orientación inicial es de veinte minutos y no tiene costo.
-
-[Agenda la llamada](/#agenda) · [Mira cómo se estructura el programa](/#servicios)
+Si en tu casa llevan meses en el ciclo de instrucción, negociación, grito y culpa, este puede ser el camino. Y si no lo es, te lo digo antes de empezar.

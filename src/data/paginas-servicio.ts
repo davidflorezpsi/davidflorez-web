@@ -84,7 +84,7 @@ export const PAGINAS_SERVICIO: PaginaServicio[] = [
     edadMin: 2,
     edadMax: 11,
     relacionadas: ['evaluacion-autismo-ados-2-bogota', 'psicologo-adolescentes-bogota'],
-    articulos: ['terapia-basada-en-procesos', 'entrenamiento-a-cuidadores-en-vivo', 'despues-del-informe-de-evaluacion'],
+    articulos: ['pataletas-en-ninos', 'entrenamiento-a-cuidadores-en-vivo', 'terapia-basada-en-procesos', 'despues-del-informe-de-evaluacion'],
     preguntas: ['online-ninos', 'diagnostico-previo', 'duracion', 'donde', 'eps'],
   },
   {
@@ -150,7 +150,7 @@ export const PAGINAS_SERVICIO: PaginaServicio[] = [
     edadMin: 2,
     edadMax: 17,
     relacionadas: ['psicologo-infantil-bogota', 'psicologo-adolescentes-bogota', 'peers-adolescentes-bogota'],
-    articulos: ['despues-del-informe-de-evaluacion'],
+    articulos: ['ados-2-y-adi-r', 'despues-del-informe-de-evaluacion'],
     preguntas: ['quien', 'donde', 'eps', 'no-pertinente'],
   },
   {

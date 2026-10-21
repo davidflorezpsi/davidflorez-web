@@ -1,10 +1,12 @@
 ---
 title: "Después del informe: cuándo terminaste y cuándo apenas empiezas"
 description: "Una evaluación entrega dos cosas distintas: la formulación que guía el tratamiento y el diagnóstico que pide el sistema. Y según cuál sea el cuadro, el informe cierra la pregunta o abre una ruta."
-pubDate: 2026-09-24
+tituloSeo: "Informe de evaluación psicológica: cuándo basta y cuándo no"
+descripcionSeo: "Formulación y diagnóstico vienen en el mismo informe y sirven para cosas distintas. Cuándo basta y cuándo abre una ruta con otros profesionales."
+pubDate: 2026-10-21T12:00:00Z
 servicio: psicologo-infantil-bogota
 tags: ["Para padres", "evaluación", "neurodesarrollo"]
-draft: true
+draft: false
 ---
 
 Hay dos clases de informe de evaluación. Uno cierra la pregunta. El otro abre una ruta.
@@ -27,9 +29,9 @@ Aunque venga en un solo archivo, lo que recibes son dos cosas que sirven para co
 
 **El diagnóstico** responde *a qué categoría pertenece*. Y aquí viene la parte que suele incomodar decir en voz alta: **el diagnóstico está ahí porque el sistema lo exige, no porque sea el objetivo del trabajo clínico.**
 
-Sin diagnóstico formal no hay ruta dentro de la EPS, y es más difícil tener un lenguaje común con el neuropediatra o con el docente de apoyo. Es un requisito administrativo real, y por eso se entrega cuando corresponde. En el colegio, en cambio, la norma no condiciona los ajustes razonables a un diagnóstico: se definen a partir de las barreras que tu hijo encuentra para aprender, y el PIAR se construye sobre la valoración pedagógica ([Decreto 1421 de 2017, compilado en el Decreto 1075 de 2015](https://www1.funcionpublica.gov.co/eva/gestornormativo/norma.php?i=77913)). Aun así, el informe suele ayudar a que el colegio entienda qué apoyos hacen falta. Pero no es lo que hace que una intervención funcione.
+Sin diagnóstico formal no hay ruta dentro de la EPS, y es más difícil tener un lenguaje común con el neuropediatra o con el docente de apoyo. Es un requisito administrativo real, y por eso se entrega cuando corresponde. En el colegio es distinto: la norma no exige un diagnóstico para los ajustes razonables, como expliqué en [Tu hijo no necesita una etiqueta: necesita un plan](/blog/terapia-basada-en-procesos/). Aun así, el informe suele ayudar a que el colegio entienda qué apoyos hacen falta.
 
-Si alguien te dice que el diagnóstico no sirve para nada, desconfía. Si te dice que con el diagnóstico ya está todo resuelto, desconfía igual.
+Las dos cosas hacen falta. El problema aparece cuando el informe trae solo la segunda.
 
 ## Aquí se bifurca el camino
 
@@ -47,13 +49,13 @@ Ese informe cierra la pregunta.
 
 Espectro autista, TDAH, trastornos específicos del aprendizaje.
 
-Aquí **la evaluación psicológica es una pieza, no el conjunto**. Un diagnóstico del neurodesarrollo bien hecho es interdisciplinario, y eso no es burocracia: es que ninguna profesión sola tiene todas las herramientas.
+Aquí **la evaluación psicológica es una pieza, no el conjunto**. Un diagnóstico del neurodesarrollo bien hecho casi siempre es interdisciplinario, y eso no es burocracia: ninguna profesión sola tiene todas las herramientas.
 
 Lo que suele faltar:
 
 - **Neurología pediátrica.** Para descartar causas médicas que se parecen al cuadro y para evaluar lo que puede estar acompañándolo.
 - **Neuropsicología.** Para el perfil cognitivo: qué funciona bien, qué no, y con qué intensidad. Eso es lo que después sostiene los ajustes del colegio.
-- **Evaluación específica cuando la pregunta es por espectro autista.** El estándar internacional combina observación estructurada (ADOS-2) con entrevista de desarrollo a los cuidadores (ADI-R). Eso sí lo hago yo, y es un proceso aparte de la evaluación inicial.
+- **Evaluación específica cuando la pregunta es por espectro autista.** El estándar internacional combina observación estructurada (ADOS-2) con entrevista de desarrollo a los cuidadores (ADI-R). Eso sí lo hago yo, y es un [proceso aparte](/evaluacion-autismo-ados-2-bogota/) de la evaluación inicial. En [este artículo](/blog/ados-2-y-adi-r/) explico qué mide cada instrumento.
 
 Y según el caso pueden entrar otras: fonoaudiología, terapia ocupacional, optometría o audiología cuando hay sospecha sensorial.
 
@@ -84,7 +86,7 @@ No es automático. Un informe externo se revisa antes de construir nada encima, 
 - **Si describe funcionamiento o solo concluye una categoría.** Un informe que dice "TDAH presentación combinada" y nada más, no permite trabajar. Uno que describe en qué situaciones aparece, qué lo empeora y qué lo alivia, sí.
 - **La vigencia.** En niñez el desarrollo se mueve rápido. Un informe de hace tres años describe a un niño que ya no existe.
 
-Si el informe alcanza, se formula sobre él y no se repite nada: sería cobrarte dos veces por lo mismo. Si no alcanza, hay que reevaluar antes de empezar, y eso se dice de frente y antes de que pagues el programa, no a mitad de camino.
+Si el informe alcanza, se formula sobre él y no se repite nada: sería cobrarte dos veces por lo mismo. Si no alcanza, hay que reevaluar antes de empezar, y eso se dice de frente y antes de que pagues el programa, no cuando ya vas por la mitad.
 
 ## Lo que no cambia en ninguno de los dos casos
 
@@ -92,6 +94,10 @@ Sea cual sea el resultado, hay algo que debería estar en tu informe siempre: **
 
 Un informe que termina en una categoría y una recomendación genérica de "iniciar proceso terapéutico" está incompleto, aunque el diagnóstico sea correcto. Lo que estás comprando no es un nombre. Es entender qué está pasando y saber cuál es el siguiente paso concreto.
 
-Si el que te entregó el informe no puede contestarte *"¿por dónde se empieza?"* en dos frases y sin tecnicismos, vale la pena pedir esa reunión. No es desconfianza. Es lo que corresponde.
+Si quien te entregó el informe no puede contestarte *"¿por dónde se empieza?"* en dos frases y sin tecnicismos, pide una cita para que te lo explique. Entender tu propio informe es parte de lo que pagaste.
 
 *La verdadera locura es no crecer con evidencia.*
+
+## Referencias
+
+- Decreto 1421 de 2017, por el cual se reglamenta en el marco de la educación inclusiva la atención educativa a la población con discapacidad. Compilado en el [Decreto 1075 de 2015](https://www1.funcionpublica.gov.co/eva/gestornormativo/norma.php?i=77913).
