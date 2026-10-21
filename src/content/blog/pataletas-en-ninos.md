@@ -1,7 +1,7 @@
 ---
 title: "Pataletas en niños: qué las mantiene y cuándo consultar"
 description: "Por qué una pataleta se repite todos los días a la misma hora, qué consejos comunes la alargan sin querer y qué señales indican que conviene una evaluación."
-descripcionSeo: "Por qué una pataleta se repite a la misma hora, qué consejos comunes la alargan sin querer y qué señales indican que conviene consultar. Niños de 2 a 7 años."
+descripcionSeo: "Por qué una pataleta se repite a la misma hora, qué consejos comunes la alargan sin querer y qué señales indican que conviene consultar."
 pubDate: 2026-10-21T15:00:00Z
 servicio: psicologo-infantil-bogota
 tags: ["Para padres", "pataletas", "análisis funcional"]
