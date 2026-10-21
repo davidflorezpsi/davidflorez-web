@@ -314,14 +314,24 @@ const titulo = post.data.tituloSeo ?? (conFirma.length <= 60 ? conFirma : post.d
     color: var(--azul-oscuro);
   }
 
+  .cuerpo :global(blockquote) {
+    margin: 1.5rem 0 0;
+    padding-left: 1rem;
+    border-left: 3px solid var(--cian);
+  }
+
   .cuerpo :global(hr) {
     border: none;
     border-top: 1px solid rgba(0, 51, 70, 0.25);
     margin: 2.5rem 0 0;
   }
 
-  /* El último párrafo en cursiva de un artículo es el tagline de marca. */
-  .cuerpo :global(p:last-child:has(em:only-child)) {
+  /*
+   * El último párrafo en cursiva de un artículo es el tagline de marca. Solo
+   * cuenta si es hijo directo del cuerpo: una cita en cursiva dentro de un
+   * blockquote no es el tagline.
+   */
+  .cuerpo > :global(p:last-child:has(> em:only-child)) {
     font-family: var(--fuente-cuerpo);
     font-weight: 300;
     font-size: 0.95rem;

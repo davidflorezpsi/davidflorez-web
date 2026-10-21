@@ -44,7 +44,7 @@ Tu tarea es practicar cinco cosas:
 - **Describir** lo que está haciendo. *"Estás poniendo el bloque rojo encima."*
 - **Reflejar** lo que dice. Él dice "hice una torre", tú dices "hiciste una torre".
 - **Imitar** su juego. Si él construye, tú construyes.
-- **Elogiar en concreto.** No "muy bien", sino "me gusta que me estás pidiendo las fichas con la palabra por favor".
+- **Elogiar en concreto.** Además del "muy bien", decir qué te gustó: "me gusta que me estás pidiendo las fichas con la palabra por favor".
 - **Acompañar con la voz.** Que el entusiasmo se note.
 
 Y hay tres cosas que **no** se hacen en esta fase: no se pregunta, no se dan órdenes, no se critica. Ni siquiera preguntas amables como "¿de qué color es ese?". Cada pregunta le quita el control del juego, que es justo lo que le estamos devolviendo.
@@ -79,7 +79,7 @@ Cuando una conducta ha estado funcionando durante meses —cuando gritar ha serv
 
 Es exactamente lo que haces tú con un ascensor que no llega: no dejas de oprimir el botón, lo oprimes más veces y más duro.
 
-Ese repunte se llama brote de extinción. No les pasa a todas las familias, y cuando aparece suele durar poco si los adultos de la casa sostienen la misma respuesta. El problema es que casi siempre coincide con el momento en que la familia concluye que "esto no está funcionando" y suelta. Y soltar justo ahí le enseña al niño algo peor que antes: que insistir más fuerte sí funciona, solo que ahora hay que insistir mucho más.
+Ese repunte se llama brote de extinción. No les pasa a todas las familias: en una revisión de tratamientos conductuales apareció en uno de cada cuatro casos, y menos cuando se combinó con otras estrategias (Lerman e Iwata, 1995). Cuando aparece, suele durar poco si los adultos de la casa sostienen la misma respuesta. El problema es que casi siempre coincide con el momento en que la familia concluye que "esto no está funcionando" y suelta. Y soltar justo ahí le enseña al niño algo peor que antes: que insistir más fuerte sí funciona, solo que ahora hay que insistir mucho más.
 
 Por eso avisarlo antes es parte del tratamiento.
 
@@ -87,7 +87,7 @@ Por eso avisarlo antes es parte del tratamiento.
 
 Vale la pena ser exacto, porque en internet vas a encontrar varios nombres y conviene que sepas qué estás contratando.
 
-Esta familia de intervenciones se conoce como entrenamiento conductual a cuidadores. Comparte un mismo núcleo: análisis funcional de la conducta, juego dirigido por el niño para reconstruir la relación, atención diferencial, instrucciones efectivas, práctica diaria con registro, y avance por criterios de dominio en vez de por número de sesiones.
+Esta familia de intervenciones se conoce como entrenamiento conductual a cuidadores. Comparte un mismo núcleo: análisis funcional de la conducta, juego dirigido por el niño para reconstruir la relación, atención diferencial, instrucciones efectivas, práctica diaria con registro, y avance por criterios de dominio en vez de por número de sesiones. Los componentes que más se asocian con buenos resultados son justamente esos: más interacciones positivas, consistencia y práctica con el niño durante la sesión (Kaminski et al., 2008).
 
 Dentro de esa familia hay programas con marca registrada y certificación propia, como PCIT (Parent-Child Interaction Therapy o Terapia de Interacción Padres-Hijos) y Triple P. **Lo que ofrezco no es ninguno de esos programas**, y no lo llamo así. Está construido sobre los mismos principios conductuales, con los mismos componentes, pero sin la certificación específica de un protocolo de marca.
 
@@ -95,7 +95,7 @@ Te lo digo por dos razones. La primera es que tienes derecho a saberlo antes de 
 
 ## Cuánto dura y para quién es
 
-El ciclo es de ocho sesiones, pero el avance no se mide en sesiones: se mide por criterios de dominio. Se pasa de la primera fase a la segunda cuando tú alcanzas un desempeño específico en las habilidades de juego, no cuando se cumple la fecha. Algunas familias llegan antes, otras necesitan más.
+El ciclo es de ocho sesiones, pero el avance no se mide en sesiones: se mide por criterios de dominio. Se pasa de la primera fase a la segunda cuando tú alcanzas un desempeño específico en las habilidades de juego, no cuando se cumple la fecha. Algunas familias llegan antes, otras necesitan más. No es un capricho: en un metaanálisis de 23 estudios de PCIT, los programas que exigían dominar las habilidades antes de avanzar redujeron más los problemas de conducta que los que no lo exigían (Thomas et al., 2017).
 
 El entrenamiento a cuidadores tiene evidencia para conductas disruptivas en niños aproximadamente entre los 2 y los 7 años. Fuera de ese rango, o cuando lo que está en primer plano es otra cosa —ansiedad marcada, sospecha de una condición del neurodesarrollo sin evaluar, una situación familiar en crisis— hay caminos mejores, y eso se define antes de empezar, no a mitad de camino.
 
@@ -106,3 +106,9 @@ No se te va a pedir perfección, ni que no te enojes, ni que dejes de poner lím
 Tampoco se te va a decir que el problema es tuyo. La mayoría de padres que llegan aquí están haciendo cosas razonables que, en el contexto específico de su familia, están sosteniendo justo lo que quieren cambiar. Eso no es culpa. Es información, y es la que permite hacer algo distinto.
 
 Si en tu casa llevan meses en el ciclo de instrucción, negociación, grito y culpa, este puede ser el camino. Y si no lo es, te lo digo antes de empezar.
+
+## Referencias
+
+- Kaminski, J. W., Valle, L. A., Filene, J. H. y Boyle, C. L. (2008). A meta-analytic review of components associated with parent training program effectiveness. *Journal of Abnormal Child Psychology, 36*(4), 567–589. [https://doi.org/10.1007/s10802-007-9201-9](https://doi.org/10.1007/s10802-007-9201-9)
+- Lerman, D. C. e Iwata, B. A. (1995). Prevalence of the extinction burst and its attenuation during treatment. *Journal of Applied Behavior Analysis, 28*(1), 93–94. [https://doi.org/10.1901/jaba.1995.28-93](https://doi.org/10.1901/jaba.1995.28-93)
+- Thomas, R., Abell, B., Webb, H. J., Avdagic, E. y Zimmer-Gembeck, M. J. (2017). Parent-child interaction therapy: A meta-analysis. *Pediatrics, 140*(3), e20170352. [Registro en Bond University](https://research.bond.edu.au/en/publications/parent-child-interaction-therapy-a-meta-analysis/)
