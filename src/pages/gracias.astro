@@ -49,6 +49,11 @@ import { wa } from '../data/contacto';
 </BaseLayout>
 
 <script is:inline>
+  // Con «Reenviar parámetros» activado (viene así), Cal.com agrega a esta
+  // dirección el nombre y el correo de quien reservó. Se borran antes de que
+  // Google tag lea la página, para que no lleguen a GA4.
+  if (location.search) history.replaceState(null, '', location.pathname);
+
   try {
     if (!sessionStorage.getItem('llamada-contada')) {
       sessionStorage.setItem('llamada-contada', '1');

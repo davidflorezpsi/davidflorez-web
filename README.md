@@ -82,7 +82,10 @@ nombres, montos ni las respuestas del filtro de pertinencia:
 
 1. En GA4 → Administrar → Eventos, marca los cinco como eventos clave.
 2. Para que `booking_confirmed` funcione: en Cal.com → tu evento → Avanzado →
-   «Redirigir al reservar», pon `https://davidflorez.co/gracias/`.
+   «Redirigir al reservar», pon `https://davidflorez.co/gracias/` y desactiva
+   «Reenviar parámetros». Si queda activo, Cal.com agrega a la dirección el
+   nombre y el correo de quien reserva; `/gracias/` los borra antes de medir,
+   pero es mejor que no salgan de Cal.com.
 
 La política de seguridad de contenido (`Content-Security-Policy` en
 `vercel.json`) solo deja cargar archivos del propio sitio y de Google
